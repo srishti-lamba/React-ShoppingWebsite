@@ -45,6 +45,15 @@
         $("#fadeOutInfoImg3").click(function() {
             $(".img3Info").fadeOut();
         })
+
+        //Part 2 Q2//
+        $(".smallItem").click(function(){
+            $(this).animate({zoom: '175%'}, "slow");
+
+        })
+        $(".smallItem").mouseleave(function(){
+            $(this).animate({zoom: '100%'}, "slow");
+        })
     });
   </script>
 </head>
@@ -92,7 +101,7 @@
         <input type="radio" id="fadeOutImg1" name="radiobtnsImg1" value="button1">
         <label for="fadeOutImg1">Fade Out Image</label>
     </td>
-    <td><img id="img1" src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-7inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661027942322" width=250px></td>
+    <td><img id="img1" class="smallItem" src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-7inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661027942322" width=250px></td>
     <td>
         <div style="display: block;">
             <input type="radio" id="fadeInInfoImg1" name="radiobtnsImg1Info" value="button1">
@@ -124,7 +133,7 @@
         <input type="radio" id="fadeOutImg2" name="radioBtnsImg2" value="button1">
         <label for="fadeOutImg2">Fade Out Image</label>
     </td>
-    <td><img id="img2" src="https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/xps_notebooks/xps_13_9310/general/xps-13_black_open-up-left-v2.jpg?fmt=pjpg&pscan=auto&scl=1&wid=3334&hei=2017&qlt=100,0&resMode=sharp2&size=3334,2017" width=250px></td>
+    <td><img id="img2" class="smallItem" src="https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/xps_notebooks/xps_13_9310/general/xps-13_black_open-up-left-v2.jpg?fmt=pjpg&pscan=auto&scl=1&wid=3334&hei=2017&qlt=100,0&resMode=sharp2&size=3334,2017" width=250px></td>
     <td>
         <div style="display: block;">
             <input type="radio" id="fadeInInfoImg2" name="radiobtnsImg2Info" value="button1">
@@ -156,7 +165,7 @@
         <input type="radio" id="fadeOutImg3" name="radioBtnsImg3" value="button1">
         <label for="fadeOutImg3">Fade Out Image</label>
     </td>
-    <td><img id="img3" src="https://m.media-amazon.com/images/G/15/kindle/journeys/yl2FmjqOlTBpnMG8q6pmcAiinXhfbcOc2B2w2BCRwcDFbw3D/ZDAyODVkY2Qt._CB670554671_.jpg7" width=250px></td>
+    <td><img id="img3" class="smallItem" src="https://m.media-amazon.com/images/G/15/kindle/journeys/yl2FmjqOlTBpnMG8q6pmcAiinXhfbcOc2B2w2BCRwcDFbw3D/ZDAyODVkY2Qt._CB670554671_.jpg7" width=250px></td>
     <td>
         <div style="display: block;">
             <input type="radio" id="fadeInInfoImg3" name="radiobtnsImg3Info" value="button1">
