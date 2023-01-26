@@ -1,13 +1,187 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Electronics-Center</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script>
-            
-        </script>
-        <link rel="stylesheet" href="./Lab1-Part1-Team6.css">
-    </head>
-    <body>
-        <!-- Copy body of Part1 -->
-    </body>
+
+<head>
+  <link rel="stylesheet" href="Lab1-Part1-Team6.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $("#fadeInImg1").click(function(){
+            $("#img1").fadeIn("slow");
+        })
+        $("#fadeOutImg1").click(function() {
+            $('#img1').fadeOut();
+        })
+        $("#fadeInImg2").click(function(){
+            $("#img2").fadeIn("fast");
+        })
+        $("#fadeOutImg2").click(function() {
+            $('#img2').fadeOut();
+        })
+        $("#fadeInImg3").click(function(){
+            $("#img3").fadeIn(3000);
+        })
+        $("#fadeOutImg3").click(function() {
+            $('#img3').fadeOut();
+        })
+
+        $("#fadeInInfoImg1").click(function() {
+            $(".img1Info").fadeIn("slow");
+        })
+        $("#fadeOutInfoImg1").click(function() {
+            $(".img1Info").fadeOut();
+        })
+
+        $("#fadeInInfoImg2").click(function() {
+            $(".img2Info").fadeIn("fast");
+        })
+        $("#fadeOutInfoImg2").click(function() {
+            $(".img2Info").fadeOut();
+        })
+
+        $("#fadeInInfoImg3").click(function() {
+            $(".img3Info").fadeIn(3000);
+        })
+        $("#fadeOutInfoImg3").click(function() {
+            $(".img3Info").fadeOut();
+        })
+    });
+  </script>
+</head>
+
+<body>
+
+<h1>Electronics-Center</h1>
+
+<div style="float:right;">
+    <label for="type">Type:</label>
+    <select name="type" id="type">
+        <option value="0">LapTop</option>
+        <option value="1">NoteBook</option>
+        <option value="2">Tablet</option>
+        <option value="3">CellPhone</option>
+    </select>
+</div>
+
+<div style="float:left;">
+    <label for="action">Action:</label>
+    <select name="action" id="action">
+        <option value="4">Archive</option>
+        <option value="5">Edit</option>
+        <option value="6">Delete</option>
+        <option value="7">Collection</option>
+    </select>
+</div>
+
+<table>
+  <tr>
+    <th> </th>
+    <th> </th>
+    <th></th>
+    <th>Name</th>
+    <th>Company</th>
+    <th>Year</th>
+    <th>Type</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr>
+    <td>
+        <input type="radio" id="fadeInImg1" name="radiobtnsImg1" value="button1">
+        <label for="fadeInImg1">Fade In Image</label>
+        <input type="radio" id="fadeOutImg1" name="radiobtnsImg1" value="button1">
+        <label for="fadeOutImg1">Fade Out Image</label>
+    </td>
+    <td><img id="img1" src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-7inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661027942322" width=250px></td>
+    <td>
+        <div style="display: block;">
+            <input type="radio" id="fadeInInfoImg1" name="radiobtnsImg1Info" value="button1">
+            <label for="fadeInInfoImg1">Fade In Product Info</label>
+        </div>
+        <div style="display: block; margin-top: 10px;">
+            <input type="radio" id="fadeOutInfoImg1" name="radiobtnsImg1Info" value="button1">
+            <label for="fadeOutInfoImg1">Fade Out Product Info</label>
+        </div>
+    </td>
+    <td><div class="img1Info">iPhone 14</div></td>
+    <td><div class="img1Info">Apple</div></td>
+    <td><div class="img1Info">2022</div></td>
+    <td><div class="img1Info">CellPhone</div></td>
+    <td>
+        <div class="img1Info" >
+            <button><a href="">Archive</a></button>
+            <button><a href="">Edit</a></button>
+            <button><a href="">Delete</a></button>
+            <button><a href="">Collection</a></button>
+        </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <input type="radio" id="fadeInImg2" name="radioBtnsImg2" value="button1">
+        <label for="fadeInImg2">Fade In Image</label>
+        <input type="radio" id="fadeOutImg2" name="radioBtnsImg2" value="button1">
+        <label for="fadeOutImg2">Fade Out Image</label>
+    </td>
+    <td><img id="img2" src="https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/xps_notebooks/xps_13_9310/general/xps-13_black_open-up-left-v2.jpg?fmt=pjpg&pscan=auto&scl=1&wid=3334&hei=2017&qlt=100,0&resMode=sharp2&size=3334,2017" width=250px></td>
+    <td>
+        <div style="display: block;">
+            <input type="radio" id="fadeInInfoImg2" name="radiobtnsImg2Info" value="button1">
+            <label for="fadeInInfoImg2">Fade In Product Info</label>
+        </div>
+        <div style="display: block; margin-top: 10px;">
+            <input type="radio" id="fadeOutInfoImg2" name="radiobtnsImg2Info" value="button1">
+            <label for="fadeOutInfoImg2">Fade Out Product Info</label>
+        </div>
+    </td>
+    <td><div class="img2Info">XPS 13 Laptop</div></td>
+    <td><div class="img2Info">Dell</div></td>
+    <td><div class="img2Info">2022</div></td>
+    <td><div class="img2Info">LapTop</div></td>
+    <td>
+        <div class="img2Info">
+            <button><a href="">Archive</a></button>
+            <button><a href="">Edit</a></button>
+            <button><a href="">Delete</a></button>
+            <button><a href="">Collection</a></button>
+        </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <input type="radio" id="fadeInImg3" name="radioBtnsImg3" value="button1">
+        <label for="fadeInImg3">Fade In Image</label>
+        <input type="radio" id="fadeOutImg3" name="radioBtnsImg3" value="button1">
+        <label for="fadeOutImg3">Fade Out Image</label>
+    </td>
+    <td><img id="img3" src="https://m.media-amazon.com/images/G/15/kindle/journeys/yl2FmjqOlTBpnMG8q6pmcAiinXhfbcOc2B2w2BCRwcDFbw3D/ZDAyODVkY2Qt._CB670554671_.jpg7" width=250px></td>
+    <td>
+        <div style="display: block;">
+            <input type="radio" id="fadeInInfoImg3" name="radiobtnsImg3Info" value="button1">
+            <label for="fadeInInfoImg3">Fade In Product Info</label>
+        </div>
+        <div style="display: block; margin-top: 10px;">
+            <input type="radio" id="fadeOutInfoImg3" name="radiobtnsImg3Info" value="button1">
+            <label for="fadeOutInfoImg3">Fade Out Product Info</label>
+        </div>
+    </td>
+    <td><div class="img3Info">Fire HD 10 Tablet</div></td>
+    <td><div class="img3Info">Amazon</div></td>
+    <td><div class="img3Info">2021</div></td>
+    <td><div class="img3Info">Tablet</div></td>
+    <td>
+        <div class="img3Info">
+            <button><a href="">Archive</a></button>
+            <button><a href="">Edit</a></button>
+            <button><a href="">Delete</a></button>
+            <button><a href="">Collection</a></button>
+        </div>
+    </td>
+  </tr>
+
+</table>
+
+</body>
 </html>
