@@ -26,6 +26,10 @@ button {
     margin-bottom: 3px;
 }
 
+.textbox {
+    width: 500px;
+}
+
 .productImg {
     height: 120px;
     width: auto;
