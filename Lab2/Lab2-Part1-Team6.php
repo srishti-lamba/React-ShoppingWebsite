@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html>
-
 <head>
     <link rel="stylesheet" href="">
 </head>
@@ -49,4 +46,3 @@
     </div>
 
 </body>
-</html>
