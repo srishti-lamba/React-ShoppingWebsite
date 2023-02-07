@@ -20,8 +20,11 @@
     <div style="float:left;">
         <label for="type">Type:</label>
         <select name="type" id="type">
-            <option value="0">Painting</option>
-            <option value="1">Sculpture</option>
+            <optgroup label="Painting">
+                <option value="0">Landscape</option>
+                <option value="1">Portrait</option>
+            </optgroup>
+            <option value="2">Sculpture</option>
         </select>
     </div>
 
