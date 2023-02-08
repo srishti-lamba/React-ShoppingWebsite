@@ -14,7 +14,6 @@
         $art3 = new artObject();
         array_push($artworks, $art1, $art2, $art3);
         $_SESSION['artworks'] = $artworks;
-        echo "gothere";
     }
     
     //If all post parameters are set, update array database (save record)
