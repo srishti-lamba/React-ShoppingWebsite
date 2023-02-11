@@ -15,15 +15,38 @@
 </head>
 
 <body>
+    <?php
+        //Creates a session array database called artworks, access array with $_SESSION['artworks']
+        require('initalizeArray.php');
+    ?>
     <header>
         <h1>Art Work Database</h1>
         <p>Description TBD</p>
+        <table>
+            <tr>
+                <th>Index</th>
+                <th>Genre</th>
+                <th>Type</th>
+                <th>Specification</th>
+                <th>Year</th>
+                <th>Museum</th>
+            </tr>
+            <?php
+                $artArray = $_SESSION['artworks'];
+                for ($x = 0; $x < count($artArray); $x++) {
+                    $artWork = $artArray[$x];
+                    echo "<tr>";
+                    echo "<td>$x</td>";
+                    echo "<td>"; echo $artWork->genre; echo "</td>";
+                    echo "<td>"; echo $artWork->type; echo "</td>";
+                    echo "<td>"; echo $artWork->specification; echo "</td>";
+                    echo "<td>"; echo $artWork->year; echo "</td>";
+                    echo "<td>"; echo $artWork->museum; echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+        </table>
     </header>
-    <?php
-        //Creates a session array database called artworks
-        require('initalizeArray.php');
-        //print_r ($_SESSION['artworks']);
-    ?>
     <form id="form" action="./Lab2-Part1-Team6.php" method="post">
         <div style="float:left;">
             <label for="genre">Genre:</label>
