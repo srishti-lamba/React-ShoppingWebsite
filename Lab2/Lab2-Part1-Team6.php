@@ -1,3 +1,12 @@
+<?php
+    
+    session_start();
+    if(!isset($_SESSION['artworks']) ){
+        $_SESSION['artworks'] = array();
+    }
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,38 +24,11 @@
 </head>
 
 <body>
-    <?php
-        //Creates a session array database called artworks, access array with $_SESSION['artworks']
-        require('initalizeArray.php');
-    ?>
     <header>
         <h1>Art Work Database</h1>
         <p>Description TBD</p>
-        <table>
-            <tr>
-                <th>Index</th>
-                <th>Genre</th>
-                <th>Type</th>
-                <th>Specification</th>
-                <th>Year</th>
-                <th>Museum</th>
-            </tr>
-            <?php
-                $artArray = $_SESSION['artworks'];
-                for ($x = 0; $x < count($artArray); $x++) {
-                    $artWork = $artArray[$x];
-                    echo "<tr>";
-                    echo "<td>$x</td>";
-                    echo "<td>"; echo $artWork->genre; echo "</td>";
-                    echo "<td>"; echo $artWork->type; echo "</td>";
-                    echo "<td>"; echo $artWork->specification; echo "</td>";
-                    echo "<td>"; echo $artWork->year; echo "</td>";
-                    echo "<td>"; echo $artWork->museum; echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
-        </table>
     </header>
+   
     <form id="form" action="./Lab2-Part1-Team6.php" method="post">
         <div style="float:left;">
             <label for="genre">Genre:</label>
@@ -88,8 +70,41 @@
             <label for="museum">Museum:</label>
             <input name="museum" id="museum" type="text" class="textbox" value=""/>
         </div>
-        <button type="button" id="clear" class="right">Clear Record</button>
-        <button class="right">Save Record</button>
+        <input class="right" type="submit" name="action" value="Clear Record" id="clear"  />
+        <input class="right" type="submit" name="action" value="Save Record"/>
     </form>
+
 </body>
 </html>
+
+<?php 
+    if($_POST['action'] == "Clear Record") {
+        $_SESSION['artworks'] = array();
+    }
+    else if ($_POST['action'] == "Save Record" && isset($_POST['genre'], 
+    $_POST['type'], 
+    $_POST['specification'],
+    $_POST['year'],
+    $_POST['museum'])) {
+        $newArtwork = [$_POST['genre'], $_POST['type'], $_POST['specification'], $_POST['year'], $_POST['museum']];
+        array_push($_SESSION['artworks'], $newArtwork);
+        //print_r($_SESSION['artworks']);
+        // for($i=0; $i<count($_SESSION['artworks']); $i++){
+        //     print_r($_SESSION['artworks'][$i]);
+        //     echo "\n";
+        // }
+    } 
+
+    
+?>
+
+<?php
+        if(count($_SESSION['artworks']) > 0) {
+            echo "<table><tr><th>Genre</th><th>Type</th><th>Specification</th><th>Year</th><th>Museum</th></tr>";
+            for($i=0; $i<count($_SESSION['artworks']); $i++){
+                echo "<tr><td>".$_SESSION['artworks'][$i][0]."</td><td>".$_SESSION['artworks'][$i][1]."</td><td>".$_SESSION['artworks'][$i][2]."</td><td>".$_SESSION['artworks'][$i][3]."</td><td>".$_SESSION['artworks'][$i][4]."</td></tr>";
+            }
+            echo "</table>";
+        }
+        
+?>
