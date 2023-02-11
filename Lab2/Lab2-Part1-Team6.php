@@ -1,3 +1,42 @@
+<?php
+
+    class artObject {
+        public $genre;
+        public $type;
+        public $specification;
+        public $year;
+        public $museum;
+        
+        function __construct($genre, $type, $specification, $year, $museum){
+            $this->genre = $genre;
+            $this->type = $type;
+            $this->specification = $specification;
+            $this->year = $year;
+            $this->museum = $museum;
+        }
+    }
+    
+    session_start();
+    if(!isset($_SESSION['artworks']) ){
+        $_SESSION['artworks'] = array();
+    }
+
+    if(isset($_POST['action']) && $_POST['action'] == "Clear Records") {
+        $_SESSION['artworks'] = array();
+    }
+    else if (isset($_POST['action'],
+            $_POST['genre'], 
+            $_POST['type'], 
+            $_POST['specification'],
+            $_POST['year'],
+            $_POST['museum']) && $_POST['action'] == "Save Record" ) {
+
+        $newArtwork = new artObject($_POST['genre'], $_POST['type'], $_POST['specification'], $_POST['year'], $_POST['museum']);
+        array_push($_SESSION['artworks'], $newArtwork);
+    } 
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,37 +54,9 @@
 </head>
 
 <body>
-    <?php
-        //Creates a session array database called artworks, access array with $_SESSION['artworks']
-        require('initalizeArray.php');
-    ?>
     <header>
         <h1>Art Work Database</h1>
         <p>Description TBD</p>
-        <table>
-            <tr>
-                <th>Index</th>
-                <th>Genre</th>
-                <th>Type</th>
-                <th>Specification</th>
-                <th>Year</th>
-                <th>Museum</th>
-            </tr>
-            <?php
-                $artArray = $_SESSION['artworks'];
-                for ($x = 0; $x < count($artArray); $x++) {
-                    $artWork = $artArray[$x];
-                    echo "<tr>";
-                    echo "<td>$x</td>";
-                    echo "<td>"; echo $artWork->genre; echo "</td>";
-                    echo "<td>"; echo $artWork->type; echo "</td>";
-                    echo "<td>"; echo $artWork->specification; echo "</td>";
-                    echo "<td>"; echo $artWork->year; echo "</td>";
-                    echo "<td>"; echo $artWork->museum; echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
-        </table>
     </header>
     <form id="form" action="./Lab2-Part1-Team6.php" method="post">
         <div style="float:left;">
@@ -87,9 +98,34 @@
         <div class="left">
             <label for="museum">Museum:</label>
             <input name="museum" id="museum" type="text" class="textbox" value=""/>
+            <input type="button" id="clear" value="Clear Form" />
         </div>
-        <button type="button" id="clear" class="right">Clear Record</button>
-        <button class="right">Save Record</button>
+        <input class="right" type="submit" name="action" value="Clear Records" />
+        <input class="right" type="submit" name="action" value="Save Record"/>
     </form>
+
+    
+    <?php
+        $artArray = $_SESSION['artworks'];
+        if(count($artArray) > 0){
+            echo "<table><tr><th>Index</th><th>Genre</th><th>Type</th><th>Specification</th><th>Year</th><th>Museum</th></tr>";
+            for ($x = 0; $x < count($artArray); $x++) {
+                $artWork = $artArray[$x];
+                echo "<tr>";
+                echo "<td>$x</td>";
+                echo "<td>"; echo $artWork->genre; echo "</td>";
+                echo "<td>"; echo $artWork->type; echo "</td>";
+                echo "<td>"; echo $artWork->specification; echo "</td>";
+                echo "<td>"; echo $artWork->year; echo "</td>";
+                echo "<td>"; echo $artWork->museum; echo "</td>";
+                echo "</tr>";
+            }
+
+            echo "</table>";
+        }
+    ?>
+    
+    
+    
 </body>
 </html>
