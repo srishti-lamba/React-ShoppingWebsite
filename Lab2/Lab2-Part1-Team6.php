@@ -50,6 +50,14 @@
                 $("#form").trigger("reset");
             });
         })
+        //Part C forming live record
+        function updateLiveRecord(){
+            $("#genre-live").text($('#genre').val());
+            $("#type-live").text($('#type').val());
+            $("#specification-live").text($('#specification').val());
+            $('#year-live').text($('#year').val());
+            $('#museum-live').text($('#museum').val());
+        }
     </script>
 </head>
 
@@ -61,7 +69,7 @@
     <form id="form" action="./Lab2-Part1-Team6.php" method="post">
         <div style="float:left;">
             <label for="genre">Genre:</label>
-            <select name="genre" id="genre">
+            <select name="genre" id="genre" onchange="updateLiveRecord();">
                 <option value="abstract">Abstract</option>
                 <option value="baroque">Baroque</option>
                 <option value="gothic">Gothic</option>
@@ -71,7 +79,7 @@
 
         <div class="left">
             <label for="type">Type:</label>
-            <select name="type" id="type">
+            <select name="type" id="type" onchange="updateLiveRecord();">
                 <optgroup label="Painting">
                     <option value="landscape">Landscape</option>
                     <option value="portrait">Portrait</option>
@@ -82,7 +90,7 @@
 
         <div class="left">
             <label for="specification">Specification:</label>
-            <select name="specification" id="specification">
+            <select name="specification" id="specification" onchange="updateLiveRecord();">
                 <option value="commercial">Commercial</option>
                 <option value="non-commercial">Non-commercial</option>
                 <option value="derivative-work">Derivative Work</option>
@@ -92,12 +100,12 @@
 
         <div class="left">
             <label for="year">Year:</label>
-            <input name="year" id="year" type="number" class="textbox" value=""/>
+            <input name="year" id="year" type="number" class="textbox" value="" onkeyup="updateLiveRecord()"/>
         </div>
 
         <div class="left">
             <label for="museum">Museum:</label>
-            <input name="museum" id="museum" type="text" class="textbox" value=""/>
+            <input name="museum" id="museum" type="text" class="textbox" value="" onkeyup="updateLiveRecord()"/>
             <input type="button" id="clear" value="Clear Form" />
         </div>
         <input class="right" type="submit" name="action" value="Clear Records" />
@@ -125,7 +133,26 @@
         }
     ?>
     
-    
-    
+    <div class="left">
+        <p>Live artwork record being formed:</p>
+        <table>
+            <tr>
+                <th>Index</th>
+                <th>Genre</th>
+                <th>Type</th>
+                <th>Specification</th>
+                <th>Year</th>
+                <th>Museum</th>
+            </tr>
+            <tr>
+                <td><?php echo count($artArray);?></td>
+                <td id="genre-live">abstract</td>
+                <td id="type-live">landscape</td>
+                <td id="specification-live">commercial</td>
+                <td id="year-live"></td>
+                <td id="museum-live"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
