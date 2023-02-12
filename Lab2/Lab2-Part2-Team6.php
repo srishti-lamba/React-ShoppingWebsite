@@ -87,7 +87,7 @@ try {
             echo "<tr><td>".$row["firstname"]."</td><td>".$row["lastname"]."</td><td>".$row["email"]."</td><td>".$row["university"]."</td><td>".$row["gpa"]."</td></tr>";
         }  
     }
-    echo "<table>";
+    echo "</table>";
 
 } catch(mysqli_sql_exception $exception) {
     $conn->rollback();
