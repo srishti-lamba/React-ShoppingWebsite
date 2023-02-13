@@ -149,22 +149,53 @@
         </table>
     </div>
 
+    <h3>Input an index to query the database:</h3>
+    <form class="query-form" action="./Lab2-Part1-Team6.php" method="get">
+        
+        <div>
+            <input type="number" name="index"/>
+            <input name="action" class="form-button" type="submit" value="Query Database"/>
+        </div>
+        
+    </form>
+
+    <?php
+        //check if user input is an integer and a valid index in the array
+        if(isset($_GET['action']) && !is_int($_GET['index']) && $_GET['index'] >= 0 && $_GET['index'] < count($artArray)) {
+            $queriedArtWork = $artArray[$_GET['index']];
+            echo "<h3>Art work with index of " . $_GET['index'] . ":</h3>";
+            echo "<table><tr><th>Index</th><th>Genre</th><th>Type</th><th>Specification</th><th>Year</th><th>Museum</th></tr>";
+            echo "<tr>";
+            echo "<td>". $_GET['index'] . "</td>";
+            echo "<td>" . $queriedArtWork->genre . "</td>";
+            echo "<td>" . $queriedArtWork->type . "</td>";
+            echo "<td>" . $queriedArtWork->specification . "</td>";
+            echo "<td>" . $queriedArtWork->year . "</td>";
+            echo "<td>" . $queriedArtWork->museum . "</td>";
+            echo "</tr>";
+            echo "</table>";
+        } else if (isset($_GET['action'])) {
+            //if user submitted form but without a valid input then print error message
+            echo "<h3>not a valid index</h3>";
+        }
+    ?>
+
     <div>
 
     <?php
         
         if(count($artArray) > 0){
-            echo "<h3>Saved Records:</h3>";
+            echo "<h3>Here is a List of Your Saved Records:</h3>";
             echo "<table><tr><th>Index</th><th>Genre</th><th>Type</th><th>Specification</th><th>Year</th><th>Museum</th></tr>";
             for ($x = 0; $x < count($artArray); $x++) {
                 $artWork = $artArray[$x];
                 echo "<tr>";
                 echo "<td>$x</td>";
-                echo "<td>"; echo $artWork->genre; echo "</td>";
-                echo "<td>"; echo $artWork->type; echo "</td>";
-                echo "<td>"; echo $artWork->specification; echo "</td>";
-                echo "<td>"; echo $artWork->year; echo "</td>";
-                echo "<td>"; echo $artWork->museum; echo "</td>";
+                echo "<td>"; echo $artWork->genre . "</td>";
+                echo "<td>"; echo $artWork->type . "</td>";
+                echo "<td>"; echo $artWork->specification . "</td>";
+                echo "<td>"; echo $artWork->year . "</td>";
+                echo "<td>"; echo $artWork->museum . "</td>";
                 echo "</tr>";
             }
 
@@ -173,6 +204,10 @@
     ?>
 
     </div>
+
+    
+
+    
     
     
 </body>

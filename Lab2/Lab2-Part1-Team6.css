@@ -4,6 +4,12 @@
     justify-content: space-between;
 }
 
+.query-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 body {
     background-color: #fdcd3b;
     font-family: Arial, Helvetica, sans-serif;
