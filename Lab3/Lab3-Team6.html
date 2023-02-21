@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <head>
+        <TITLE>how to detect browser using PHP </TITLE>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+<body>
+    <h1>Display Cross Browsers Compatibility Issues line1</h1>
+    <p>Display Cross Browsers Compatibility Issues line2</p>
+    <script>
+        var br = ["Firefox", "Internet Explorer", "Chrome"];	 
+        var res1 = navigator.userAgent;
+        var res2 = "";
+
+        $("body").append("<p>Trying to detect Browser name!</p>" + res1);
+
+        for(let browser of br){
+            if(res1.includes(browser)){
+                res2 = browser;
+            }
+        }
+        $("body").append("<p>Browser: " + res2 + "</p>");
+    </script>
+</body>
+</html>
