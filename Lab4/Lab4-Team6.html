@@ -7,17 +7,20 @@
     <h1>Display Cross Browsers Compatibility Issues line1</h1>
     <p>Display Cross Browsers Compatibility Issues line2</p>
     <script>
-        var br = ["Firefox", "Internet Explorer", "Chrome"];	 
+        var br = ["Firefox", "Trident", "Chrome"];	 
         var res1 = navigator.userAgent;
         var res2 = "";
 
         $("body").append("<p>Trying to detect Browser name!</p>" + res1);
 
-        for(let browser of br){
-            if(res1.includes(browser)){
-                res2 = browser;
+        for(i=0;i<br.length; i++){
+            if(res1.indexOf(br[i]) !== -1 && br[i] === "Trident"){
+                res2 = "Internet Explorer"
+            } else if(res1.indexOf(br[i]) !== -1){
+                res2 = br[i]
             }
         }
+        
         $("body").append("<p>Browser: " + res2 + "</p>");
     </script>
 </body>
