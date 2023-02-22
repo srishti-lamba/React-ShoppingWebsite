@@ -19,6 +19,8 @@
                 echo "Browser: Firefox";
             else if ( strpos ($res, "Trident") == true)
                 echo "Browser: Internet Explorer";
+            else if ( strpos ($res, "Safari") == true)
+                echo "Browser: Safari";
             else echo "Browser: unkown";
         }
         brdetect( );
