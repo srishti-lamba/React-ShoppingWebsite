@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-    <head>
-        <TITLE>How to detect browser using JavaScript </TITLE>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
+<head>
+    <TITLE>How to detect browser using JavaScript </TITLE>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="Lab4-Team6.css">
+</head>
 <body>
-    <h1>Display Cross Browsers Compatibility Issues - JavaScript Method</h1>
+    <h1>Display Cross Browsers Compatibility Issues<br />JavaScript Method</h1>
     <p>This page utilizes navigator.userAgent in JavaScript to detect the browser.</p>
     <script>
         var br = ["Edg", "Firefox", "Trident", "Chrome", "Safari"];	 
         var res1 = navigator.userAgent;
         var res2 = "";
 
-        $("body").append("<p>Trying to detect Browser name!</p>" + res1);
+        $("body").append("<p>Trying to detect Browser name!</p><p class='browser'>" + res1 + "</p>");
 
         for (i = 0; i < br.length; i++) {
             if (res1.indexOf(br[i]) !== -1) {
@@ -37,7 +38,7 @@
             }
         }
         
-        $("body").append("<p>Browser: " + res2 + "</p>");
+        $("body").append("<p class='browser'>Browser: " + res2 + "</p>");
     </script>
 </body>
 </html>

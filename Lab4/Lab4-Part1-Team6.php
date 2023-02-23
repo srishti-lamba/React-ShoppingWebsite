@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <TITLE>How to detect browser using PHP </TITLE>
+    <link rel="stylesheet" href="Lab4-Team6.css">
 </head>
 <body>
     <h1> Display Cross Browsers Compatibility Issues - PHP Method</h1>

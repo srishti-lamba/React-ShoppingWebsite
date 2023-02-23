@@ -1,0 +1,16 @@
+h1 {
+	font-size: 35px;
+	text-align: center;
+	background-color: #5a8fc3;
+	color: white;
+}
+
+body {
+	font-family: Arial;
+	background-color: #d9e6f2;
+}
+
+.browser {
+	background-color: #5a8fc3;
+	color: white;
+}
