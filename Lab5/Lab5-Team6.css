@@ -1,0 +1,35 @@
+body {
+    font-family: Arial;
+    background-color: #e1def1;
+}
+
+h1 {
+    font-size: 30px;
+    text-align: center;
+    background-color: #7062bc;
+    color: white;
+    margin-bottom: 0px;
+}
+h2 {
+    font-size: 25px;
+    text-align: center;
+    background-color: #7062bc;
+    color: white;
+    margin-top: 0px;
+}
+
+#map {
+    height: 400px;
+    width: 50%;
+}
+
+button {
+    background-color: #968bce;
+    color: white;
+    padding: 3px;
+    border: none;
+}
+
+    button:hover {
+        background-color: #7062bc;
+    }
