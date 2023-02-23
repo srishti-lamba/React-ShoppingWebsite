@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
-    <TITLE>how to detect browser using PHP </TITLE>
+    <TITLE>How to detect browser using PHP </TITLE>
 </head>
 <body>
-    <h1> Display Cross Browsers Compatibility Issues line1</h1>
-    <p> Display Cross Browsers Compatibility Issues line2</p>
+    <h1> Display Cross Browsers Compatibility Issues - PHP Method</h1>
+    <p> This page utilizes $_SERVER['HTTP_USER_AGENT'] in PHP to detect the browser.</p>
 
     <?php
         echo " Trying to detect Browser name! <br/><br/>";
@@ -13,17 +13,17 @@
             $res = $_SERVER['HTTP_USER_AGENT'];
             echo $res . "<br/><br/>";
 
-            if ( strpos ($res, "Edg") == true)
-                echo "Browser: Microsoft Edge";
-            else if ( strpos ($res, "Chrome") == true)
-                echo "Browser: Google Chrome";
-            else if ( strpos ($res, "Firefox") == true)
-                echo "Browser: Firefox";
-            else if ( strpos ($res, "Trident") == true)
+            if ( strpos ($res, "Trident") || strpos ($res, "MSIE") || strpos ($res, "IE"))
                 echo "Browser: Internet Explorer";
-            else if ( strpos ($res, "Safari") == true)
+            else if ( strpos ($res, "Edg"))
+                echo "Browser: Microsoft Edge";
+            else if ( strpos ($res, "Chrome"))
+                echo "Browser: Google Chrome";
+            else if ( strpos ($res, "Firefox"))
+                echo "Browser: Firefox";
+            else if ( strpos ($res, "Safari"))
                 echo "Browser: Safari";
-            else echo "Browser: unkown";
+            else echo "Browser: unknown";
         }
         brdetect( );
     ?>

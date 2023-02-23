@@ -1,11 +1,11 @@
 <!DOCTYPE html>
     <head>
-        <TITLE>how to detect browser using PHP </TITLE>
+        <TITLE>How to detect browser using JavaScript </TITLE>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
 <body>
-    <h1>Display Cross Browsers Compatibility Issues line1</h1>
-    <p>Display Cross Browsers Compatibility Issues line2</p>
+    <h1>Display Cross Browsers Compatibility Issues - JavaScript Method</h1>
+    <p>This page utilizes navigator.userAgent in JavaScript to detect the browser.</p>
     <script>
         var br = ["Edg", "Firefox", "Trident", "Chrome", "Safari"];	 
         var res1 = navigator.userAgent;
@@ -13,16 +13,27 @@
 
         $("body").append("<p>Trying to detect Browser name!</p>" + res1);
 
-        for(i=0;i<br.length; i++){
-            if(res1.indexOf(br[i]) !== -1 && br[i] == "Trident"){
-                res2 = "Internet Explorer"
-                break;
-            } else if(res1.indexOf(br[i]) !== -1 && br[i] == "Edg"){
-                res2 = "Microsoft Edge"
-                break;
-            } else if(res1.indexOf(br[i]) !== -1){
-                res2 = br[i]
-                break;
+        for (i = 0; i < br.length; i++) {
+            if (res1.indexOf(br[i]) !== -1) {
+                if (br[i] == "Trident" || br[i] == "MSIE" || br[i] == "IE") {
+                    res2 = "Internet Explorer";
+                    break;
+                } else if (br[i] == "Edg") {
+                    res2 = "Microsoft Edge";
+                    break;
+                } else if (br[i] == "Chrome") {
+                    res2 = "Google Chrome";
+                    break;
+                } else if (br[i] == "Firefox") {
+                    res2 = "Firefox";
+                    break;
+                } else if (br[i] == "Safari") {
+                    res2 = "Safari";
+                    break;
+                } else {
+                    res2 = "unknown";
+                    break;
+                }
             }
         }
         
