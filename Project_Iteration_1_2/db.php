@@ -13,6 +13,7 @@
         $result = mysqli_query($conn, $query);
     }
     catch(mysqli_sql_exception $exception) {
+    //Query to make table, this can be modified/expanded, but the initial table would need to be manually deleted.
         $query = "CREATE TABLE users (
             username VARCHAR(50) NOT NULL PRIMARY KEY,
             password VARCHAR(50) NOT NULL
