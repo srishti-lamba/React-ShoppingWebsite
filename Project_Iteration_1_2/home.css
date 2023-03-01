@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e3e9f7;
+}
+
+.product-container{
+    width: 68%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 25px;
+    min-width:1100px;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.center{
+    text-align: center;
+}
+
+.product-container h1{
+    text-align: center;
+    font-size: 3rem;
+    margin: 15px 0;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+}
+
+.categories{
+    width: 30%;
+    margin-top: 30px;
+    border-right: 2px solid #e3e9f7;
+}
+
+.shop-by-room{
+    width: 100%;
+}
+
+.categories-flex{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-right: 20px;
+}
+
+.categories-flex span{
+    cursor: pointer;
+    font-size: 25px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.categories-flex span{
+    color: inherit;
+    text-decoration: none;
+}
+
+.categories-flex span::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #232F3E;
+    transition: width .5s;
+}
+  
+.categories-flex span:hover::after {
+    width: 100%;
+    transition: width .3s;
+}
+
+/*Right side of window, display products*/
+#productH2{
+    margin-top: -5px;
+    padding-bottom: 10px;
+    text-decoration: underline;  
+}
+
+.products{
+    width:70%;
+    min-height: 120vh;
+    border-radius: 15px;
+}
+
+
+.products-flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/*Card css*/
+.card{
+    display: inline-block;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.price{
+    color: green;
+    margin-top: 20px;
+}
+
+.card:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+@media only screen and (max-width: 1850px) {
+    .products-flex{
+        justify-content: center;
+    }
+}
