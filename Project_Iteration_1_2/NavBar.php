@@ -12,9 +12,11 @@
     <script>
     $(document).ready(function() {
         $("#username").click(function(){
+            $('#errMsg').css({"display": 'none'});
             $('#errMsg2').css({"display": 'none'});
         });
         $("#password").click(function(){
+            $('#errMsg').css({"display": 'none'});
             $('#errMsg2').css({"display": 'none'});
         });
     });
