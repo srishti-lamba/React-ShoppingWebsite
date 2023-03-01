@@ -93,7 +93,6 @@ a:hover::after {
     background-color:#232F3E;
     width: 30%;
     left: 35%;
-    height: 40%;
     display: none;
 }
 
