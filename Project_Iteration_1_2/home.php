@@ -10,29 +10,9 @@
             $("#productH2").text(string);
         }
 
-        function displayLivingRoom(){
+        function updateProductDisplay(category){
             //ajax to get items
-            changeProductH2Header("LIVING ROOM");
-        }
-
-        function displayBedroom(){
-            //ajax to get items
-            changeProductH2Header("BEDROOM");
-        }
-
-        function displayDiningRoom(){
-            //ajax to get items
-            changeProductH2Header("DINING ROOM");
-        }
-
-        function displayKidsRoom(){
-            //ajax to get items
-            changeProductH2Header("KID'S ROOM");
-        }
-
-        function displayHomeOffice(){
-            //ajax to get items
-            changeProductH2Header("HOME OFFICE");
+            changeProductH2Header(category);
         }
     </script>
     <body>
@@ -47,11 +27,11 @@
                 <aside class="categories">
                     <h2 class="center shop-by-room">SHOP BY ROOM</h2>
                     <div class="categories-flex">
-                        <span id="living-room" onclick="displayLivingRoom()">Living Room</span>
-                        <span id="bedroom" onclick="displayBedroom()">Bedroom</span>
-                        <span id="dining room" onclick="displayDiningRoom()">Dining Room</span>
-                        <span id="kids-room" onclick="displayKidsRoom()">Kid's Room</span>
-                        <span id="home office" onclick="displayHomeOffice()">Home Office</span>
+                        <span id="living-room" onclick="updateProductDisplay('Living Room')">Living Room</span>
+                        <span id="bedroom" onclick="updateProductDisplay('Bedroom')">Bedroom</span>
+                        <span id="dining room" onclick="updateProductDisplay('Dining Room')">Dining Room</span>
+                        <span id="kids-room" onclick="updateProductDisplay('Kid\'s Room')">Kid's Room</span>
+                        <span id="home office" onclick="updateProductDisplay('Home Office')">Home Office</span>
                     </div>
                 </aside>
                 <div class="products">
