@@ -91,6 +91,12 @@ body {
     text-decoration: underline;  
 }
 
+#shoppingCartH2 {
+    margin-top: 10px;
+    margin-bottom: 10px;;
+    text-decoration: underline
+}
+
 .products{
     width:70%;
     min-height: 120vh;
@@ -119,6 +125,48 @@ body {
 
 .card:hover{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.shopping-cart {
+    flex:1;
+}
+
+.shopping-cart table {
+    margin:auto;
+    border: 1px solid #e3e9f7;
+}
+
+
+
+.shopping-cart table td {
+    padding: 30px;
+}
+
+.checkOutBtnContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.checkOutBtn,
+.clearShoppingCartBtn {
+    padding: 10px 20px 10px 20px;
+    background-color: #232F3E;
+    border: none;
+    color: white;
+    cursor:pointer;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.checkOutBtn:hover,
+.clearShoppingCartBtn:hover {
+    background-color: #3d546f;
+}
+
+img {
+    width: 240px;
+    height: 116px;
 }
 
 
