@@ -18,6 +18,7 @@
             LoginId varchar(10) not null,
             `Password` varchar(20) not null,
             Balance decimal(6,2) SIGNED not null default 0);";
+        $conn->query($query);
         
         $query2 = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`)
                     VALUES('John Smith', '4161234567', 'john.smith@gmail.com', '258 Avro Rd', 'L6A1X8', 'john_smith', '1234') ";

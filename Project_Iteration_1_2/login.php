@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once('db.php');
+    include_once('./CreateAndPopulateUsersTable.php');
 
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -9,8 +9,9 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
+        $_SESSION['username'] = $row['userName'];
         $_SESSION['failedLogin'] = false;
     }
     else{

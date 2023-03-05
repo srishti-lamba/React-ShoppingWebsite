@@ -1,6 +1,5 @@
 <?php 
     require("./NavBar.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -180,7 +179,7 @@
     </script>
     <body>
         <p>temp login (xammp apache and mysql needed):</p>
-        <p>User: admin<br>pass: password</p>
+        <p>User: john_smith<br>pass: 1234</p>
         <div class="product-container">
             <h1 class="center">FURNITURE</h1>
             <main class="wrapper">
@@ -222,7 +221,7 @@
                         </div>
                         <div class="checkOutBtnContainer"> 
                             <input class="checkOutBtn" type="submit" value="Checkout" />
-                            <input class="clearShoppingCartBtn" value="Clear Shopping Cart" onclick="clearShoppingCart()" />
+                            <input type="button" class="clearShoppingCartBtn" value="Clear Shopping Cart" onclick="clearShoppingCart()" />
                         </div>
                     </form>
                 </div>

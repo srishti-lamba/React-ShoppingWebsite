@@ -51,8 +51,8 @@
             <nav class="nav">
                 <ul>
                     <li><a href="./home.php">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="./aboutus.php">About us</a></li>
+                    <li><a href="./aboutus.php">Contact us</a></li>
                     <li><a href="#">Services</a></li>
                 </ul>
             </nav>
