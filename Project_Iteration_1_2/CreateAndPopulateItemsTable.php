@@ -15,7 +15,6 @@
         department_code int(2) not null,
         image_url varchar(512) not null);";
     
-    mysqli_query($conn, $query);
 
     $query2 = "insert into item (productName, price, category, made_in, department_code, image_url) values ('Sofa', 700, 'Living Room', 'Canada', 1, 'https://cdn.shopify.com/s/files/1/2660/5106/products/Hi_Res_JPEG-Ava_58D35050_Sofa_3Q_b3f9ae86-16d9-41b0-8502-cde2693f5df0_medium.progressive.jpg?v=1663774964');";
     $query3 = "insert into item (productName, price, category, made_in, department_code, image_url) values ('HEMNES Coffee Table', 249.00, 'Living Room', 'China', 1, 'https://www.ikea.com/ca/en/images/products/hemnes-coffee-table-black-brown__0837153_pe601368_s5.jpg')";
@@ -33,6 +32,7 @@
     $query15 = "insert into item (productName, price, category, made_in, department_code, image_url) values ('XUER Ergonomic Office Chair', 150.00, 'Home Office', 'China', 1, 'https://m.media-amazon.com/images/I/81KGPhfAC3L._AC_SX466_.jpg')";
     $query16 = "insert into item (productName, price, category, made_in, department_code, image_url) values ('HSH Solid Wood Bookshelf', 549.82, 'Home Office', 'China', 1, 'https://m.media-amazon.com/images/I/71tq-TnCm0S._AC_SL1200_.jpg')";
     try {
+        mysqli_query($conn, $query);
         $conn-> query($query2);
         $conn-> query($query3);
         $conn-> query($query4);
@@ -51,6 +51,5 @@
         echo "Query executed successfully";
     } 
     catch(mysqli_sql_exception $exception) {
-        echo $exception;
     }
 ?>

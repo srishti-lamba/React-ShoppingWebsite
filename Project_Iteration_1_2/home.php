@@ -1,5 +1,6 @@
 <?php 
     require("./NavBar.php");
+    require("./CreateAndPopulateItemsTable.php");
 ?>
 
 <!DOCTYPE html>
