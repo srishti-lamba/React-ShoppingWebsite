@@ -39,6 +39,7 @@ header {
 
 .cart{
     margin-right: 40px;
+    cursor: pointer;
 }
 
 .right button{
@@ -103,7 +104,8 @@ a:hover::after {
     margin: 20px auto;
     text-align: left;
     padding: 14px 10px;
-    width: 275px;
+    max-width: 990px;
+    width: 70%;
     outline: none;
     color: white;
     border-bottom: #2b2d30 3px solid;

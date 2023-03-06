@@ -19,6 +19,12 @@
             $('#errMsg').css({"display": 'none'});
             $('#errMsg2').css({"display": 'none'});
         });
+        $(".cart").click(function(){
+            window.location.href = "./processUserOrder.php";
+        });
+        $(".sign-up").click(function(){
+            window.location.href = "./register.php";
+        });
     });
 
     function openLogin() {
@@ -59,13 +65,13 @@
             <ul class="right">
                 <?php
                     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
-                        echo "<li><div class=\"cart\">Cart</div></li>";
+                        echo "<li><div class='cart'>Cart</div></li>";
                         echo "<li><p>Hello, ". $_SESSION['username'] ."</p></li>";
-                        echo "<li><form action=\"./logout.php\">  <button type=\"submit\">Log Out</button> </form></li>";
+                        echo "<li><form action='./logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
                     }
                     else{
-                        echo "<li><button type=\"button\">Sign Up</button></li>
-                              <li><button type=\"button\" class=\"login\" onclick=\"openLogin()\">Login</button></li>";
+                        echo "<li><button type='button' class='sign-up'>Sign Up</button></li>
+                              <li><button type='button' class='login' onclick='openLogin()'>Login</button></li>";
                     }
                 ?>
             </ul>

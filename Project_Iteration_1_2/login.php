@@ -2,8 +2,15 @@
     session_start();
     include_once('./CreateAndPopulateUsersTable.php');
 
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    $username = test_input($_POST["username"]);
+    $password = test_input($_POST["password"]);
 
     $sql = "SELECT * FROM users WHERE (loginId = '$username' AND `password` = '$password')";
     $result = $conn->query($sql);
