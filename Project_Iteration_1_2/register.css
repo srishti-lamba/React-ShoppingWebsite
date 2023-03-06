@@ -57,5 +57,8 @@ body {
 }
 
 .reg-button{
+    width: 150px;
+    height: 40px;
+    margin: auto;
     margin-top: 25px;
 }
