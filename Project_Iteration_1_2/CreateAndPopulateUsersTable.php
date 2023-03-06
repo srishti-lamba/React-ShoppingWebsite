@@ -23,6 +23,8 @@
         $query2 = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`)
                     VALUES('John Smith', '4161234567', 'john.smith@gmail.com', '258 Avro Rd', 'L6A1X8', 'john_smith', '1234') ";
 
+                    
+
         $conn->query($query2);
         echo "Query executed successfully";
 

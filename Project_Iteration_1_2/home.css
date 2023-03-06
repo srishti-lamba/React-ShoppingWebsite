@@ -164,6 +164,10 @@ body {
     background-color: #3d546f;
 }
 
+.clearShoppingCartBtn {
+    margin-left: 10px;
+}
+
 img {
     width: 240px;
     height: 116px;
