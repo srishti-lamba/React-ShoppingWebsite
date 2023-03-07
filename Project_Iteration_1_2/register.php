@@ -45,7 +45,7 @@
                 <label for="reg-password2">Re-Enter Password:</label>
                 <input type="password" id="reg-password2" name="reg-password2" onclick="hideRegisterSuccess()">
 
-                <label for="address">Enter Address:</label>
+                <label for="address">Enter Home Address:</label>
                 <input type="text" id="address" name="address" value="<?php 
                     if(isset($_SESSION['address'])){
                         echo $_SESSION['address'];}?>" onclick="hideRegisterSuccess()">

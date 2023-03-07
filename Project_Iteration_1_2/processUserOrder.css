@@ -1,57 +1,44 @@
-table {
-    margin:auto;
-    margin-top: 20px;
-    border: 1px solid #e3e9f7;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-td {
-    padding: 30px;
+body{
+    background-color: #e3e9f7;
 }
 
-.formContainer {
+.formContainer{
+    display: flex;
+    justify-content: center
+}
+
+
+/*Main Content css*/
+main {
+    background-color: white;
+    margin: 15px;
+    margin-right: 0px;
+    width: 70%;
+    max-width: 900px;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.selectBranchContainer {
+    margin-top: 7px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 68%;
-    margin:auto;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-.userInputContainer {
-    display: flex;
-    flex-direction: column;
     align-items: center;
 }
 
-.userInputContainer input {
+.selectBranchContainer input {
     margin: 15px 0px 15px 0px;
 }
 
-.userInputContainer input {
+.selectBranchContainer input {
     padding: 5px;
-}
-
-.submitContainer {
-    display: flex;
-    justify-content: center;
-}
-
-.submitContainer > input {
-    padding: 10px 20px 10px 20px;
-    background-color: #232F3E;
-    border: none;
-    color: white;
-    cursor:pointer;
-    font-weight: 600;
-    border-radius: 4px;
-}
-
-.submitContainer > input:hover {
-    background-color: #3d546f;
 }
 
 .locationSelector {
@@ -67,4 +54,111 @@ td {
 
 label {
     font-weight: 600;
+}
+
+.selectBranchHeader{
+    align-self: flex-start;
+    border-bottom: 2px solid #e3e9f7;
+    width: 95%;
+    margin: auto;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+#destination {
+    height: 36px;
+    width: 449px;
+    border-radius: 4px;
+    margin-bottom: -5px;
+    margin-top: 5px;
+    border: 3px solid #232F3E;
+}
+
+#mapErrMsg{
+    color: red;
+    margin-top: 8px;
+    display: none;
+}
+
+#distanceMsg{
+    display: none;
+}
+
+#distanceMsg p{
+    margin-top: 9px;
+    font-size: 15px;
+    font-weight: 10px;
+    display: inline-block;
+}
+
+
+#googleMap {
+    width: 90%;
+    height: 500px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/*Payment Section*/
+.paymentContainer h1{
+    font-weight: 600;
+    border-bottom: 2px solid #e3e9f7;
+    width: 95%;
+    margin: auto;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+/*Side Bar css*/
+aside {
+    background-color: white;
+    margin: 15px;
+    margin-left: 8px;
+    width:30%;
+    max-width: 385px;
+    margin-bottom: 45%;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+aside h1{
+    border-bottom: 2px solid #e3e9f7;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.aside-flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+table {
+    background-color: white;
+}
+
+td {
+    padding: 10px;
+}
+
+.submitContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.submitContainer > input {
+    padding: 10px 20px 10px 20px;
+    background-color: #232F3E;
+    border: none;
+    color: white;
+    cursor:pointer;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.submitContainer > input:hover {
+    background-color: #3d546f;
 }

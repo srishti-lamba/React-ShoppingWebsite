@@ -1,10 +1,12 @@
 <?php
     include('./NavBar.php');
-    $location = $_POST['location'];
+    $warehouse = $_POST['location'];
+    $destination = $_POST['destination'];
     $date = $_POST['deliveryDate'];
     $deliveryTime = $_POST['deliveryTime'];
     $total = $_POST['total'];
+    $user = $_SESSION['userId']; //Unique Primary User key
 
-
-    echo "<p>Set up map with markers for location and user address and add user order and trip to DB</p>"
+    echo "<p>".$total."</p>";
+    echo "<p>add user order and trip to DB</p>";
 ?>

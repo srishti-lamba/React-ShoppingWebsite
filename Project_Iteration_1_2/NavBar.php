@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include('./CreateAndPopulateTruckTable.php');
+    include('./CreateAndPopulateLocationsTable.php');
 ?>
 <!DOCTYPE html>
 <html>

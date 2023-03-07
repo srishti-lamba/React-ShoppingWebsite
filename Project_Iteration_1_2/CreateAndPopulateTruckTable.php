@@ -21,8 +21,8 @@
         $conn->query($query3);
         $conn->query($query4);
         $conn->query($query5);
-        echo "Executed Query";
+        //echo "Executed Query";
     } catch (mysqli_sql_exception $exception) {
-        echo $exception;
+        //echo $exception;
     }
 ?>

@@ -34,8 +34,8 @@
         $conn->query($query4);
         $conn->query($query5);
         $conn->query($query6);
-        echo "query's executed successfully";
+        //echo "query's executed successfully";
     } catch (mysqli_sql_exception $exception) {
-        echo $exception;
+        //echo $exception;
     }
 ?>
