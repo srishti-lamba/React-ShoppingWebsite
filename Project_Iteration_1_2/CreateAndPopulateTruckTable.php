@@ -2,27 +2,34 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "mysql";
+    $dbname = "cps630";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $query = "CREATE TABLE Truck(
-        truckId int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        availabilityCode varchar(15) not null);";
+    $queryDrop = "DROP TABLE Trucks;";
 
-    $query2 = "INSERT INTO Truck (availabilityCode) VALUES('Available');";
-    $query3 = "INSERT INTO Truck (availabilityCode) VALUES('Available');";
-    $query4 = "INSERT INTO Truck (availabilityCode) VALUES('Available');";
-    $query5 = "INSERT INTO Truck (availabilityCode) VALUES('Available');";
+    $queryCreate = "CREATE TABLE Trucks(
+        truckId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        availabilityCode VARCHAR(15) NOT NULL);";
 
+    $query1 = "INSERT INTO Trucks (availabilityCode) VALUES('Available');";
+    $query2 = "INSERT INTO Trucks (availabilityCode) VALUES('Available');";
+    $query3 = "INSERT INTO Trucks (availabilityCode) VALUES('Available');";
+    $query4 = "INSERT INTO Trucks (availabilityCode) VALUES('Available');";
+
+    //Drop
+    try {$conn-> query($queryDrop);}
+    catch(mysqli_sql_exception $exception) {}
+    
+    //Create + Insert
     try {
-        $conn->query($query);
+        $conn->query($queryCreate);
+        $conn->query($query1);
         $conn->query($query2);
         $conn->query($query3);
         $conn->query($query4);
-        $conn->query($query5);
         //echo "Executed Query";
-    } catch (mysqli_sql_exception $exception) {
-        //echo $exception;
     }
+    catch (mysqli_sql_exception $exception)
+    { echo("Error on Trucks:" . $conn->error); }
 ?>

@@ -6,10 +6,10 @@
             $servername = "localhost";
             $username = "root";
             $password = "";
-            $dbname = "mysql";
+            $dbname = "cps630";
         
             $conn = new mysqli($servername, $username, $password, $dbname);
-            $query = "Select item_id, productName, price, category, image_url from item where category = " . "'". $category . "'";
+            $query = "SELECT item_id, productName, price, category, image_url FROM Items WHERE category = " . "'". $category . "'";
 
 
             try{
