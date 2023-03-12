@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <title>AngularJS MVC Architecture</title>
-    <script src="./angular.min.js"></script>
+    <script src="../../angular.min.js"></script>
 </head>
 <body>
-    <div ng-app="myApp" ng-controller="fullName">
+    <div ng-controller="fullName">
         <p>{{Student.FName}}</p>
     </div>
     <script>
@@ -14,8 +14,7 @@
             $scope.Student =
             {
                 'FName': 'John',
-                'LName': 'Smith',
-
+                'LName': 'Smith'
             }
         };
         angular.module('myApp', []).controller('fullName', fullName);
