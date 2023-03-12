@@ -1,0 +1,30 @@
+
+
+ 
+      
+  
+
+     <!DOCTYPE html> 
+    <html> 
+    <head> 
+    <title>Controllers In AngularJS</title> 
+    <script src="../../angular.js"></script> 
+    </head> 
+
+    <body ng-app="app1"> 
+    <div> Application.Controller</div> 
+    <div ng-controller="cnt1"> 
+    <div> My Name ( using app.contrller): {{myName}} </div> 
+    </div> 
+    <br/> 
+
+    <script> 
+    angular.module("app1", []) 
+    .controller("cnt1", function($scope)
+    { 
+    $scope.myName = "John Smith"; 
+    }); 
+    </script> 
+
+    </body> 
+    </html>

@@ -1,0 +1,37 @@
+ 
+<!DOCTYPE html>
+<html>
+ 
+<script src="../../angular.min.js"></script>
+
+<body>
+
+<div ng-app="app1" ng-controller="cnt1">
+
+  <label> Line1: <input type="text" ng-model="line1"></label><br>
+  <label> Line2: <input type="text" ng-model="line2"></label><br><br>
+      Lines: {{line1 + " " + line2}}
+      <p ng-bind-template="{{line1}}    {{line2}}!"></p>
+</div>
+
+<script>
+var app = angular.module('app1', []);
+app.controller('cnt1', function($scope) 
+{
+    $scope.line1 = "Hello";
+    $scope.line2 = "World";
+});
+</script>
+
+</body>
+</html>
+
+<!--
+-------------------------------------------------------------
+Output:
+     
+Line1:  Hello (in a box)
+Line2:  World (in a box)
+
+Hello World!
+-->

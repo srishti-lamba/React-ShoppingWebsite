@@ -3,6 +3,11 @@
 <head>
     <script src="../../angular.min.js"></script>
     <script src="../../angular-route.js"></script>
+    <style>
+        body {
+            background-color: #86cceb;
+        }
+    </style>
 </head>
 <body ng-app="myApp">
 
@@ -25,10 +30,12 @@
                     templateUrl: "htm/main.htm"
                 })
                 .when("/london", {
-                    templateUrl: "htm/london.htm"
+                    templateUrl: "htm/london.htm",
+                    controller: "londonCtrl"
                 })
                 .when("/paris", {
-                    templateUrl: "htm/paris.htm"
+                    templateUrl: "htm/paris.htm",
+                    controller: "parisCtrl"
                 });
         });
         app.controller("londonCtrl", function ($scope) {

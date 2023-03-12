@@ -1,0 +1,35 @@
+ 
+<!DOCTYPE html>
+<html>
+ 
+<script src="../../angular.min.js"></script>
+
+<body>
+
+<div ng-app="app1" ng-controller="cnt1">
+
+First Name: <input type="text" ng-model="fname"><br>
+Last Name: <input type="text" ng-model="lname"><br>
+<br>
+Full Name: {{fname + " " + lname}}
+
+</div>
+
+<script>
+var app = angular.module('app1', []);
+app.controller('cnt1', function($scope) 
+{
+    $scope.fname = "John";
+    $scope.lname = "Smith";
+});
+</script>
+
+</body>
+</html>
+
+<!--
+-------------------------------------------------------------
+Output:
+    Full Name: John Smith
+
+-->
