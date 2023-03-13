@@ -180,12 +180,12 @@
         }
     </script>
     <body>
-        <article class="company-info">
-            <h1>SMART CUSTOMER SERVICES</h1>
-            <p>Smart Customer Services (SCS) is an online system that aims to plan for smart green trips inside the city
-                 and its neighborhood. <br>We offer online shoppping services and delivery to the destinations using a smart 
-                green solution.</p>
-        </article>
+        <div class="banner">
+            <article class="company-info">
+                <h1>SMART CUSTOMER SERVICES</h1>
+                <p>- Furniture Department -</p>
+            </article>
+        </div>
         <div class="product-container">
             <h1 class="center">FURNITURE</h1>
             <main class="wrapper">

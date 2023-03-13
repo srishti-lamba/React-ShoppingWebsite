@@ -59,10 +59,10 @@
             <div class="logo">System Logo</div>
             <nav class="nav navbar">
                 <ul>
-                    <li><a href="./home.php"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> About us</a></li>
-                    <li><a href="./aboutus.php"><i class="fa-solid fa-headset"></i> Contact us</a></li>
-                    <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> Types of Services</a></li>
+                    <li><a href="./home.php"><i class="fa-solid fa-house"></i> HOME</a></li>
+                    <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
+                    <li><a href="./aboutus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
+                    <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
                 </ul>
             </nav>
             <ul class="right">

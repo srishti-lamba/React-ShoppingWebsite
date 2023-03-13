@@ -9,7 +9,7 @@
 }
 
 body {
-    background-color: #e3e9f7;
+    background-color: #EDF1D6;
 }
 
 .product-container{
@@ -173,12 +173,19 @@ body {
 }
 
 .company-info {
-    background-color: white;
+    background-color: rgba(255,255,255,0.9);
     flex: 1;
     text-align: center;
     padding: 15px;
     font-size: 1.25em;
     margin: 2% 5% 0% 5%;
+}
+
+.banner {
+    width: 100%;
+    padding: 10%;
+    background-position: center;
+    background-image: url("https://images.unsplash.com/photo-1634547588713-edd93045b9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1100&q=80");
 }
 
 img {

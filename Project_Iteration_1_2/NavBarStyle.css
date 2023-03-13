@@ -9,7 +9,7 @@
 header {
     display: flex;
     padding: 30px 5%;
-    background-color:#232F3E;
+    background-color: #8D7B68;
     color: white;
     justify-content: space-between;
     align-items: center;
@@ -52,7 +52,7 @@ header {
     margin: 0;
     width: 100px;
     padding: 10px 0;
-    box-shadow: 0 0 20px;
+    box-shadow: 0 0 10px;
 }
 
 a{
