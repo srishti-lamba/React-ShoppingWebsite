@@ -28,7 +28,7 @@
             </div>
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/9431/9431220.png">
-                <h2 class="center">Returns & Exchanges</h2>
+                <h2 class="center">Returns &<br>Exchanges</h2>
                 <p class="bio center"></p>
             </div>
         </main>

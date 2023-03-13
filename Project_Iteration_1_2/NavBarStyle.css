@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -56,6 +58,7 @@ header {
 a{
     color: inherit;
     text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a::after {

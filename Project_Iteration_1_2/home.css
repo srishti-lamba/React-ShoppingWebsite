@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -186,7 +187,7 @@ img {
 }
 
 h1, h2 {
-    font-family: 'Abril Fatface', serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 @media only screen and (max-width: 1850px) {
