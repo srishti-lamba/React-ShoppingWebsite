@@ -42,6 +42,7 @@
     </style>
     <script src="angular.min.js"></script>
     <script>
+        var myScope;
         var myapp = angular.module('demo', []);
         // notice that our callback function is passed the $http parameter.
         // parameters are injected by the AngularJS system "behind-the-scenes"
@@ -63,34 +64,49 @@
         {
             $scope.sortField = 'name';
             $scope.reverse = false;
+            myScope = $scope;
 
             $scope.countries = 
                 [
-                { name: 'Belgium', population: '22277766', capital: 'Brussels' },
-                { name: 'Belarus', population: '11443876', capital: 'Minsk' },
-                { name: 'Serbia', population: '7543987', capital: 'Belgrade' }
+                { name: 'Belgium', population: 22277766, capital: 'Brussels' },
+                { name: 'Belarus', population: 11443876, capital: 'Minsk' },
+                { name: 'Serbia', population: 7543987, capital: 'Belgrade' }
                 ];
         });
 
         function sortChanged(newSort)
         {
-            var coEl = document.getElementById("countryHeader");
-            var poEl = document.getElementById("populationHeader");
-            var caEl = document.getElementById("capitalHeader");
+            var coHe = document.getElementById("countryHeader");
+            var poHe = document.getElementById("populationHeader");
+            var caHe = document.getElementById("capitalHeader");
 
-            coEl.style.textDecoration = "none";
-            poEl.style.textDecoration = "none";
-            caEl.style.textDecoration = "none";
+            var coIm = document.getElementById("countryImg");
+            var poIm = document.getElementById("populationImg");
+            var caIm = document.getElementById("capitalImg");
+
+            var downArrow = "https://sman1tambunutara.sch.id/assets/icon/ionicons-2.0.1/png/512/arrow-down-b.png";
+            var upArrow = "http://www.innovationinfo.org/dists/ionicons/png/512/arrow-up-b.png";
+
+            coIm.src = "";
+            poIm.src = "";
+            caIm.src = "";
+
+            coHe.style.textDecoration = "none";
+            poHe.style.textDecoration = "none";
+            caHe.style.textDecoration = "none";
 
             switch (newSort) {
                 case 'name':
-                    coEl.style.textDecoration = "underline";
+                    myScope.reverse == false ? coIm.src = upArrow : coIm.src = downArrow;
+                    coHe.style.textDecoration = "underline";
                     break;
                 case 'population':
-                    poEl.style.textDecoration = "underline";
+                    myScope.reverse == false ? poIm.src = upArrow : poIm.src = downArrow;
+                    poHe.style.textDecoration = "underline";
                     break;
                 case 'capital':
-                    caEl.style.textDecoration = "underline";
+                    myScope.reverse == false ? caIm.src = upArrow : caIm.src = downArrow;
+                    caHe.style.textDecoration = "underline";
                     break;
             }
         }
@@ -106,16 +122,19 @@
             <th>
                 <a id="countryHeader" href="" ng-click="sortField='name'; reverse=!reverse;" onclick="sortChanged('name');">
                     Country
+                    <img id="countryImg" height="10" />
                 </a>
             </th>
             <th>
                 <a id="populationHeader" href="" ng-click="sortField='population'; reverse=!reverse;" onclick="sortChanged('population');">
                     Population
+                    <img id="populationImg" height="10"/>
                 </a>
             </th>
             <th>
                 <a id="capitalHeader" href="" ng-click="sortField='capital'; reverse=!reverse;" onclick="sortChanged('capital');">
                     Capital
+                    <img id="capitalImg" height="10"/>
                 </a>
             </th>
         </tr>
