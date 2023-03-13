@@ -11,6 +11,8 @@
     $queryCreate = "CREATE TABLE Orders(
         orderId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         dateIssued TIMESTAMP,
+        deliveryDate DATE,
+        deliveryTime TIME,
         totalPrice DECIMAL(6,2) UNSIGNED NOT NULL,
         paymentCode INT(6) UNSIGNED,
         user_id INT(6) REFERENCES Users(user_id),

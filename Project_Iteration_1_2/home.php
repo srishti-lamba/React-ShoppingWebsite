@@ -31,6 +31,8 @@
                 for(let i=0; i<shoppinglist.items.length; i++) {
                     let item = shoppinglist.items[i]
                     let newRow = document.createElement("tr")
+                    newRow.setAttribute("name", item.productName)
+                    newRow.setAttribute("quantity", item.quantity)
 
                     let itemNameCell = document.createElement("td");
                     itemNameCell.innerHTML = item.productName;
@@ -42,15 +44,15 @@
                     quantityCell.innerHTML = item.quantity;
 
                     newRow.appendChild(itemNameCell)
-                    newRow.appendChild(priceCell)
                     newRow.appendChild(quantityCell);
+                    newRow.appendChild(priceCell)
 
                     tableBody.appendChild(newRow)
 
                     total += item.quantity * item.price;
                 }
 
-                document.getElementById("total").innerHTML = total;
+                document.getElementById("total").innerHTML = Number(total.toFixed(2));
             }        
         }
 
@@ -111,7 +113,6 @@
             let id = e.dataTransfer.getData('id');
             let productName = e.dataTransfer.getData('product-name');
             let price = e.dataTransfer.getData('price');
-
 
             if(id.length === 0 || productName.length === 0 || price.length === 0) return;
   

@@ -6,6 +6,15 @@ $("#submitBtn").click(function() {
     $("form").submit();
 });
 
+function displayErrorMessage(msg) {
+    $(".errorMessage").text(msg)
+    $(".errorMessage").css("display", "block")
+}
+
+function hideErrorMessage() {
+    $(".errorMessage").css("display", "none")
+}
+
 function displayShoppinglistFromLocalStorage() {
     if(localStorage.getItem('shoppinglist') !== null) {
         let tableBody = document.getElementById("tableBody");
@@ -34,9 +43,8 @@ function displayShoppinglistFromLocalStorage() {
             total += item.quantity * item.price;
         }
 
-        document.getElementById("total").innerHTML = total;
-        document.getElementById("totalForForm").setAttribute("value", total);
-        console.log(document.getElementById('totalForForm'));
+        document.getElementById("total").innerHTML = Number(total.toFixed(2));
+        document.getElementById("totalForForm").setAttribute("value", Number(total.toFixed(2)));
     }        
 }
 

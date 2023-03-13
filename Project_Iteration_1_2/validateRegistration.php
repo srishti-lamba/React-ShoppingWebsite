@@ -73,7 +73,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "mysql";
+        $dbname = "cps630";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
         $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$password1')";

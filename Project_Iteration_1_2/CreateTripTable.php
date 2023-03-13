@@ -12,6 +12,7 @@
         tripId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         source VARCHAR(50) not null,
         destination VARCHAR(50) not null,
+        distance DECIMAL(12,2) not null,
         truckId INT(6) REFERENCES Trucks(truckId));";
     
     //Drop

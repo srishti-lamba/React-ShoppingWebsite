@@ -8,7 +8,7 @@
 
         $conn = new mysqli($servername, $username, $password, $dbname);
 
-        $query = "SELECT locationAddress FROM BranchLocation;";
+        $query = "SELECT locationAddress FROM BranchLocations;";
 
         try {
             $result = $conn->query($query);

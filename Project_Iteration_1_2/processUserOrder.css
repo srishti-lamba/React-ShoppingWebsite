@@ -26,6 +26,11 @@ main {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
+.errorMessage {
+    color:red;
+    display: none;
+}
+
 .selectBranchContainer {
     margin-top: 7px;
     display: flex;
@@ -41,7 +46,7 @@ main {
     padding: 5px;
 }
 
-.locationSelector {
+.locationSelector, .selectPaymentOption {
     margin-top: 5px;
     background-color: #232F3E;
     padding: 10px;
@@ -65,7 +70,7 @@ label {
     margin-bottom: 10px;
 }
 
-#destination {
+#destination, #cardNumber {
     height: 36px;
     width: 449px;
     border-radius: 4px;
@@ -73,6 +78,7 @@ label {
     margin-top: 5px;
     border: 3px solid #232F3E;
 }
+
 
 #mapErrMsg{
     color: red;
