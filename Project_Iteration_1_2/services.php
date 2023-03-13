@@ -14,17 +14,17 @@
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/3081/3081648.png">
                 <h2 class="center">Secure<br>Online Shopping</h2>
-                <p class="description center">We provide convenient online shopping services using our 
-                customer-friendly service web application. Customers can register for an account, sign-in, 
-                select items, and drag them to their shopping cart.</p>
+                <p class="description center">Shop from the comfort of your own home! We provide convenient online shopping 
+                    services using our customer-friendly service web application. Customers can register for an account, sign-in, 
+                    select items, and drag them to their shopping cart. Check out our new collection from the furniture department!</p>
                 <p class="redirect center"><a href="./home.php">Shop Now</a></p>
             </div>
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/2203/2203124.png">
                 <h2 class="center">Fast and<br>Convenient Delivery</h2>
                 <p class="description center">We offer eco-friendly and fast delivery services within 1-3 days. Customers can 
-                    select a branch location, date and time for delivery, and a destination for delivery. Before you 
-                    know it, your order will be ready on the front of your doorstep.</p>
+                    select a branch location, date and time for delivery, and a destination for delivery. All you need to 
+                    do is review and confirm your purchase. Before you know it, your order will be ready on the front of your doorstep.</p>
                 <p class="redirect center"><a href="./processUserOrder.php">Go to Cart</a></p>
             </div>
             <div class="card">
@@ -33,7 +33,7 @@
                 <p class="description center">Looking for a professional to assemble your new furniture? We offer professional 
                     services for purchases bought from our furniture department. After purchasing your item, feel free to contact 
                     one of our customer service representatives to book an appointment.</p>
-                <p class="redirect center"><a href="./aboutus.php">Contact Us</a></p>
+                <p class="redirect center"><a href="./aboutus.php">Meet Our Team</a></p>
             </div>
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/9431/9431220.png">

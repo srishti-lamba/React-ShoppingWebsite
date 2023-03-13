@@ -57,5 +57,5 @@ h2 {
 
 .redirect {
     color: blue;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: underline;
 }
