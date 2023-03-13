@@ -5,24 +5,44 @@
     <!--<link href="css/styles.css" rel="stylesheet">-->
     <style>
         body {
-            background-color: #86cceb;
+            background-color: #E2F9FB;
+            font-family: Arial;
         }
         table {
             border: 1px solid black;
             margin-top: 10px;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px black
+        }
+        tr {
+            margin-top: 50px;
+            background-color: #A9BBBC;
         }
         td {
             border: 1px solid black;
             padding: 10px;
+            background-color: white;
         }
+            td:hover {
+                background-color: #C6DADC;
+            }
         input {
             border-radius: 3px;
             border: none;
             padding: 5px;
+            box-shadow: 0px 0px 3px 0px black
+        }
+        a {
+            color: black;
+            font-weight: 700;
+            text-decoration: none;
         }
     </style>
     <script src="angular.min.js"></script>
     <script>
+        var myScope;
         var myapp = angular.module('demo', []);
         // notice that our callback function is passed the $http parameter.
         // parameters are injected by the AngularJS system "behind-the-scenes"
@@ -42,13 +62,54 @@
 
         myapp.controller('myController', function ($scope)
         {
+            $scope.sortField = 'name';
+            $scope.reverse = false;
+            myScope = $scope;
+
             $scope.countries = 
                 [
-                { name: 'Belgium', population: '22277766', capital: 'Brussels' },
-                { name: 'Belarus', population: '11443876', capital: 'Minsk' },
-                { name: 'Serbia', population: '7543987', capital: 'Belgrade' }
+                { name: 'Belgium', population: 22277766, capital: 'Brussels' },
+                { name: 'Belarus', population: 11443876, capital: 'Minsk' },
+                { name: 'Serbia', population: 7543987, capital: 'Belgrade' }
                 ];
         });
+
+        function sortChanged(newSort)
+        {
+            var coHe = document.getElementById("countryHeader");
+            var poHe = document.getElementById("populationHeader");
+            var caHe = document.getElementById("capitalHeader");
+
+            var coIm = document.getElementById("countryImg");
+            var poIm = document.getElementById("populationImg");
+            var caIm = document.getElementById("capitalImg");
+
+            var downArrow = "https://sman1tambunutara.sch.id/assets/icon/ionicons-2.0.1/png/512/arrow-down-b.png";
+            var upArrow = "http://www.innovationinfo.org/dists/ionicons/png/512/arrow-up-b.png";
+
+            coIm.src = "";
+            poIm.src = "";
+            caIm.src = "";
+
+            coHe.style.textDecoration = "none";
+            poHe.style.textDecoration = "none";
+            caHe.style.textDecoration = "none";
+
+            switch (newSort) {
+                case 'name':
+                    myScope.reverse == false ? coIm.src = upArrow : coIm.src = downArrow;
+                    coHe.style.textDecoration = "underline";
+                    break;
+                case 'population':
+                    myScope.reverse == false ? poIm.src = upArrow : poIm.src = downArrow;
+                    poHe.style.textDecoration = "underline";
+                    break;
+                case 'capital':
+                    myScope.reverse == false ? caIm.src = upArrow : caIm.src = downArrow;
+                    caHe.style.textDecoration = "underline";
+                    break;
+            }
+        }
     </script>
 </head>
 <body ng-controller="myController">
@@ -59,18 +120,21 @@
     <table>
         <tr>
             <th>
-                <a href="" ng-click="sortField='name'; reverse=!reverse">
+                <a id="countryHeader" href="" ng-click="sortField='name'; reverse=!reverse;" onclick="sortChanged('name');">
                     Country
+                    <img id="countryImg" height="10" />
                 </a>
             </th>
             <th>
-                <a href="" ng-click="sortField='population'; reverse=!reverse">
+                <a id="populationHeader" href="" ng-click="sortField='population'; reverse=!reverse;" onclick="sortChanged('population');">
                     Population
+                    <img id="populationImg" height="10"/>
                 </a>
             </th>
             <th>
-                <a href="" ng-click="sortField='capital'; reverse=!reverse">
+                <a id="capitalHeader" href="" ng-click="sortField='capital'; reverse=!reverse;" onclick="sortChanged('capital');">
                     Capital
+                    <img id="capitalImg" height="10"/>
                 </a>
             </th>
         </tr>
