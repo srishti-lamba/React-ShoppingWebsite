@@ -180,8 +180,6 @@
         }
     </script>
     <body>
-        <p>temp login (xammp apache and mysql needed):</p>
-        <p>User: john_smith<br>pass: 1234</p>
         <article class="company-info">
             <h1>SMART CUSTOMER SERVICES</h1>
             <p>Smart Customer Services (SCS) is an online system that aims to plan for smart green trips inside the city
@@ -235,5 +233,7 @@
                 </div>
             </main>
         </div>
+        <p>temp login (xammp apache and mysql needed):</p>
+        <p>User: john_smith<br>pass: 1234</p>
     </body>
 </html>
