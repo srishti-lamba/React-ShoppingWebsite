@@ -23,8 +23,8 @@
               VALUES('John Smith', '4161234567', 'john.smith@gmail.com', '258 Avro Rd', 'L6A1X8', 'john_smith', '1234') ";
     
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try {
