@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -168,11 +171,23 @@ body {
     margin-left: 10px;
 }
 
+.company-info {
+    background-color: white;
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.25em;
+    margin: 2% 5% 0% 5%;
+}
+
 img {
     width: 240px;
     height: 116px;
 }
 
+h1, h2 {
+    font-family: 'Abril Fatface', serif;
+}
 
 @media only screen and (max-width: 1850px) {
     .products-flex{
