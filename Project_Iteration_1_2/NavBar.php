@@ -61,7 +61,7 @@
                     <li><a href="./home.php">Home</a></li>
                     <li><a href="./aboutus.php">About us</a></li>
                     <li><a href="./aboutus.php">Contact us</a></li>
-                    <li><a href="#">Services</a></li>
+                    <li><a href="./services.php">Types of Services</a></li>
                 </ul>
             </nav>
             <ul class="right">
