@@ -61,7 +61,7 @@
                 <ul>
                     <li><a href="./home.php"><i class="fa-solid fa-house"></i> HOME</a></li>
                     <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
-                    <li><a href="./aboutus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
+                    <li><a href="./contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
                     <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
                 </ul>
             </nav>
