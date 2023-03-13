@@ -30,11 +30,11 @@ h1 {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin: 15px;
     max-width: 320px;
-    max-height: 500px;
+    max-height: 600px;
 }
 
 img {
-    height: 30%;
+    height: 20%;
     margin: auto;
     display: block;
     margin-bottom: 25px;
@@ -46,15 +46,16 @@ h2 {
     margin-bottom: 30px;
 }
 
-.bio {
+.description {
     min-height: 110px;
-}
-
-.contact {
-    margin-top: 18px;
-    color: gray;
+    padding: 5%;
 }
 
 .center{
     text-align: center;
+}
+
+.redirect {
+    color: blue;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
