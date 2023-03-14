@@ -34,6 +34,7 @@
                         <div id="mapErrMsg"><p>Error: there is currently no known route for this address!</p></div>
 
                         <div id="distanceMsg"><p>Estimated Distance: </p><p id="distanceVal">23</p></div>
+                        <input id="distanceValForForm" name="distanceVal" style="display: none;" value="0" type="text" />
                         <div>
                             <label for="deliveryDate">Delivery Date</label>
                             <input id="deliveryDate" name="deliveryDate" type="date"/>
@@ -53,7 +54,7 @@
                             <option value="credit">Credit</option>
                         </select>
                         <label for="ccn">Card Number:</label>
-                        <input id="cardNumber" name="cardNumber" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+                        <input id="cardNumber" name="cardNumber" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxxxxxxxxxxxxxx">
                     </section>
                 </main>
                 <aside>

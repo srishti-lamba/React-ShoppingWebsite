@@ -14,7 +14,7 @@
         deliveryDate DATE,
         deliveryTime TIME,
         totalPrice DECIMAL(6,2) UNSIGNED NOT NULL,
-        paymentCode INT(6) UNSIGNED,
+        paymentCode INT(19) UNSIGNED,
         user_id INT(6) REFERENCES Users(user_id),
         tripId INT(6) REFERENCES Trips(tripId),
         receiptId INT(6) UNSIGNED);";

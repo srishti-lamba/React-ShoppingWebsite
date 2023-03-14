@@ -1,6 +1,10 @@
 <?php 
     require("./NavBar.php");
     require("./CreateAndPopulateItemsTable.php");
+
+    if(isset($_SESSION['orderId'])) {
+        unset($_SESSION['orderId']);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -178,6 +182,14 @@
             $("#total").html("0.00");
             localStorage.removeItem('shoppinglist')
         }
+
+        function submitForm() {
+            if(localStorage.getItem('shoppinglist') === null) {
+                $(".shoppingCartErr").css("display", "block");
+            } else {
+                $('form').submit();
+            }
+        }
     </script>
     <body>
         <p>temp login (xammp apache and mysql needed):</p>
@@ -221,8 +233,9 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <p class="shoppingCartErr" style="color: red; display:none; text-align:center;">Your shopping cart is empty</p>
                         <div class="checkOutBtnContainer"> 
-                            <input class="checkOutBtn" type="submit" value="Checkout" />
+                            <input class="checkOutBtn" type="button" onclick="submitForm()" value="Checkout" />
                             <input type="button" class="clearShoppingCartBtn" value="Clear Shopping Cart" onclick="clearShoppingCart()" />
                         </div>
                     </form>

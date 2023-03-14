@@ -91,6 +91,9 @@ function displayDirections(){
             $("#mapErrMsg").css("display", "none");
             $("#distanceMsg").css("display", "flex");
             $("#distanceVal").text(result.routes[0].legs[0].distance.text);
+            //let distanceValForForm = document.getElementById("distanceValForForm");
+            //distanceValForForm.setAttribute("value", "hello");
+            $("#distanceValForForm").val(result.routes[0].legs[0].distance.text);
         }
         else {
             $("#mapErrMsg").css("display", "block");
