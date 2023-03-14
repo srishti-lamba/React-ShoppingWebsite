@@ -18,11 +18,12 @@
         $row = $result->fetch_assoc();
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $row['userName'];
-        $_SESSION['userId'] = $row['User_id'];
+        $_SESSION['userId'] = $row['user_id'];
         $_SESSION['failedLogin'] = false;
     }
     else{
         $_SESSION['failedLogin'] = true;
     }
     header('Location: ' . $_SERVER['HTTP_REFERER']);
+    //header('Location: http://localhost/CPS630-Project-Iteration-1_2/home.php')
 ?>

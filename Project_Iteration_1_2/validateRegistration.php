@@ -24,6 +24,7 @@
     function test_special_char($data, $varName){
         if (preg_match('/[\'^£$%&*()}{#~?><>,|=_+¬-]/', $data)){
             $GLOBALS['var'] = $varName . " cannot contain special characters!";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             return true;
         }
         return false;
