@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +7,8 @@
 }
 
 body{
-    background-color: #e3e9f7;
+    background-color: #EDF1D6;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .formContainer{
@@ -48,7 +51,7 @@ main {
 
 .locationSelector, .selectPaymentOption {
     margin-top: 5px;
-    background-color: #232F3E;
+    background-color: #8D7B68;
     padding: 10px;
     color: white;
     font-weight: 600;
@@ -63,7 +66,7 @@ label {
 
 .selectBranchHeader{
     align-self: flex-start;
-    border-bottom: 2px solid #e3e9f7;
+    border-bottom: 2px solid #EDF1D6;
     width: 95%;
     margin: auto;
     font-size: 25px;
@@ -76,7 +79,7 @@ label {
     border-radius: 4px;
     margin-bottom: -5px;
     margin-top: 5px;
-    border: 3px solid #232F3E;
+    border: 3px solid #8D7B68;
 }
 
 
@@ -107,7 +110,7 @@ label {
 /*Payment Section*/
 .paymentContainer h1{
     font-weight: 600;
-    border-bottom: 2px solid #e3e9f7;
+    border-bottom: 2px solid #EDF1D6;
     width: 95%;
     margin: auto;
     font-size: 25px;
@@ -130,7 +133,7 @@ aside {
 }
 
 aside h1{
-    border-bottom: 2px solid #e3e9f7;
+    border-bottom: 2px solid #EDF1D6;
     margin-bottom: 10px;
     font-size: 30px;
 }
@@ -157,7 +160,7 @@ td {
 
 .submitContainer > input {
     padding: 10px 20px 10px 20px;
-    background-color: #232F3E;
+    background-color: #8D7B68;
     border: none;
     color: white;
     cursor:pointer;

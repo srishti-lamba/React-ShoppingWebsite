@@ -192,8 +192,12 @@
         }
     </script>
     <body>
-        <p>temp login (xammp apache and mysql needed):</p>
-        <p>User: john_smith<br>pass: 1234</p>
+        <div class="banner">
+            <article class="company-info">
+                <h1>SMART CUSTOMER SERVICES</h1>
+                <p>- Furniture Department -</p>
+            </article>
+        </div>
         <div class="product-container">
             <h1 class="center">FURNITURE</h1>
             <main class="wrapper">
@@ -242,5 +246,7 @@
                 </div>
             </main>
         </div>
+        <p>temp login (xammp apache and mysql needed):</p>
+        <p>User: john_smith<br>pass: 1234</p>
     </body>
 </html>
