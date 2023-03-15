@@ -13,8 +13,7 @@
         source VARCHAR(50) not null,
         destination VARCHAR(50) not null,
         distance VARCHAR(20) not null,
-        truckId INT(6) REFERENCES Trucks(truckId),
-        price FLOAT(2) not null);";
+        truckId INT(6) REFERENCES Trucks(truckId));";
     
     //Drop
     try {$conn-> query($queryDrop);}
