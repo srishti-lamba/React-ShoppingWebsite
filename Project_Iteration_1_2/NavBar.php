@@ -35,9 +35,15 @@
         $('#loginWindow').css({"display": 'block'});
     }
 
+    function openSearch() {
+        $('#overlay').css({"display": 'block'});
+        $('#searchWindow').css({"display": 'block'});
+    }
+
     function toggleOffOverlay(){
         $('#overlay').css({"display": 'none'});
         $('#loginWindow').css({"display": 'none'});
+        $('#searchWindow').css({"display": 'none'});
     }
 
     function displayLoginError(){
@@ -53,6 +59,10 @@
             $("#loginForm").submit();
         }
     }
+
+    function submitSearch() {
+        $("#searchForm").submit();
+    }
     </script>
     <body>
         <header>
@@ -63,6 +73,7 @@
                     <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
                     <li><a href="./contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
                     <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
+                    <li class="searchLbl" onclick='openSearch()'><i class="fa-solid fa-magnifying-glass"></i> SEARCH</li>
                 </ul>
             </nav>
             <ul class="right">
@@ -79,7 +90,11 @@
                 ?>
             </ul>
         </header>
+
+        <!-- Screen Dim -->
         <div id="overlay" onclick="toggleOffOverlay()"></div>
+
+        <!-- Login -->
         <div id="loginWindow">
             <form id="loginForm" action="./login.php" method="POST">
                 <h1>Login</h1>
@@ -90,6 +105,21 @@
                 <button class="submit" type="button" name="login" value="Login" onclick="submitLogin()">Login</button>
             </form>
         </div>
+
+        <!-- Search -->
+        <div id="searchWindow">
+            <form id="searchForm" action="./search.php" method="POST">
+                <h1>Search</h1>
+                <p>Search user orders</p>
+                <label for="userid">User-ID:</label>
+                <input type="text" name="userid" id="userid"><br>
+                <label for="orderid">Order-ID:</label>
+                <input type="text" name="orderid" id="orderid">
+                <p id="errMsg">No such order has been placed.</p>
+                <button class="searchBtn" type="button" name="search" value="Search" onclick="submitSearch()">Search</button>
+            </form>
+        </div>
+
     </body>
     <?php 
         if(isset($_SESSION['failedLogin']) && $_SESSION['failedLogin'] == true){
