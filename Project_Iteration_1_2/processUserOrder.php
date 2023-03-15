@@ -26,21 +26,31 @@
                                 echo "<select id=\"selectLocation\" class=\"locationSelector\" name=\"location\">";
                                 $result = fetchLocations();
                                 while($row = $result->fetch_assoc()) {
-                                    echo "<option value=\"" . $row['locationAddress'] . "\">" . $row['locationAddress'] . "</option>";
+                                    $locOption = "<option value=\"" . $row['locationAddress'] . "\"";
+                                    if ((isset($_SESSION['order-location'])) && ($row['locationAddress'] == $_SESSION['order-location']))
+                                        { $locOption = $locOption . " selected";}
+                                    $locOption = $locOption . ">" . $row['locationAddress'] . "</option>";
+                                    echo $locOption;
                                 }
-                                echo "</select>"
+                                echo "</select>";                                
                             ?>
-                        <input id="destination" name="destination" type="text">
+                        <input id="destination" name="destination" type="text" value="<?php 
+                            if(isset($_SESSION['order-destination'])){
+                                echo $_SESSION['order-destination'];}?>">
                         <div id="mapErrMsg"><p>Error: there is currently no known route for this address!</p></div>
 
                         <div id="distanceMsg"><p>Estimated Distance: </p><p id="distanceVal">23</p></div>
                         <input id="distanceValForForm" name="distanceVal" style="display: none;" value="0" type="text" />
                         <div>
                             <label for="deliveryDate">Delivery Date</label>
-                            <input id="deliveryDate" name="deliveryDate" type="date"/>
+                            <input id="deliveryDate" name="deliveryDate" type="date" value="<?php 
+                            if(isset($_SESSION['order-date'])){
+                                echo $_SESSION['order-date'];}?>"/>
 
                             <label for="deliveryTime">Delivery Time</label>
-                            <input id="deliveryTime" name="deliveryTime" type="time" min="09:00" max="18:00"/>
+                            <input id="deliveryTime" name="deliveryTime" type="time" min="09:00" max="18:00" value="<?php 
+                            if(isset($_SESSION['order-time'])){
+                                echo $_SESSION['order-time'];}?>"/>
                         </div>
 
                         <!-- <input name='total' value="0" style="display:none" id="totalForForm"/> -->
@@ -54,7 +64,9 @@
                             <option value="credit">Credit</option>
                         </select>
                         <label for="ccn">Card Number:</label>
-                        <input id="cardNumber" name="cardNumber" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxxxxxxxxxxxxxx">
+                        <input id="cardNumber" name="cardNumber" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxxxxxxxxxxxxxx" value="<?php 
+                            if(isset($_SESSION['order-cardNumber'])){
+                                echo $_SESSION['order-cardNumber'];}?>">
                     </section>
                 </main>
                 <aside>

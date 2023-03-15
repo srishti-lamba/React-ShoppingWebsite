@@ -1,4 +1,13 @@
 <?php
+
+    session_start();
+    //Set Session Variables to repopulate form on failure
+    $_SESSION['order-location'] = $_POST['location'];
+    $_SESSION['order-destination'] = $_POST['destination'];
+    $_SESSION['order-date'] = $_POST['deliveryDate'];
+    $_SESSION['order-time'] = $_POST['deliveryTime'];
+    $_SESSION['order-cardNumber'] = $_POST['cardNumber'];    
+
     include('./NavBar.php');
     $warehouse = $_POST['location'];
     $destination = $_POST['destination'];
