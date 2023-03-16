@@ -63,6 +63,27 @@
     function submitSearch() {
         $("#searchForm").submit();
     }
+
+    function displaySearch(resultHtml) {
+        openSearch();
+        var tableHtml = 
+        `<table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Order Total</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            </tbody>`
+                + resultHtml +
+            `</tbody>
+        </table>`;
+        $("#searchTable").html(tableHtml);
+    }
+
     </script>
     <body>
         <header>
@@ -118,6 +139,7 @@
                 <p id="errMsg">No such order has been placed.</p>
                 <button class="searchBtn" type="button" name="search" value="Search" onclick="submitSearch()">Search</button>
             </form>
+            <div id="searchTable"></div>
         </div>
 
     </body>
@@ -125,6 +147,11 @@
         if(isset($_SESSION['failedLogin']) && $_SESSION['failedLogin'] == true){
             echo '<script type="text/javascript">displayLoginError();</script>';
             $_SESSION['failedLogin'] = false;
+        }
+
+        if(isset($_SESSION['search-mode']) && $_SESSION['search-mode'] == true){
+            echo '<script type="text/javascript">displaySearch("' . $_SESSION['search-result'] . '");</script>';
+            $_SESSION['search-mode'] = false;
         }
     ?>
 </html>

@@ -15,9 +15,15 @@
         deliveryTime TIME,
         totalPrice DECIMAL(6,2) UNSIGNED NOT NULL,
         paymentCode INT(19) UNSIGNED,
-        user_id INT(6) REFERENCES Users(user_id),
+        userId INT(6) REFERENCES Users(user_id),
         tripId INT(6) REFERENCES Trips(tripId),
-        receiptId INT(6) UNSIGNED);";
+        receiptId INT(6) UNSIGNED,
+        orderStatus VARCHAR(50) NOT NULL DEFAULT 'Processing');";
+
+    //          1234567890
+    //Status:   Processing
+    //          In Transit
+    //          Delivered
     
     //Drop
     try {$conn-> query($queryDrop);}
@@ -26,7 +32,7 @@
     //Create + Insert
     try {
         $conn->query($queryCreate);
-        echo "Executed Query";
+        echo ("<script>console.log(\"Order table created.\")</script>");
     }
     catch (mysqli_sql_exception $exception)
     { echo("Error on Orders:" . $conn->error); }

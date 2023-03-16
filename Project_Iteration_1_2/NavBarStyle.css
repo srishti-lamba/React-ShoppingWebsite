@@ -147,6 +147,7 @@ a {
     padding: 20px 40px;
     background-color: #675a4c;
     width: 50%;
+    top: 25%;
     left: 25%;
     display: none;
     color: white;
@@ -155,6 +156,7 @@ a {
     #searchWindow input[type = "text"] {
         border: 0;
         background: #847361;
+        color: white;
         margin-top: 20px;
         text-align: left;
         padding: 14px 10px;
@@ -188,9 +190,14 @@ a {
     margin: 20px auto 0px auto;
     width: 100px;
     padding: 10px 0;
-    box-shadow: 0 0 5px;
     color: #2c2620;
+    transition: box-shadow .3s;
 }
+
+    .searchBtn:hover {
+        box-shadow: 0 0 10px;
+        transition: box-shadow .3s;
+    }
 
 .submit {
     border: 0;
