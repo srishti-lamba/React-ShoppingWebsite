@@ -17,10 +17,6 @@
     $_SESSION['search-userid'] = $userID;
     $_SESSION['search-orderid'] = $orderID;
 
-    // Blanks
-    if ($userID == "") { $userID = "*"; }
-    if ($orderID == "") { $orderID = "*"; }
-
     // Database connection setup
     $servername = "localhost";
     $username = "root";
@@ -28,7 +24,20 @@
     $dbname = "cps630";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
-    $sql = "SELECT * FROM Orders WHERE (userId = '$userID' AND orderId = '$orderID')";
+    $sql = "";
+    
+    if (($userID == "") && ($orderID == "")) {
+        $sql = "SELECT * FROM Orders";
+    }
+    else if (($userID <> "") && ($orderID == "")) {
+        $sql = "SELECT * FROM Orders WHERE (userId = '$userID')";
+    }
+    else if (($userID == "") && ($orderID <> "")) {
+        $sql = "SELECT * FROM Orders WHERE (orderId = '$orderID')";
+    }
+    else {
+        $sql = "SELECT * FROM Orders WHERE (userId = '$userID' AND orderId = '$orderID')";
+    }
 
     // Connecting
     $resultSql = "";

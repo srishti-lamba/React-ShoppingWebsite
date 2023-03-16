@@ -136,11 +136,11 @@
             <form id="searchForm" action="./search.php" method="POST">
                 <h1>Search</h1>
                 <p>Search user orders</p>
-                <label for="userid">User-ID:</label>
+                <label for="userid">User ID:</label>
                 <input type="text" name="userid" id="userid" value="<?php 
                             if(isset($_SESSION['search-userid'])){
                                 echo $_SESSION['search-userid'];}?>"><br>
-                <label for="orderid">Order-ID:</label>
+                <label for="orderid">Order ID:</label>
                 <input type="text" name="orderid" id="orderid" value="<?php 
                             if(isset($_SESSION['search-orderid'])){
                                 echo $_SESSION['search-orderid'];}?>">
