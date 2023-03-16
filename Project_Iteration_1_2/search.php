@@ -13,6 +13,10 @@
     $userID = test_input($_POST["userid"]);
     $orderID = test_input($_POST["orderid"]);
 
+    // Put in session
+    $_SESSION['search-userid'] = $userID;
+    $_SESSION['search-orderid'] = $orderID;
+
     // Blanks
     if ($userID == "") { $userID = "*"; }
     if ($orderID == "") { $orderID = "*"; }

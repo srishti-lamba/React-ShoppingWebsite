@@ -72,9 +72,9 @@
                 <tr>
                     <th>User ID</th>
                     <th>Order ID</th>
-                    <th>Order Date</th>
-                    <th>Order Total</th>
-                    <th>Order Status</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             </tbody>`
@@ -83,11 +83,13 @@
         </table>`;
         $("#searchTable").html(tableHtml);
     }
-
     </script>
+
     <body>
         <header>
             <div class="logo">System Logo</div>
+
+            <!-- Navigation -->
             <nav class="nav navbar">
                 <ul>
                     <li><a href="./home.php"><i class="fa-solid fa-house"></i> HOME</a></li>
@@ -97,6 +99,8 @@
                     <li class="searchLbl" onclick='openSearch()'><i class="fa-solid fa-magnifying-glass"></i> SEARCH</li>
                 </ul>
             </nav>
+
+            <!-- Log in -->
             <ul class="right">
                 <?php
                     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
@@ -109,7 +113,7 @@
                               <li><button type='button' class='login' onclick='openLogin()'>Login</button></li>";
                     }
                 ?>
-            </ul>
+                </ul>
         </header>
 
         <!-- Screen Dim -->
@@ -133,9 +137,13 @@
                 <h1>Search</h1>
                 <p>Search user orders</p>
                 <label for="userid">User-ID:</label>
-                <input type="text" name="userid" id="userid"><br>
+                <input type="text" name="userid" id="userid" value="<?php 
+                            if(isset($_SESSION['search-userid'])){
+                                echo $_SESSION['search-userid'];}?>"><br>
                 <label for="orderid">Order-ID:</label>
-                <input type="text" name="orderid" id="orderid">
+                <input type="text" name="orderid" id="orderid" value="<?php 
+                            if(isset($_SESSION['search-orderid'])){
+                                echo $_SESSION['search-orderid'];}?>">
                 <p id="errMsg">No such order has been placed.</p>
                 <button class="searchBtn" type="button" name="search" value="Search" onclick="submitSearch()">Search</button>
             </form>

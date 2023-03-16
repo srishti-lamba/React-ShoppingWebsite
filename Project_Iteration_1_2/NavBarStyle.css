@@ -199,6 +199,22 @@ a {
         transition: box-shadow .3s;
     }
 
+#searchTable {
+    margin: 20px auto 0px auto;
+    display: block;
+    width: fit-content;
+}
+
+    #searchTable table {
+        border-collapse: collapse;
+    }
+
+    #searchTable th {
+        border: 1px solid white;
+        background-color: #847361;
+        padding: 10px;
+    }
+
 .submit {
     border: 0;
     background: none;

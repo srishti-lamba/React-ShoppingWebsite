@@ -1,5 +1,5 @@
 <?php
-
+    //ob_start();
     session_start();
     //Set Session Variables to repopulate form on failure
     $_SESSION['order-location'] = $_POST['location'];
@@ -109,13 +109,11 @@
 
             $_SESSION['orderId'] = $orderId;
 
-            header('Location: ' . "http://localhost/CPS630-Project-Iteration-1_2/purchaseNotification.php");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
 
         } catch(mysqli_sql_exception $e) {
             echo $conn->error;
         }
     }
-
-    
-
+    //ob_end_flush();
 ?>

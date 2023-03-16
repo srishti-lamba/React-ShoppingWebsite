@@ -20,7 +20,7 @@
     //Create + Insert
     try {
         $conn->query($queryCreate);
-        echo "Executed Query";
+        //echo "Executed Query";
     }
     catch (mysqli_sql_exception $exception)
     { echo("Error on Orders:" . $conn->error); }

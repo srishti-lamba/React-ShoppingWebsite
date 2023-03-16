@@ -30,7 +30,7 @@
     try {
         $conn->query($queryCreate);
         $conn->query($query1);
-        echo "Query executed successfully";
+        //echo "Query executed successfully";
 
     }
     catch(mysqli_sql_exception $exception)

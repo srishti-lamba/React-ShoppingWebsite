@@ -32,7 +32,7 @@
     //Create + Insert
     try {
         $conn->query($queryCreate);
-        echo ("<script>console.log(\"Order table created.\")</script>");
+        //echo ("<script>console.log(\"Order table created.\")</script>");
     }
     catch (mysqli_sql_exception $exception)
     { echo("Error on Orders:" . $conn->error); }
