@@ -49,7 +49,7 @@
         $resultHtml .= "<td>" . $row['userId'] . "</td>";
         $resultHtml .= "<td>" . $row['orderId'] . "</td>";
         $resultHtml .= "<td>" . $row['dateIssued'] . "</td>";
-        $resultHtml .= "<td>" . $row['totalPrice'] . "</td>";
+        $resultHtml .= "<td>$" . $row['totalPrice'] . "</td>";
         $resultHtml .= "<td>" . $row['orderStatus'] . "</td>";
 
         $resultHtml .= "</tr>";

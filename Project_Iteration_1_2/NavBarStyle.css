@@ -207,6 +207,7 @@ a {
 
     #searchTable table {
         border-collapse: collapse;
+        align-content: center;
     }
 
     #searchTable th {
@@ -214,6 +215,17 @@ a {
         background-color: #847361;
         padding: 10px;
     }
+
+    #searchTable td {
+        border: 1px solid white;
+        background-color: #9e8d7b;
+        padding: 10px;
+        text-align: center;
+    }
+
+        #searchTable td:hover {
+            background-color: #91806E;
+        }
 
 .submit {
     border: 0;
