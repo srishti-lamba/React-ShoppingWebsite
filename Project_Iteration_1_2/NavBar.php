@@ -28,8 +28,11 @@
         $(".sign-up").click(function(){
             window.location.href = "./register.php";
         });
-        $(".dbMaintain-options").mouseleave( function(){
+        $(".dbMaintain").mouseleave( function(){
             $(".dbMaintain-options").css("display", "none");
+        });
+        $(".dbMaintain-btn").mouseenter( function(){
+            $(".dbMaintain-options").css("display", "block");
         });
     });
 
@@ -118,7 +121,7 @@
                     <li class="searchLbl" onclick='openSearch()'><i class="fa-solid fa-magnifying-glass"></i> SEARCH</li>
 
                     <!-- Database Maintain Dropdown -->
-                    <li> 
+                    <li class="dbMaintain"> 
                         <div class="dbMaintain-btn" onclick="toggleDropdown()"><i class="fa-solid fa-screwdriver-wrench"></i> DB MAINTAIN</div>
                         <div class="dbMaintain-options">
                             <a href="./insertDB.php"><i class="fa-solid fa-plus"></i> Insert</a>
