@@ -28,17 +28,12 @@
         $(".sign-up").click(function(){
             window.location.href = "./register.php";
         });
+        $(".dbMaintain-options").mouseleave( function(){
+            $(".dbMaintain-options").css("display", "none");
+        });
     });
 
-    function openLogin() {
-        $('#overlay').css({"display": 'block'});
-        $('#loginWindow').css({"display": 'block'});
-    }
-
-    function openSearch() {
-        $('#overlay').css({"display": 'block'});
-        $('#searchWindow').css({"display": 'block'});
-    }
+    // Screen Dim
 
     function toggleOffOverlay(){
         $('#overlay').css({"display": 'none'});
@@ -46,9 +41,11 @@
         $('#searchWindow').css({"display": 'none'});
     }
 
-    function displayLoginError(){
-        openLogin();
-        $('#errMsg').css({"display": 'block'});
+    // Login
+
+    function openLogin() {
+        $('#overlay').css({"display": 'block'});
+        $('#loginWindow').css({"display": 'block'});
     }
 
     function submitLogin(){
@@ -58,6 +55,18 @@
         else{
             $("#loginForm").submit();
         }
+    }
+
+    function displayLoginError(){
+        openLogin();
+        $('#errMsg').css({"display": 'block'});
+    }
+
+    // Search
+
+    function openSearch() {
+        $('#overlay').css({"display": 'block'});
+        $('#searchWindow').css({"display": 'block'});
     }
 
     function submitSearch() {
@@ -83,6 +92,16 @@
         </table>`;
         $("#searchTable").html(tableHtml);
     }
+
+    // Dropdown
+
+    function toggleDropdown() {
+        if ( $(".dbMaintain-options").css("display") == "none" )
+            { $(".dbMaintain-options").css("display", "block"); }
+        else 
+            { $(".dbMaintain-options").css("display", "none"); }
+    }
+
     </script>
 
     <body>
@@ -97,6 +116,17 @@
                     <li><a href="./contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
                     <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
                     <li class="searchLbl" onclick='openSearch()'><i class="fa-solid fa-magnifying-glass"></i> SEARCH</li>
+
+                    <!-- Database Maintain Dropdown -->
+                    <li> 
+                        <div class="dbMaintain-btn" onclick="toggleDropdown()"><i class="fa-solid fa-screwdriver-wrench"></i> DB MAINTAIN</div>
+                        <div class="dbMaintain-options">
+                            <a href="./insertDB.php"><i class="fa-solid fa-plus"></i> Insert</a>
+                            <a href="./deleteDB.php"><i class="fa-solid fa-minus"></i> Delete</a>
+                            <a href="./selectDB.php"><i class="fa-solid fa-hand-pointer"></i> Select</a>
+                            <a href="./updateDB.php"><i class="fa-solid fa-pen"></i> Update</a>
+                        </div>
+                    </li>
                 </ul>
             </nav>
 
