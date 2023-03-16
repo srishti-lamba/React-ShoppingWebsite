@@ -77,7 +77,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            </tbody>`
+            <tbody>`
                 + resultHtml +
             `</tbody>
         </table>`;
@@ -159,6 +159,7 @@
 
         if(isset($_SESSION['search-mode']) && $_SESSION['search-mode'] == true){
             echo '<script type="text/javascript">displaySearch("' . $_SESSION['search-result'] . '");</script>';
+            //echo ("<script>console.log(\"" . $_SESSION['search-result'] . "\")</script>");
             $_SESSION['search-mode'] = false;
         }
     ?>

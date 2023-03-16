@@ -1,5 +1,5 @@
 <?php
-    //ob_start();
+    ob_start();
     session_start();
     //Set Session Variables to repopulate form on failure
     $_SESSION['order-location'] = $_POST['location'];
@@ -109,11 +109,11 @@
 
             $_SESSION['orderId'] = $orderId;
 
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: ' . substr($_SERVER['HTTP_REFERER'], 0, strrpos($_SERVER['HTTP_REFERER'], "/")) . '/home.php');
 
         } catch(mysqli_sql_exception $e) {
             echo $conn->error;
         }
     }
-    //ob_end_flush();
+    ob_end_flush();
 ?>

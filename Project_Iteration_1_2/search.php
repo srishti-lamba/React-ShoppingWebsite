@@ -28,7 +28,7 @@
     $dbname = "cps630";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
-    $sql = "SELECT * FROM Orders WHERE (userId = '$userID' AND `orderId` = '$orderID')";
+    $sql = "SELECT * FROM Orders WHERE (userId = '$userID' AND orderId = '$orderID')";
 
     // Connecting
     $resultSql = "";

@@ -4,6 +4,7 @@
     include('./CreateAndPopulateTruckTable.php');
     include('./CreateAndPopulateLocationsTable.php');
     include('./CreateTripTable.php');
+    include('./CreateOrderTable.php');
     // if(!isset($_SESSION['loggedin'])) {
     //     echo "<h2>You need to be logged in to purchase items</h2>";
     // }

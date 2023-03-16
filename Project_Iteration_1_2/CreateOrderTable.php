@@ -26,8 +26,8 @@
     //          Delivered
     
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try {
