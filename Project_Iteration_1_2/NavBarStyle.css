@@ -200,32 +200,64 @@ a {
     }
 
 #searchTable {
-    margin: 20px auto 0px auto;
+    margin: 20px auto 10px auto;
     display: block;
     width: fit-content;
 }
 
     #searchTable table {
-        border-collapse: collapse;
-        align-content: center;
+        border-collapse: separate;
+        border-spacing: 0px;
+        text-align: center;
     }
 
     #searchTable th {
-        border: 1px solid white;
+        border: 1px solid #c9c0b6;
         background-color: #847361;
         padding: 10px;
     }
 
     #searchTable td {
-        border: 1px solid white;
+        border: 1px solid #c9c0b6;
         background-color: #9e8d7b;
         padding: 10px;
-        text-align: center;
     }
 
         #searchTable td:hover {
             background-color: #91806E;
         }
+
+    #searchTable thead tr:first-of-type th:first-child {
+        border-top-left-radius: 10px;
+        border-left: 1.5px solid #c9c0b6;
+        overflow: hidden;
+    }
+
+    #searchTable thead tr:first-of-type th:last-child {
+        border-top-right-radius: 10px;
+        border-right: 1.5px solid #c9c0b6;
+        overflow: hidden;
+    }
+
+    #searchTable thead tr:first-of-type th {
+        border-top: 1.5px solid #c9c0b6;
+    }
+
+    #searchTable tbody tr:last-of-type td:first-child {
+        border-bottom-left-radius: 10px;
+        border-left: 1.5px solid #c9c0b6;
+        overflow: hidden;
+    }
+
+    #searchTable tbody tr:last-of-type td:last-child {
+        border-bottom-right-radius: 10px;
+        border-right: 1.5px solid #c9c0b6;
+        overflow: hidden;
+    }
+
+    #searchTable tbody tr:last-of-type td {
+        border-bottom: 1.5px solid #c9c0b6;
+    }
 
 .submit {
     border: 0;
