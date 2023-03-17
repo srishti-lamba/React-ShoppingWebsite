@@ -94,7 +94,7 @@
                 $colDisplay = $columnArray[$i][0];
                 $colSql = $columnArray[$i][1];
                 
-                if ($colDisplay == "Price") 
+                if (($colDisplay == "Price") || ($colDisplay == "Balance"))
                     { $resultHtml .= "<td>$" . $row[$colSql] . "</td>"; }
                 else if ($colDisplay == "Image URL") 
                     { $resultHtml .= "<td style='font-size: 0.75em'>" . $row[$colSql] . "</td>"; }
