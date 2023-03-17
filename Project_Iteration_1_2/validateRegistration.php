@@ -82,7 +82,9 @@
         
         session_unset();
         $_SESSION['register-success'] = "true";
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        //Redirct to home page
+        header("Location: ./home.php");
+        exit();
     }
 
     function validateForm(){
