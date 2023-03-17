@@ -12,35 +12,47 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
-        <!-- Error -->
-        <div class="errorMsg"></div>
+        <div id="pageBox">
+            <!-- Error -->
+            <div class="errorMsg"></div>
 
-        <!-- Table Name -->
-        <form id="tableNameForm" action="./dbMaintain.php" method="POST">
-            <label for="tableName">Table name:</label>
-            <select name="tableName" id="tableName">
-                <option value="select" disabled selected hidden>Select table name</option>
-                <option value="users">Users</option>
-                <option value="items">Items</option>
-                <option value="orders">Orders</option>
-                <option value="locations">Locations</option>
-                <option value="trucks">Trucks</option>
-                <option value="trips">Trips</option>
-            </select>
-        </form>
+            <!-- Table Name -->
+            <form id="tableNameForm" action="./dbMaintain.php" method="POST">
+                <label for="tableName">Table name:</label>
+                <select name="tableName" id="tableName">
+                    <option value="select" disabled selected hidden>Select table name</option>
+                    <option value="users">Users</option>
+                    <option value="items">Items</option>
+                    <option value="orders">Orders</option>
+                    <option value="locations">Locations</option>
+                    <option value="trucks">Trucks</option>
+                    <option value="trips">Trips</option>
+                </select>
+            </form>
 
-        <!-- Insert Columns -->
-        <form id="insertValuesForm" action="./dbMaintain.php" method="POST">
-            <label for"insertValues">Values to insert:</label>
-            <div id="insertValues"></div>
-        </form>
+            <!-- Insert Values -->
+            <form id="inputValuesForm" action="./dbMaintain.php" method="POST">
+                <hr>
+                <label for"inputValues">Values to insert:</label>
+                <div id="inputValues"></div>
+            </form>
 
-        <!-- Insert Query -->
-        <p id="insertQuery"></p>
+            <!-- Query Display -->
+            <p id="queryDisplay"></p>
 
-        <!-- Table View -->
-        <table id="tableView">
-        </table>
+            <!-- Submit Query -->
+            <form id="querySubmitForm" action="./dbMaintain.php" method="POST">
+                <input type="text" name="insertQuery" id="querySubmit" style="display: none">
+                <button id="querySubmitBtn" type="button" name="submit" onclick="submitQuery()">Run Query</button>
+            </form>
+
+            <!-- Table View -->
+            <div id="tableView">
+                <hr>
+                <p></p>
+                <table></table>
+            </div>
+        </div>
     </body>
 </html>
 
@@ -57,6 +69,7 @@
 
         $('.queryColumn input').change(function(){
             updateQuery();
+            $("#querySubmitForm").css("display", "block");
         });
 
     });
@@ -66,15 +79,18 @@
     }
 
     function displayTable(tableHtml) {
-        $("#tableView").html(tableHtml);
+        $("#tableView").css("display", "block");
+        $("#tableView table").html(tableHtml);
+        $("#tableView p").html(columnArray[0][0].toUpperCase() + " TABLE");
     }
 
-    function updateQueryInput() {
-        $("#insertQuery").html("Display: " + queryDisplay + "<br><br>SQL: ....... " + querySQL);
+    function updateQueryDisplay() {
+        //$("#queryDisplay").html("Display: " + queryDisplay + "<br><br>SQL: " + querySQL);
+        $("#queryDisplay").html(queryDisplay);
     }
 
     function displayColumns() {
-        $("#insertValuesForm>label").css("display", "block");;
+        $("#inputValuesForm").css("display", "block");
 
         if (columnArray != "") {
             $("#tableName option[value='select']").prop("selected", false);
@@ -89,7 +105,11 @@
                 resultHtml += `<input type='text' name='${value}' id='db-${value}' placeholder='Enter value'>`;
                 resultHtml += `</div>`;
             }
-            $("#insertValues").html(resultHtml);
+            $("#inputValues").html(resultHtml);
+        }
+
+        if ( $("#tableView table").width() > $('#tableView').parent().width()) {
+            $("#tableView table").css("width", "100%");
         }
     }
 
@@ -97,7 +117,7 @@
         if (columnArray != "") {
             queryDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`;
             querySQL = `INSERT INTO <div class="bold">${columnArray[0][1]}</div>`;
-            updateQueryInput();
+            updateQueryDisplay();
         }
     }
 
@@ -149,14 +169,11 @@
             queryDisplay += ");";
             querySQL += ");";
         }
+        updateQueryDisplay();
+    }
 
+    function submitQuery() {
 
-        //queryDisplay += columnArray[index][0];
-        //querySQL += columnArray[index][1];
-        //queryDisplay += ")";
-        //querySQL += ")";
-        //console.log( colInp.val() );
-        updateQueryInput();
     }
 
 </script>

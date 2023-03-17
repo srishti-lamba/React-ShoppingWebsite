@@ -1,17 +1,46 @@
 body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+    background-color: #EDF1D6;
 }
 
+#pageBox {
+    width: 68%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 25px;
+    min-width: 1100px;
+    background-color: #fff;
+    min-height: 100vh;
+    margin-bottom: 50px;
+}
+
+hr {
+    margin: 20px 0px;
+}
+
+.bold {
+    color: mediumseagreen;
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+/* ------------- */
+/* --- Table --- */
+/* ------------- */
+
 table {
-    margin: 1%;
+    margin: auto;
     display: block;
     width: fit-content;
     color: white;
     text-align: center;
     border-collapse: separate;
     border-spacing: 0px;
-    overflow: visible;
+    overflow: auto;
 }
 
     table th {
@@ -63,34 +92,40 @@ table {
         border-bottom: 1.5px solid #91806E;
     }
 
-.bold {
-    color: mediumseagreen;
-    display: inline;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-}
+/* ------------------ */
+/* --- Table Name --- */
+/* ------------------ */
 
 #tableName {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
+    border-radius: 5px;
     margin: 10px 10px 0px 0px;
+    background-color: #8D7B68;
+    color: white;
 }
 
     #tableName option {
         font-size: 16px;
         font-weight: 600;
+        background-color: #b3a698;
+        color: white;
     }
 
-#insertValuesForm > label, #tableNameForm > label, #insertQuery {
+/* -------------------- */
+/* --- Input Values --- */
+/* -------------------- */
+
+#inputValuesForm > label, #tableNameForm > label {
     margin: 10px 20px;
 }
 
-#insertValuesForm > label {
+#inputValuesForm {
     display: none;
 }
 
-#insertValues {
+#inputValues {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -101,7 +136,7 @@ table {
 .queryColumn {
     margin: 5px;
     color: white;
-    width: 15%;
+    width: 18%;
 }
 
     .queryColumn label {
@@ -110,7 +145,7 @@ table {
         font-weight: 600;
         width: 100%;
 
-        border: 1px solid #91806E;
+        border: none;
         background-color: #91806E;
         padding: 10px;
         
@@ -122,13 +157,17 @@ table {
         display: block;
         width: 100%;
 
-        border: 1px solid #b3a698;
+        border: none;
         background-color: #b3a698;
         padding: 10px;
 
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+
+        .queryColumn input:hover {
+            background-color: #A39586;
+        }
 
         .queryColumn input[type = "text"] {
             font-family: 'Montserrat', sans-serif;
@@ -137,3 +176,57 @@ table {
             font-weight: 600;
             text-align: center;
         }
+
+/* --------------------- */
+/* --- Query Display --- */
+/* --------------------- */
+
+#queryDisplay {
+    margin: 20px 0px 0px 0px;
+    text-align: center;
+}
+
+/* --------------------- */
+/* --- Query Submit --- */
+/* --------------------- */
+
+#querySubmitForm {
+    display: none;
+}
+
+#querySubmitBtn {
+    color: white;
+    background-color: #8D7B68;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 25px auto 0px auto;
+    padding: 10px;
+    display: block;
+    width: auto;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: box-shadow .3s;
+}
+
+    #querySubmitBtn:hover {
+        box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+        transition: box-shadow .3s;
+    }
+
+/* ------------------ */
+/* --- Table View --- */
+/* ------------------ */
+
+#tableView {
+    display: none;
+    margin-top: 30px;
+}
+
+    #tableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }
