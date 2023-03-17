@@ -35,5 +35,5 @@
         //echo ("<script>console.log(\"Order table created.\")</script>");
     }
     catch (mysqli_sql_exception $exception)
-    { echo("Error on Orders:" . $conn->error); }
+    { echo("<script>console.log('Error on Orders: $conn->error')</script>"); }
 ?>
