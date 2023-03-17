@@ -1,3 +1,8 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
 table {
     margin: 1%;
     display: block;
@@ -6,7 +11,6 @@ table {
     text-align: center;
     border-collapse: separate;
     border-spacing: 0px;
-    font-family: 'Montserrat', sans-serif;
     overflow: visible;
 }
 
@@ -57,3 +61,58 @@ table {
     table tbody tr:last-of-type td {
         border-bottom: 1.5px solid #91806E;
     }
+
+#insertValuesForm > label, #tableNameForm > label, #insertQuery {
+    margin: 10px 20px;
+}
+
+#insertValuesForm > label {
+    display: none;
+}
+
+#insertValues {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 1%;
+}
+
+#queryColumn {
+    margin: 5px;
+    color: white;
+    width: 15%;
+}
+
+    #queryColumn label {
+        text-align: center;
+        display: block;
+        font-weight: 600;
+        width: 100%;
+
+        border: 1px solid #91806E;
+        background-color: #91806E;
+        padding: 10px;
+        
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    #queryColumn input {
+        display: block;
+        width: 100%;
+
+        border: 1px solid #b3a698;
+        background-color: #b3a698;
+        padding: 10px;
+
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+        #queryColumn input[type = "text"] {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }

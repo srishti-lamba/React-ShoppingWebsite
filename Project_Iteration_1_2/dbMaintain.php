@@ -72,7 +72,7 @@
                 if ($colDisplay == "Price") 
                     { $resultHtml .= "<td>$" . $row[$colSql] . "</td>"; }
                 else if ($colDisplay == "Image URL") 
-                    { $resultHtml .= "<td style='font-size: 0.75em'>". $row[$colSql] . "</td>"; }
+                    { $resultHtml .= "<td style='font-size: 0.75em'>" . $row[$colSql] . "</td>"; }
                 else 
                     { $resultHtml .= "<td>" . $row[$colSql] . "</td>"; }
             }

@@ -28,6 +28,15 @@
             </select>
         </form>
 
+        <!-- Insert Columns -->
+        <form id="insertValuesForm" action="./dbMaintain.php" method="POST">
+            <label for"insertValues">Values to insert:</label>
+            <div id="insertValues"></div>
+        </form>
+
+        <!-- Insert Query -->
+        <p id="insertQuery"></p>
+
         <!-- Table View -->
         <table id="tableView">
         </table>
@@ -39,7 +48,6 @@
 
         $('#tableName').change(function(){
             $("#tableNameForm").submit();
-            //showErrorMessage("Value has changed to " + $("#tableName").val());
         });
 
     });
@@ -52,13 +60,47 @@
         $("#tableView").html(tableHtml);
     }
 
+    function showQueryInput() {
+        $("#insertQueryForm label:first-child").html("INSERT INTO");
+    }
+
 </script>
 
 <?php
+    $query = "";
+
+    function resetQuery() {
+        if(isset($_SESSION['db-columns']) && count($_SESSION['db-columns']) <> 0){
+            $query = "INSERT INTO " . $_SESSION['db-columns'][0][0];
+            echo '<script type="text/javascript">$("#insertQuery").html("' . $query . '");</script>';
+        }
+    }
+
+    function displayColumns() {
+        echo '<script type="text/javascript">$("#insertValuesForm>label").css("display", "block");</script>';
+
+        if(isset($_SESSION['db-columns']) && count($_SESSION['db-columns']) <> 0){
+            $columnArray = $_SESSION['db-columns'];
+            $resultHtml = "";
+            for ($i = 1; $i < count($columnArray); $i++) {
+                $display = $columnArray[$i][0];
+                $value = $columnArray[$i][1];
+
+                $resultHtml .= "<div id='queryColumn'>";
+                $resultHtml .= "<label for='$value'>$display</label>";
+                $resultHtml .= "<input type='text' name='$value' id='$value' placeholder='Enter value'>";
+                $resultHtml .= "</div>";
+            }
+            echo '<script type="text/javascript">$("#insertValues").html("' . $resultHtml . '");</script>';
+        }
+    }
+
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
         echo '<script type="text/javascript">displayTable(`' . $_SESSION['db-tableView'] . '`);</script>';
-        //echo '<script type="text/javascript">console.log(`tableView: ' . $_SESSION['db-tableView'] . '`);</script>';
+        echo '<script type="text/javascript">console.log(`tableView: ' . $_SESSION['db-tableView'] . '`);</script>';
         unset($_SESSION['db-tableView']);
+        resetQuery();
+        displayColumns();
     }
 
     if(isset($_SESSION['db-error']) && $_SESSION['db-error'] <> ""){
