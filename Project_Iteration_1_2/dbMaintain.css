@@ -63,6 +63,13 @@ table {
         border-bottom: 1.5px solid #91806E;
     }
 
+.bold {
+    color: mediumseagreen;
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
 #tableName {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;

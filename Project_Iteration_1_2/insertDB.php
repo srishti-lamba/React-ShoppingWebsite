@@ -70,7 +70,7 @@
     }
 
     function updateQueryInput() {
-        $("#insertQuery").html("Display: " + queryDisplay + "<br>SQL:........ " + querySQL);
+        $("#insertQuery").html("Display: " + queryDisplay + "<br><br>SQL: ....... " + querySQL);
     }
 
     function displayColumns() {
@@ -95,8 +95,8 @@
 
     function resetQuery() {
         if (columnArray != "") {
-            queryDisplay = `INSERT INTO ${columnArray[0][0]}`;
-            querySQL = `INSERT INTO ${columnArray[0][1]}`;
+            queryDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`;
+            querySQL = `INSERT INTO <div class="bold">${columnArray[0][1]}</div>`;
             updateQueryInput();
         }
     }
@@ -142,8 +142,8 @@
                     queryDisplay += ", ";
                     querySQL += ", ";
                 }
-                queryDisplay += "'" + valArr[i] + "'";
-                querySQL += "'" + valArr[i] + "'";
+                queryDisplay += `'<div class="bold">${valArr[i]}</div>'`;
+                querySQL += `'<div class="bold">${valArr[i]}</div>'`;
             }
 
             queryDisplay += ");";
