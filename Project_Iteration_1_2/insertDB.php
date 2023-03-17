@@ -1,5 +1,6 @@
 <?php
     require("./NavBar.php");
+    $columnArray = $_SESSION['db-columns'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -44,10 +45,18 @@
 </html>
 
 <script>
+    var columnArray = <?php echo json_encode($columnArray); ?>;
+    var queryDisplay = "";
+    var querySQL = "";
+
     $(document).ready(function() {
 
         $('#tableName').change(function(){
             $("#tableNameForm").submit();
+        });
+
+        $('.queryColumn input').change(function(){
+            updateQuery();
         });
 
     });
@@ -60,59 +69,113 @@
         $("#tableView").html(tableHtml);
     }
 
-    function showQueryInput() {
-        $("#insertQueryForm label:first-child").html("INSERT INTO");
+    function updateQueryInput() {
+        $("#insertQuery").html("Display: " + queryDisplay + "<br>SQL:........ " + querySQL);
+    }
+
+    function displayColumns() {
+        $("#insertValuesForm>label").css("display", "block");;
+
+        if (columnArray != "") {
+            $("#tableName option[value='select']").prop("selected", false);
+            $("#tableName option[value='" + columnArray[0][2] + "']").prop("selected", true);
+            var resultHtml = "";
+            for (let i = 1; i < columnArray.length; i++) {
+                let display = columnArray[i][0];
+                let value = columnArray[i][1];
+
+                resultHtml += `<div class='queryColumn'>`;
+                resultHtml += `<label for='${value}'>${display}</label>`;
+                resultHtml += `<input type='text' name='${value}' id='db-${value}' placeholder='Enter value'>`;
+                resultHtml += `</div>`;
+            }
+            $("#insertValues").html(resultHtml);
+        }
+    }
+
+    function resetQuery() {
+        if (columnArray != "") {
+            queryDisplay = `INSERT INTO ${columnArray[0][0]}`;
+            querySQL = `INSERT INTO ${columnArray[0][1]}`;
+            updateQueryInput();
+        }
+    }
+
+    function updateQuery() {
+        resetQuery();
+
+        var disColArr = [];
+        var sqlColArr = [];
+        var valArr = [];
+
+        $(".queryColumn").each(function(index, domEle) {
+            let value = $(this).children("input").val();
+
+            // Getting used columns
+            if (value != "") {
+                disColArr.push(columnArray[index+1][0]);
+                sqlColArr.push(columnArray[index+1][1]);
+                valArr.push(value);
+            }
+        });
+
+        if (disColArr.length > 0) {
+            // Part 1 of query
+            queryDisplay += "(";
+            querySQL += "(";
+
+            for (let i = 0; i < disColArr.length; i++) {
+                if (i != 0) {
+                    queryDisplay += ", ";
+                    querySQL += ", ";
+                }
+                queryDisplay += disColArr[i];
+                querySQL += sqlColArr[i];
+            }
+
+            // Part 2 of Query
+            queryDisplay += ") VALUES (";
+            querySQL += ") VALUES (";
+
+            for (let i = 0; i < valArr.length; i++) {
+                if (i != 0) {
+                    queryDisplay += ", ";
+                    querySQL += ", ";
+                }
+                queryDisplay += "'" + valArr[i] + "'";
+                querySQL += "'" + valArr[i] + "'";
+            }
+
+            queryDisplay += ");";
+            querySQL += ");";
+        }
+
+
+        //queryDisplay += columnArray[index][0];
+        //querySQL += columnArray[index][1];
+        //queryDisplay += ")";
+        //querySQL += ")";
+        //console.log( colInp.val() );
+        updateQueryInput();
     }
 
 </script>
 
 <?php
-    $query = "";
 
     function echoJavascript($script) {
         echo "<script type='text/javascript'>$script</script>";
     }
 
-    function resetQuery() {
-        if(isset($_SESSION['db-columns']) && count($_SESSION['db-columns']) <> 0){
-            $query = "INSERT INTO " . $_SESSION['db-columns'][0][0];
-            echoJavascript("$('#insertQuery').html('$query');");
-        }
-    }
-
-    function displayColumns() {
-        echoJavascript("$('#insertValuesForm>label').css('display', 'block');");
-
-        if(isset($_SESSION['db-columns']) && count($_SESSION['db-columns']) <> 0){
-            $columnArray = $_SESSION['db-columns'];
-            echoJavascript("$('#tableName option[value=\"select\"]').prop('selected', false);");
-            echoJavascript("$('#tableName option[value=\"" . $columnArray[0][2] . "\"]').prop('selected', true);");
-            $resultHtml = "";
-            for ($i = 1; $i < count($columnArray); $i++) {
-                $display = $columnArray[$i][0];
-                $value = $columnArray[$i][1];
-
-                $resultHtml .= "<div id=\'queryColumn\'>";
-                $resultHtml .= "<label for=\'$value\'>$display</label>";
-                $resultHtml .= "<input type=\'text\' name=\'$value\' id=\'$value\' placeholder=\'Enter value\'>";
-                $resultHtml .= "</div>";
-            }
-            echoJavascript("$('#insertValues').html('$resultHtml');");
-        }
-    }
-
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
         echoJavascript("displayTable(`" . $_SESSION['db-tableView'] . "`);");
-        echoJavascript("$('#insertQuery').html('$query');");
-        //echo '<script type="text/javascript">console.log(`tableView: ' . $_SESSION['db-tableView'] . '`);</script>';
+        echoJavascript("resetQuery();");
+        echoJavascript("displayColumns();");
         unset($_SESSION['db-tableView']);
-        resetQuery();
-        displayColumns();
     }
 
     if(isset($_SESSION['db-error']) && $_SESSION['db-error'] <> ""){
         echoJavascript("showErrorMessage(`" . $_SESSION['db-error'] . "`);");
-        //echo '<script type="text/javascript">console.log(`Error: ' . $_SESSION['db-error'] . '`);</script>';
         unset($_SESSION['db-error']);
     }
 ?>
