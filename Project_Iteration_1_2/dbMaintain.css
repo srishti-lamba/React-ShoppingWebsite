@@ -1,6 +1,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 table {
@@ -24,6 +24,7 @@ table {
         border: 1px solid #91806E;
         background-color: #b3a698;
         padding: 10px;
+        font-weight: 500;
     }
 
         table td:hover {
@@ -60,6 +61,18 @@ table {
 
     table tbody tr:last-of-type td {
         border-bottom: 1.5px solid #91806E;
+    }
+
+#tableName {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 10px 10px 0px 0px;
+}
+
+    #tableName option {
+        font-size: 16px;
+        font-weight: 600;
     }
 
 #insertValuesForm > label, #tableNameForm > label, #insertQuery {
@@ -113,6 +126,7 @@ table {
         #queryColumn input[type = "text"] {
             font-family: 'Montserrat', sans-serif;
             color: white;
+            font-size: 16px;
             font-weight: 600;
             text-align: center;
         }
