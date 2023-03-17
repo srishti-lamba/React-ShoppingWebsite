@@ -28,6 +28,14 @@ hr {
     text-underline-offset: 0.25em;
 }
 
+#errorMsg {
+    color: red;
+}
+
+#successMsg {
+    color: mediumseagreen;
+}
+
 /* ------------- */
 /* --- Table --- */
 /* ------------- */
@@ -72,10 +80,6 @@ table {
         overflow: hidden;
     }
 
-    table thead tr:first-of-type th {
-        border-top: 1.5px solid #91806E;
-    }
-
     table tbody tr:last-of-type td:first-child {
         border-bottom-left-radius: 10px;
         border-left: 1.5px solid #91806E;
@@ -88,8 +92,20 @@ table {
         overflow: hidden;
     }
 
+    table thead tr:first-of-type th {
+        border-top: 1.5px solid #91806E;
+    }
+
     table tbody tr:last-of-type td {
         border-bottom: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:first-of-type {
+        border-left: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:last-of-type {
+        border-right: 1.5px solid #91806E;
     }
 
 /* ------------------ */

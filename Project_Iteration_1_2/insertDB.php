@@ -13,8 +13,9 @@
     </head>
     <body>
         <div id="pageBox">
-            <!-- Error -->
-            <div class="errorMsg"></div>
+            <!-- Result -->
+            <div id="errorMsg"></div>
+            <div id="successMsg"></div>
 
             <!-- Table Name -->
             <form id="tableNameForm" action="./dbMaintain.php" method="POST">
@@ -42,8 +43,8 @@
 
             <!-- Submit Query -->
             <form id="querySubmitForm" action="./dbMaintain.php" method="POST">
-                <input type="text" name="insertQuery" id="querySubmit" style="display: none">
-                <button id="querySubmitBtn" type="button" name="submit" onclick="submitQuery()">Run Query</button>
+                <input type="text" name="querySubmit" id="querySubmit" style="display: none">
+                <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuery()">Run Query</button>
             </form>
 
             <!-- Table View -->
@@ -75,7 +76,11 @@
     });
 
     function showErrorMessage(error) {
-        $(".errorMsg").html(error);
+        $("#errorMsg").html(error);
+    }
+
+    function showSuccessMessage() {
+        $("#successMsg").html("Record has been successfully inserted.");
     }
 
     function displayTable(tableHtml) {
@@ -116,7 +121,7 @@
     function resetQuery() {
         if (columnArray != "") {
             queryDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`;
-            querySQL = `INSERT INTO <div class="bold">${columnArray[0][1]}</div>`;
+            querySQL = `INSERT INTO ${columnArray[0][1]}`;
             updateQueryDisplay();
         }
     }
@@ -163,7 +168,7 @@
                     querySQL += ", ";
                 }
                 queryDisplay += `'<div class="bold">${valArr[i]}</div>'`;
-                querySQL += `'<div class="bold">${valArr[i]}</div>'`;
+                querySQL += `'${valArr[i]}'`;
             }
 
             queryDisplay += ");";
@@ -173,7 +178,8 @@
     }
 
     function submitQuery() {
-
+        $("#querySubmit").val(querySQL);
+        $("#querySubmitForm").submit();
     }
 
 </script>
@@ -184,6 +190,24 @@
         echo "<script type='text/javascript'>$script</script>";
     }
 
+    function consoleLog($script) {
+        echo "<script type='text/javascript'>console.log('$script')</script>";
+    }
+
+    if(isset($_SESSION['db-success']) && $_SESSION['db-success'] == true){
+        echoJavascript("showSuccessMessage();");
+        unset($_SESSION['db-success']);
+        unset($_SESSION['db-error']);
+        unset($_SESSION['db-tableView']);
+        unset($_SESSION['db-columns']);
+    }
+
+    if(isset($_SESSION['db-error']) && $_SESSION['db-error'] <> ""){
+        echoJavascript("showErrorMessage(`" . $_SESSION['db-error'] . "`);");
+        consoleLog($_SESSION['db-error']);
+        unset($_SESSION['db-error']);
+    }
+
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
         echoJavascript("displayTable(`" . $_SESSION['db-tableView'] . "`);");
         echoJavascript("resetQuery();");
@@ -191,8 +215,4 @@
         unset($_SESSION['db-tableView']);
     }
 
-    if(isset($_SESSION['db-error']) && $_SESSION['db-error'] <> ""){
-        echoJavascript("showErrorMessage(`" . $_SESSION['db-error'] . "`);");
-        unset($_SESSION['db-error']);
-    }
 ?>

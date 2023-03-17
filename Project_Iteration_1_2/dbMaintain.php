@@ -6,8 +6,15 @@
 
         // Table Name
 	    if ( isset($_POST["tableName"]) ) {
+            //header('Location: ' . $_SERVER['HTTP_REFERER']);
             $_SESSION['db-tableView'] = getTableView($_POST["tableName"]);
         }
+
+        // Query Submit
+        else if ( isset($_POST["querySubmit"]) ) {
+            submitQuery($_POST["querySubmit"]);
+        }
+        
     }
 
     // ------------------------
@@ -25,6 +32,24 @@
             { return $conn->query($query); }
         catch(mysqli_sql_exception $exception) 
             { $_SESSION['db-error'] = $conn->error; return "";}
+    }
+
+    function submitQuery($query) {
+        $servername = "localhost";
+        $usrnm = "root";
+        $pswrd = "";
+        $dbname = "cps630";
+        $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
+
+        try { 
+            $conn->query($query);
+            $_SESSION['db-success'] = true;
+        }
+        catch(mysqli_sql_exception $exception) {
+            echo $conn->error;
+            $_SESSION['db-error'] = $conn->error;
+            $_SESSION['db-success'] = false;
+        }
     }
 
     // --------------

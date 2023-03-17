@@ -245,10 +245,6 @@ a {
         overflow: hidden;
     }
 
-    #searchTable thead tr:first-of-type th {
-        border-top: 1.5px solid #c9c0b6;
-    }
-
     #searchTable tbody tr:last-of-type td:first-child {
         border-bottom-left-radius: 10px;
         border-left: 1.5px solid #c9c0b6;
@@ -261,8 +257,20 @@ a {
         overflow: hidden;
     }
 
+    #searchTable thead tr:first-of-type th {
+        border-top: 1.5px solid #c9c0b6;
+    }
+
     #searchTable tbody tr:last-of-type td {
         border-bottom: 1.5px solid #c9c0b6;
+    }
+
+    #searchTable tbody tr td:first-of-type {
+        border-left: 1.5px solid #91806E;
+    }
+
+    #searchTable tbody tr td:last-of-type {
+        border-right: 1.5px solid #91806E;
     }
 
 /* Database Maintain*/
