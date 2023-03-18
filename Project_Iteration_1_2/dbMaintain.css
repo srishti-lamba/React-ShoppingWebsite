@@ -204,18 +204,21 @@ table {
     .queryColumnBtn label {
         display: inline;
         background-color: #b3a698;
-        /*border-bottom: 3px solid #91806E;*/
+        border: 1.5px solid #b3a698;
+        border-radius: 8px;
         text-align: center;
         width: 16.7%;
     }
+
+        .queryColumnBtn label:hover {
+            background-color: #A39586;
+        }
 
     .queryColumnBtn input[type='radio'] {
         display: none;
     }
 
         .queryColumnBtn input[type='radio']:checked + label {
-            border: 1.5px solid #b3a698;
-            border-radius: 8px;
             background-color: #91806E;
         }
 

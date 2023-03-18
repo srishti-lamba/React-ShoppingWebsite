@@ -70,9 +70,8 @@
             $("#tableNameForm").submit();
         });
 
-        $('.queryColumn input[type = "text"]').change(function(){
+        $('.queryColumn').change(function(){
             updateQuery();
-            $("#querySubmitForm").css("display", "block");
         });
 
     });
@@ -160,6 +159,7 @@
         });
 
         if (disColArr.length > 0) {
+            $("#querySubmitForm").css("display", "block");
             queryDisplay += " WHERE ";
             querySQL += " WHERE ";
 
