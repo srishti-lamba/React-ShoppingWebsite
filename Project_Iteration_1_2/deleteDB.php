@@ -108,6 +108,14 @@
 
                 resultHtml += `<div class='queryColumn'>`;
                 resultHtml += `<label for='${value}'>${display}</label>`;
+                resultHtml += `<div class='queryColumnBtn'>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="<"  id="db-${value}-<" ><label for="db-${value}-<" >\< </label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="<=" id="db-${value}-<="><label for="db-${value}-<=">\<=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="=" id="db-${value}-=" checked><label for="db-${value}-=">=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="!=" id="db-${value}-!="><label for="db-${value}-!=">!=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="/>=" id="db-${value}-/>="><label for="db-${value}-/>=">>=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="/>"  id="db-${value}-/>" ><label for="db-${value}-/>">>  </label>
+                               </div>`;
                 resultHtml += `<input type='text' name='${value}' id='db-${value}' placeholder='Enter value'>`;
                 resultHtml += `</div>`;
             }
