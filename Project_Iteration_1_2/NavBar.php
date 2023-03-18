@@ -124,10 +124,10 @@
                     <li class="dbMaintain"> 
                         <div class="dbMaintain-btn" onclick="toggleDropdown()"><i class="fa-solid fa-screwdriver-wrench"></i> DB MAINTAIN</div>
                         <div class="dbMaintain-options">
-                            <a href="./insertDB.php"><i class="fa-solid fa-plus"></i> Insert</a>
-                            <a href="./deleteDB.php"><i class="fa-solid fa-minus"></i> Delete</a>
-                            <a href="./selectDB.php"><i class="fa-solid fa-hand-pointer"></i> Select</a>
-                            <a href="./updateDB.php"><i class="fa-solid fa-pen"></i> Update</a>
+                            <a href="./dbInsert.php"><i class="fa-solid fa-plus"></i> Insert</a>
+                            <a href="./dbDelete.php"><i class="fa-solid fa-minus"></i> Delete</a>
+                            <a href="./dbSelect.php"><i class="fa-solid fa-hand-pointer"></i> Select</a>
+                            <a href="./dbUpdate.php"><i class="fa-solid fa-pen"></i> Update</a>
                         </div>
                     </li>
                 </ul>

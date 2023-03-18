@@ -129,10 +129,47 @@ table {
         color: white;
     }
 
+/* --------------------- */
+/* --- Input Columns --- */
+/* --------------------- */
+
+#inputColumns {
+    display: none;
+}
+
+#inputColumnsBtn {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+#inputColumnsBtn label {
+    display: inline;
+    color: white;
+    background-color: #b3a698;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    width: auto;
+    padding: 3px 5px;
+    margin: 5px;
+}
+
+    #inputColumnsBtn label:hover {
+        background-color: #A39586;
+    }
+
+#inputColumnsBtn input[type="checkbox"] {
+    display: none;
+}
+
+    #inputColumnsBtn input[type="checkbox"]:checked + label {
+        background-color: #91806E;
+    }
+
 /* -------------------- */
 /* --- Input Values --- */
 /* -------------------- */
-
 #inputValuesForm > label, #tableNameForm > label {
     margin: 10px 20px;
 }
