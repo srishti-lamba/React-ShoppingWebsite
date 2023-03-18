@@ -17,7 +17,10 @@
             <!-- Result -->
             <div id="errorMsg"></div>
             <div id="successMsg"></div>
-            <div id="queryTableView"><table></table></div>
+            <div id="resultTableView">
+                <p></p>
+                <table></table>
+            </div>
 
             <!-- Table Name -->
             <form id="tableNameForm" action="./dbMaintain.php" method="POST">
@@ -53,6 +56,7 @@
             <!-- Submit Query -->
             <form id="querySubmitForm" action="./dbMaintain.php" method="POST">
                 <input type="text" name="querySubmit" id="querySubmit" style="display: none">
+                <input type="text" name="querySubmit-tableName" id="querySubmit-tableName" style="display: none">
                 <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuery()">Run Query</button>
             </form>
 
@@ -203,8 +207,6 @@
         // Appending selected columns
         if (selDisColArr.length > 0) {
             $("#querySubmitForm").css("display", "block");
-            //queryDisplay = `SELECT * FROM <div class="bold">${columnArray[0][0]}</div>`;
-            //querySQL = `SELECT * FROM ${columnArray[0][1]}`;
             queryDisplay = `SELECT `;
             querySQL = `SELECT `;
 
@@ -218,7 +220,7 @@
             }
 
             queryDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`;
-            querySQL += `FROM ${columnArray[0][1]}`;
+            querySQL += ` FROM ${columnArray[0][1]}`;
         }
 
 
@@ -245,7 +247,14 @@
 
     function submitQuery() {
         $("#querySubmit").val(querySQL);
+        $("#querySubmit-tableName").val(columnArray[index+1][1]);
         $("#querySubmitForm").submit();
+    }
+
+    function showQueryResult(tableHtml) {
+        $("#resultTableView").css("display", "block");
+        $("#resultTableView table").html(tableHtml);
+        $("#resultTableView p").html(columnArray[0][0].toUpperCase() + " TABLE");
     }
 
 </script>
@@ -262,6 +271,7 @@
 
     if(isset($_SESSION['db-success']) && $_SESSION['db-success'] == true){
         echoJavascript("showSuccessMessage();");
+        echoJavascript("showQueryResult(`" . $_SESSION['db-tableView'] . "`)");
         unset($_SESSION['db-success']);
         unset($_SESSION['db-error']);
         unset($_SESSION['db-tableView']);

@@ -9,8 +9,14 @@
             $_SESSION['db-tableView'] = getTableView($_POST["tableName"]);
         }
 
+        // Query Submit (Select)
+        else if ( isset( $_POST["querySubmit-tableName"] ) ) {
+            $_SESSION['db-tableView'] = getResultTableView($_POST["querySubmit-tableName"], $_POST["querySubmit"]);
+        }
+
         // Query Submit
         else if ( isset($_POST["querySubmit"]) ) {
+            unset($_SESSION['db-tableView']);
             submitQuery($_POST["querySubmit"]);
         }
         
@@ -27,10 +33,13 @@
         $dbname = "cps630";
         $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
 
-        try 
-            { return $conn->query($query); }
-        catch(mysqli_sql_exception $exception) 
-            { $_SESSION['db-error'] = $conn->error; return "";}
+        try {
+            return $conn->query($query);
+        }
+        catch(mysqli_sql_exception $exception) {
+            $_SESSION['db-error'] = $conn->error; 
+            return "";
+        }
     }
 
     function submitQuery($query) {
@@ -40,15 +49,41 @@
         $dbname = "cps630";
         $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
 
-        try { 
-            $conn->query($query);
+        try {
+            $result = $conn->query($query);
             $_SESSION['db-success'] = true;
+            return $result;
         }
         catch(mysqli_sql_exception $exception) {
             echo $conn->error;
             $_SESSION['db-error'] = $conn->error;
             $_SESSION['db-success'] = false;
+            return "";
         }
+    }
+
+    function getDisplayFromSQL($columnArray, $sql) {
+        $display = "";
+
+        foreach ($columnArray as $column) {
+            if ($column[1] == $sql) {
+                $display = $column[0];
+                break;
+            }
+        }
+        return $display;
+    }
+
+    function getSqlFromDisplay($columnArray, $display) {
+        $sql = "";
+
+        foreach ($columnArray as $column) {
+            if ($column[0] == $display) {
+                $sql = $column[1];
+                break;
+            }
+        }
+        return $sql;
     }
 
     // ------------------
@@ -62,12 +97,33 @@
         $query = "SELECT * FROM " . $columnArray[0][1] . ";";
         $resultSql = sendQuery($query);
 
+        return makeTable($columnArray, $resultSql);
+    }
+
+    function getResultTableView($tableName, $resultSql) {
+        $columnArray = getColumns($tableName);
+
+        include_once($columnArray[0][3]);
+
+        return makeTable($columnArray, $resultSql);
+    }
+
+    function makeTable($columnArray, $resultSql) {
+        $colNum = $resultSql->field_count;
+        $colDisplayArr = [];
+        $colSqlArr = [];
+
         // Header
         $resultHtml = 
         "<thead>
             <tr>";
-        for ($i = 1; $i < count($columnArray); $i++) {
-            $resultHtml .= "<th>" . $columnArray[$i][0] . "</th>";
+        while ($col = mysqli_fetch_field($resultSql) ) {
+            $sql = $col->name;
+            $display = getDisplayFromSQL($columnArray, $sql);
+            array_push($colDisplayArr, $display);
+            array_push($colSqlArr, $sql);
+            
+            $resultHtml .= "<th>" . $display . "</th>";
         }
         $resultHtml .= 
             "</tr>
@@ -76,13 +132,13 @@
 
         // Body
         // For each row
-        while ( $row = $resultSql->fetch_assoc() ) {
+        while ( $row = $resultSql->fetch_array() ) {
             $resultHtml .= "<tr>";
 
             // For each column
-            for ($i = 1; $i < count($columnArray); $i++) { 
-                $colDisplay = $columnArray[$i][0];
-                $colSql = $columnArray[$i][1];
+            for ($i = 0; $i < $colNum; $i++) { 
+                $colDisplay = $colDisplayArr[$i];
+                $colSql = $colSqlArr[$i];
                 
                 if (($colDisplay == "Price") || ($colDisplay == "Balance"))
                     { $resultHtml .= "<td>$" . $row[$colSql] . "</td>"; }

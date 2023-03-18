@@ -316,3 +316,12 @@ table {
         text-underline-offset: 0.25em;
         margin-bottom: 10px;
     }
+
+/* ------------------------- */
+/* --- Result Table View --- */
+/* ------------------------- */
+
+#resultTableView {
+    display: none;
+    margin-top: 30px;
+}
