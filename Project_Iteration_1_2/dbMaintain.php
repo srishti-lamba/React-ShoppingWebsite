@@ -1,7 +1,6 @@
 <?php
     session_start();
-	header('Location: ' . $_SERVER['HTTP_REFERER']);
-
+	
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Table Name
@@ -19,6 +18,9 @@
             unset($_SESSION['db-tableView']);
             submitQuery($_POST["querySubmit"]);
         }
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
         
     }
 
@@ -55,7 +57,6 @@
             return $result;
         }
         catch(mysqli_sql_exception $exception) {
-            echo $conn->error;
             $_SESSION['db-error'] = $conn->error;
             $_SESSION['db-success'] = false;
             return "";
@@ -100,10 +101,11 @@
         return makeTable($columnArray, $resultSql);
     }
 
-    function getResultTableView($tableName, $resultSql) {
+    function getResultTableView($tableName, $query) {
         $columnArray = getColumns($tableName);
 
         include_once($columnArray[0][3]);
+        $resultSql = submitQuery($query);
 
         return makeTable($columnArray, $resultSql);
     }
@@ -126,7 +128,7 @@
             $resultHtml .= "<th>" . $display . "</th>";
         }
         $resultHtml .= 
-            "</tr>
+        "    </tr>
         </thead>
         <tbody>";
 

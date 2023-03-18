@@ -1,5 +1,7 @@
 <?php
     require("./NavBar.php");
+    if (session_id() === "") { session_start(); }
+
     $columnArray = $_SESSION['db-columns'] ?? null;
 ?>
 
@@ -75,6 +77,7 @@
     var columnArray = <?php echo json_encode($columnArray); ?>;
     var queryDisplay = "";
     var querySQL = "";
+    var resultTableName = "";
 
     $(document).ready(function() {
 
@@ -247,7 +250,7 @@
 
     function submitQuery() {
         $("#querySubmit").val(querySQL);
-        $("#querySubmit-tableName").val(columnArray[index+1][1]);
+        $("#querySubmit-tableName").val(columnArray[0][2]);
         $("#querySubmitForm").submit();
     }
 
@@ -266,12 +269,15 @@
     }
 
     function consoleLog($script) {
-        echoJavascript("console.log('$script');");
+        echoJavascript("console.log(`$script`);");
     }
 
     if(isset($_SESSION['db-success']) && $_SESSION['db-success'] == true){
         echoJavascript("showSuccessMessage();");
+        echoJavascript("resultTableName = " . $_SESSION['db-columns'][0][0] . ".toUpperCase()");        
         echoJavascript("showQueryResult(`" . $_SESSION['db-tableView'] . "`)");
+
+        consoleLog($_SESSION['db-tableView']);
         unset($_SESSION['db-success']);
         unset($_SESSION['db-error']);
         unset($_SESSION['db-tableView']);
@@ -284,6 +290,9 @@
     }
 
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
+        consoleLog(isset($_SESSION['db-columns']));
+        consoleLog($_SESSION['db-columns'][0][0]);
+
         echoJavascript("displayTable(`" . $_SESSION['db-tableView'] . "`);");
         echoJavascript("resetQuery();");
         echoJavascript("displayColumnSelector();");

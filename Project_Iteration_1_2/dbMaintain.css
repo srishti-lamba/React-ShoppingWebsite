@@ -325,3 +325,10 @@ table {
     display: none;
     margin-top: 30px;
 }
+
+    #resultTableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }
