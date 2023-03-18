@@ -35,7 +35,7 @@
             <!-- Input Values -->
             <form id="inputValuesForm" action="./dbMaintain.php" method="POST">
                 <hr>
-                <label for"inputValues">Values to insert:</label>
+                <label for"inputValues">Conditions:</label>
                 <div id="inputValues"></div>
             </form>
 
@@ -121,8 +121,8 @@
 
     function resetQuery() {
         if (columnArray != "") {
-            queryDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`;
-            querySQL = `INSERT INTO ${columnArray[0][1]}`;
+            queryDisplay = `DELETE FROM <div class="bold">${columnArray[0][0]}</div>`;
+            querySQL = `DELETE FROM ${columnArray[0][1]}`;
             updateQueryDisplay();
         }
     }
@@ -146,34 +146,20 @@
         });
 
         if (disColArr.length > 0) {
-            // Part 1 of query
-            queryDisplay += "(";
-            querySQL += "(";
+            queryDisplay += " WHERE ";
+            querySQL += " WHERE ";
 
             for (let i = 0; i < disColArr.length; i++) {
                 if (i != 0) {
-                    queryDisplay += ", ";
-                    querySQL += ", ";
+                    queryDisplay += " AND ";
+                    querySQL += " AND ";
                 }
-                queryDisplay += disColArr[i];
-                querySQL += sqlColArr[i];
+                queryDisplay += `(${disColArr[i]} = '<div class="bold">${valArr[i]}</div>')`;
+                querySQL += `(${sqlColArr[i]} = '${valArr[i]})'`;
             }
 
-            // Part 2 of Query
-            queryDisplay += ") VALUES (";
-            querySQL += ") VALUES (";
-
-            for (let i = 0; i < valArr.length; i++) {
-                if (i != 0) {
-                    queryDisplay += ", ";
-                    querySQL += ", ";
-                }
-                queryDisplay += `'<div class="bold">${valArr[i]}</div>'`;
-                querySQL += `'${valArr[i]}'`;
-            }
-
-            queryDisplay += ");";
-            querySQL += ");";
+            queryDisplay += ";";
+            querySQL += ";";
         }
         updateQueryDisplay();
     }

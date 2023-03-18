@@ -6,7 +6,6 @@
 
         // Table Name
 	    if ( isset($_POST["tableName"]) ) {
-            //header('Location: ' . $_SERVER['HTTP_REFERER']);
             $_SESSION['db-tableView'] = getTableView($_POST["tableName"]);
         }
 
@@ -50,15 +49,6 @@
             $_SESSION['db-error'] = $conn->error;
             $_SESSION['db-success'] = false;
         }
-    }
-
-    // --------------
-    // --- Insert ---
-    // --------------
-    function insertToUsers($name, $email, $username, $telephone, $password, $address, $postalCode){
-        include_once('./CreateAndPopulateUsersTable.php');
-        $query = "INSERT INTO Users (userName, telephoneNum, email, address, postalCode, loginId, password) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username', '$password')";
-        sendQuery($query);
     }
 
     // ------------------
