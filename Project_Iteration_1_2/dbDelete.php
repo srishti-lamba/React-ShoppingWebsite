@@ -14,6 +14,8 @@
     <body>
         <div id="pageBox">
 
+            <h1>DATABASE: DELETE</h1>
+
             <!-- Result -->
             <div id="errorMsg"></div>
             <div id="successMsg"></div>
