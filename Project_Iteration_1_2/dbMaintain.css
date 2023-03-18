@@ -213,7 +213,7 @@ table {
         display: none;
     }
 
-        .queryColumnBtn input[type="radio"]:checked + label {
+        .queryColumnBtn input[type='radio']:checked + label {
             border: 1.5px solid #b3a698;
             border-radius: 8px;
             background-color: #91806E;

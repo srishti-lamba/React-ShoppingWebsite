@@ -70,7 +70,7 @@
             $("#tableNameForm").submit();
         });
 
-        $('.queryColumn input').change(function(){
+        $('.queryColumn input[type = "text"]').change(function(){
             updateQuery();
             $("#querySubmitForm").css("display", "block");
         });
@@ -109,12 +109,12 @@
                 resultHtml += `<div class='queryColumn'>`;
                 resultHtml += `<label for='${value}'>${display}</label>`;
                 resultHtml += `<div class='queryColumnBtn'>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="<"  id="db-${value}-<" ><label for="db-${value}-<" >\< </label>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="<=" id="db-${value}-<="><label for="db-${value}-<=">\<=</label>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="=" id="db-${value}-=" checked><label for="db-${value}-=">=</label>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="!=" id="db-${value}-!="><label for="db-${value}-!=">!=</label>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="/>=" id="db-${value}-/>="><label for="db-${value}-/>=">>=</label>
-                                    <input type="radio" name="queryColumnBtn-${value}" value="/>"  id="db-${value}-/>" ><label for="db-${value}-/>">>  </label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="<"  id="db-${value}-<" ><label        for="db-${value}-<" >\<</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="<=" id="db-${value}-<="><label        for="db-${value}-<=">\<=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="="  id="db-${value}-=" checked><label for="db-${value}-=" >=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value="!=" id="db-${value}-!="><label        for="db-${value}-!=">!=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value=">=" id="db-${value}->="><label        for="db-${value}->=">>=</label>
+                                    <input type="radio" name="queryColumnBtn-${value}" value=">"  id="db-${value}->" ><label        for="db-${value}->" >></label>
                                </div>`;
                 resultHtml += `<input type='text' name='${value}' id='db-${value}' placeholder='Enter value'>`;
                 resultHtml += `</div>`;
@@ -141,15 +141,21 @@
         var disColArr = [];
         var sqlColArr = [];
         var valArr = [];
+        var cmpArr = [];
 
         $(".queryColumn").each(function(index, domEle) {
+            let dis = columnArray[index+1][0];
+            let sql = columnArray[index+1][1];
             let value = $(this).children("input").val();
+            let comp = $( `input[name='queryColumnBtn-${sql}']:checked` ).val();
 
             // Getting used columns
             if (value != "") {
-                disColArr.push(columnArray[index+1][0]);
-                sqlColArr.push(columnArray[index+1][1]);
+                disColArr.push(dis);
+                sqlColArr.push(sql);
                 valArr.push(value);
+                cmpArr.push(comp);
+                console.log(comp);
             }
         });
 
@@ -162,8 +168,8 @@
                     queryDisplay += " AND ";
                     querySQL += " AND ";
                 }
-                queryDisplay += `(${disColArr[i]} = '<div class="bold">${valArr[i]}</div>')`;
-                querySQL += `(${sqlColArr[i]} = '${valArr[i]})'`;
+                queryDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`;
+                querySQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]})'`;
             }
 
             queryDisplay += ";";
