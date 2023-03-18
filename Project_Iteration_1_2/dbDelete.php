@@ -154,7 +154,6 @@
                 sqlColArr.push(sql);
                 valArr.push(value);
                 cmpArr.push(comp);
-                console.log(comp);
             }
         });
 

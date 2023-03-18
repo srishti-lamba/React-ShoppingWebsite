@@ -36,6 +36,10 @@ hr {
     color: mediumseagreen;
 }
 
+##tableNameForm > label, inputValuesForm > label, #inputColumns > label {
+    margin: 10px 20px;
+}
+
 /* ------------- */
 /* --- Table --- */
 /* ------------- */
@@ -140,7 +144,7 @@ table {
 #inputColumnsBtn {
     display: flex;
     justify-content: flex-start;
-    margin-top: 10px;
+    margin: 10px 0px 0px 1%;
 }
 
 #inputColumnsBtn label {
@@ -170,9 +174,6 @@ table {
 /* -------------------- */
 /* --- Input Values --- */
 /* -------------------- */
-#inputValuesForm > label, #tableNameForm > label {
-    margin: 10px 20px;
-}
 
 #inputValuesForm {
     display: none;

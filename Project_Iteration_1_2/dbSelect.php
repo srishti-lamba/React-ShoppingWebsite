@@ -82,6 +82,10 @@
             updateQuery();
         });
 
+        $('#inputColumnsBtn input[type="checkbox"]').change(function(){
+            updateQuery();
+        });
+
     });
 
     function showErrorMessage(error) {
@@ -161,6 +165,22 @@
     function updateQuery() {
         resetQuery();
 
+        // Getting selected columns
+        var selDisColArr = [];
+        var selSqlColArr = [];
+
+        $("#inputColumnsBtn input[type='checkbox']").each(function(index, domEle) {
+            let dis = columnArray[index+1][0];
+            let sql = columnArray[index+1][1];
+            let isChecked = $(this).prop("checked");
+
+            if (isChecked == true) {
+                selDisColArr.push(dis);
+                selSqlColArr.push(sql);
+            }
+        });
+
+        // Getting conditions
         var disColArr = [];
         var sqlColArr = [];
         var valArr = [];
@@ -172,20 +192,41 @@
             let value = $(this).children("input").val();
             let comp = $( `input[name='queryColumnBtn-${sql}']:checked` ).val();
 
-            // Getting used columns
             if (value != "") {
                 disColArr.push(dis);
                 sqlColArr.push(sql);
                 valArr.push(value);
                 cmpArr.push(comp);
-                console.log(comp);
             }
         });
 
+        // Appending selected columns
+        if (selDisColArr.length > 0) {
+            $("#querySubmitForm").css("display", "block");
+            //queryDisplay = `SELECT * FROM <div class="bold">${columnArray[0][0]}</div>`;
+            //querySQL = `SELECT * FROM ${columnArray[0][1]}`;
+            queryDisplay = `SELECT `;
+            querySQL = `SELECT `;
+
+            for (let i = 0; i < selDisColArr.length; i++) {
+                if (i != 0) {
+                    queryDisplay += ", ";
+                    querySQL += ", ";
+                }
+                queryDisplay += `<div class="bold">${selDisColArr[i]}</div>`;
+                querySQL += `${selSqlColArr[i]}`;
+            }
+
+            queryDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`;
+            querySQL += `FROM ${columnArray[0][1]}`;
+        }
+
+
+        // Appending conditions
         if (disColArr.length > 0) {
             $("#querySubmitForm").css("display", "block");
-            queryDisplay = " WHERE ";
-            querySQL = " WHERE ";
+            queryDisplay += " WHERE ";
+            querySQL += " WHERE ";
 
             for (let i = 0; i < disColArr.length; i++) {
                 if (i != 0) {
