@@ -82,7 +82,7 @@
     }
 
     function showSuccessMessage() {
-        $("#successMsg").html("Record has been successfully inserted.");
+        $("#successMsg").html("Record(s) have been successfully deleted.");
     }
 
     function displayTable(tableHtml) {
@@ -169,7 +169,7 @@
                     querySQL += " AND ";
                 }
                 queryDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`;
-                querySQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]})'`;
+                querySQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`;
             }
 
             queryDisplay += ";";
