@@ -29,6 +29,7 @@
     //Create + Insert
     try {
         $conn->query($queryCreate);
+        include("./addAdminUser.php");
         $conn->query($query1);
         //echo "Query executed successfully";
 
