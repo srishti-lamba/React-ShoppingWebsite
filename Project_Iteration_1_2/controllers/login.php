@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once('./config/CreateAndPopulateUsersTable.php');
+    include_once('../config/CreateAndPopulateUsersTable.php');
 
     function test_input($data) {
         $data = trim($data);

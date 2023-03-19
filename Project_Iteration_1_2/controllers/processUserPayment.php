@@ -8,7 +8,7 @@
     $_SESSION['order-time'] = $_POST['deliveryTime'];
     $_SESSION['order-cardNumber'] = $_POST['cardNumber'];    
 
-    include('./views/NavBar.php');
+    include('../views/NavBar.php');
     $warehouse = $_POST['location'];
     $destination = $_POST['destination'];
     $distance = $_POST['distanceVal'];

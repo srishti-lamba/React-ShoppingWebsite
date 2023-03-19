@@ -14,7 +14,7 @@
         ?>
         <main class="reg-container">
             <h1 class="registration-h1">Registration</h1>
-            <form class="register-form" action="../validateRegistration.php" method="post">
+            <form class="register-form" action="../controllers/validateRegistration.php" method="post">
                 <p class="register-err">Error Message</p>
                 <p class="register-success">Registered successfully!</p>
 

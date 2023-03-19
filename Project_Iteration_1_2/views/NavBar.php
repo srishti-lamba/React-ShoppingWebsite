@@ -148,7 +148,7 @@
                     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
                         //echo "<li><div class='cart'><i class='fa-solid fa-cart-shopping'></i> Cart</div></li>";
                         echo "<li><p>Hello, ". $_SESSION['username'] ."! </p></li>";
-                        echo "<li><form action='../logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
+                        echo "<li><form action='../controllers/logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
                     }
                     else{
                         echo "<li><button type='button' class='sign-up'>Sign Up</button></li>
@@ -163,7 +163,7 @@
 
         <!-- Login -->
         <div id="loginWindow">
-            <form id="loginForm" action="../login.php" method="POST">
+            <form id="loginForm" action="../controllers/login.php" method="POST">
                 <h1>Login</h1>
                 <input type="text" name="username" id="username" placeholder="Username">
                 <input type="password" name="password" id="password" placeholder="Password">
@@ -175,7 +175,7 @@
 
         <!-- Search -->
         <div id="searchWindow">
-            <form id="searchForm" action="../search.php" method="POST">
+            <form id="searchForm" action="../controllers/search.php" method="POST">
                 <h1>Search</h1>
                 <p>Search user orders</p>
                 <label for="userid">User ID:</label>

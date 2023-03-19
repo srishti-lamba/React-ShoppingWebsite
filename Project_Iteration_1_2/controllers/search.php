@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once('./config/CreateOrderTable.php');
+    include_once('../config/CreateOrderTable.php');
 
     function test_input($data) {
         $data = trim($data);
