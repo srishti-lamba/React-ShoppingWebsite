@@ -50,7 +50,7 @@
     }
 
     function checkDuplicate($data, $columnName, $varName){
-        include_once('./CreateAndPopulateUsersTable.php');
+        include_once('./config/CreateAndPopulateUsersTable.php');
 
         $servername = "localhost";
         $username = "root";
@@ -69,7 +69,7 @@
     }
 
     function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode){
-        include_once('./CreateAndPopulateUsersTable.php');
+        include_once('./config/CreateAndPopulateUsersTable.php');
 
         $servername = "localhost";
         $username = "root";
