@@ -24,6 +24,7 @@
     else{
         $_SESSION['failedLogin'] = true;
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    //header('Location: ' . $_SERVER['HTTP_REFERER']);
     //header('Location: http://localhost/CPS630-Project-Iteration-1_2/home.php')
+    header('Location: ' . substr($_SERVER['HTTP_REFERER'], 0, strrpos($_SERVER['HTTP_REFERER'], "/")) . '/home.php');
 ?>

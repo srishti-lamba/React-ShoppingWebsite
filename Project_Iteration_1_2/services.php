@@ -7,7 +7,8 @@
     </head>
     <body>
         <?php 
-            require("./NavBar.php") 
+            require("./NavBar.php");
+            unset($_SESSION['orderConfirmationMessage']);
         ?>
         <div class="main-image">
             <article class="main-title">
