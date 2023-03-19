@@ -8,7 +8,7 @@
     <head>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="dbMaintain.css">
+        <link rel="stylesheet" href="./css/dbMaintain.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
