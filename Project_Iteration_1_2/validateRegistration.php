@@ -83,7 +83,7 @@
         session_unset();
         $_SESSION['register-success'] = "true";
         //Redirct to home page
-        header("Location: ./home.php");
+        header("Location: ./views/home.php");
         exit();
     }
 

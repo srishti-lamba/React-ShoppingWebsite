@@ -1,5 +1,5 @@
 <?php
-    include("NavBar.php");
+    include("./NavBar.php");
     $orderId = $_SESSION['orderId'];
 ?>
 

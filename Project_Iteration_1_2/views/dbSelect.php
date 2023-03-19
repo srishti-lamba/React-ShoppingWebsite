@@ -10,7 +10,7 @@
     <head>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./css/dbMaintain.css">
+        <link rel="stylesheet" href="../css/dbMaintain.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Table Name -->
-            <form id="tableNameForm" action="./dbMaintain.php" method="POST">
+            <form id="tableNameForm" action="../dbMaintain.php" method="POST">
                 <label for="tableName">Table name:</label>
                 <select name="tableName" id="tableName">
                     <option value="select" disabled selected hidden>Select table name</option>
@@ -48,7 +48,7 @@
             </div>
 
             <!-- Input Values -->
-            <form id="inputValuesForm" action="./dbMaintain.php" method="POST">
+            <form id="inputValuesForm" action="../dbMaintain.php" method="POST">
                 <hr>
                 <label for"inputValues">Conditions:</label>
                 <div id="inputValues"></div>
@@ -58,7 +58,7 @@
             <p id="queryDisplay"></p>
 
             <!-- Submit Query -->
-            <form id="querySubmitForm" action="./dbMaintain.php" method="POST">
+            <form id="querySubmitForm" action="../dbMaintain.php" method="POST">
                 <input type="text" name="querySubmit" id="querySubmit" style="display: none">
                 <input type="text" name="querySubmit-tableName" id="querySubmit-tableName" style="display: none">
                 <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuery()">Run Query</button>

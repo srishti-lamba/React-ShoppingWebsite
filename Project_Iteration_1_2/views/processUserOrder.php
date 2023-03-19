@@ -1,8 +1,8 @@
 <?php
-    include('NavBar.php');
-    include('fetchLocations.php');
-    include('./config/CreateAndPopulateTruckTable.php');
-    include('./config/CreateAndPopulateLocationsTable.php');
+    include('./NavBar.php');
+    include('../fetchLocations.php');
+    include('../config/CreateAndPopulateTruckTable.php');
+    include('../config/CreateAndPopulateLocationsTable.php');
     //include('./config/CreateTripTable.php');
     //include('./config/CreateOrderTable.php');
     // if(!isset($_SESSION['loggedin'])) {
@@ -15,12 +15,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./css/processUserOrder.css">
+        <link rel="stylesheet" href="../css/processUserOrder.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
-        <form method="post" action="./processUserPayment.php">
+        <form method="post" action="../processUserPayment.php">
             <div class="formContainer">
                 <main>
                     <section class="selectBranchContainer">

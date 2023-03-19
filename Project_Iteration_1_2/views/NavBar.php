@@ -1,14 +1,14 @@
 <?php
     session_start();
-    include('./config/CreateAndPopulateTruckTable.php');
-    include('./config/CreateAndPopulateLocationsTable.php');
+    include('../config/CreateAndPopulateTruckTable.php');
+    include('../config/CreateAndPopulateLocationsTable.php');
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./css/NavBarStyle.css">
+        <link rel="stylesheet" href="../css/NavBarStyle.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
@@ -114,10 +114,10 @@
             <!-- Navigation -->
             <nav class="nav navbar">
                 <ul>
-                    <li><a href="./home.php"><i class="fa-solid fa-house"></i> HOME</a></li>
-                    <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
-                    <li><a href="./contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
-                    <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
+                    <li><a href="../views/home.php"><i class="fa-solid fa-house"></i> HOME</a></li>
+                    <li><a href="../views/aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
+                    <li><a href="../views/contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
+                    <li><a href="../views/services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
                     <?php
                         if(isset($_SESSION['loggedin'])) {
                             echo "<li class=\"searchLbl\" onclick='openSearch()'><i class=\"fa-solid fa-magnifying-glass\"></i> SEARCH</li>";
@@ -148,7 +148,7 @@
                     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
                         //echo "<li><div class='cart'><i class='fa-solid fa-cart-shopping'></i> Cart</div></li>";
                         echo "<li><p>Hello, ". $_SESSION['username'] ."! </p></li>";
-                        echo "<li><form action='./logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
+                        echo "<li><form action='../logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
                     }
                     else{
                         echo "<li><button type='button' class='sign-up'>Sign Up</button></li>
@@ -163,7 +163,7 @@
 
         <!-- Login -->
         <div id="loginWindow">
-            <form id="loginForm" action="./login.php" method="POST">
+            <form id="loginForm" action="../login.php" method="POST">
                 <h1>Login</h1>
                 <input type="text" name="username" id="username" placeholder="Username">
                 <input type="password" name="password" id="password" placeholder="Password">
@@ -175,7 +175,7 @@
 
         <!-- Search -->
         <div id="searchWindow">
-            <form id="searchForm" action="./search.php" method="POST">
+            <form id="searchForm" action="../search.php" method="POST">
                 <h1>Search</h1>
                 <p>Search user orders</p>
                 <label for="userid">User ID:</label>

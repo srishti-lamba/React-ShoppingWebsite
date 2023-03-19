@@ -1,6 +1,6 @@
 <?php 
     require("./NavBar.php");
-    require("./config/CreateAndPopulateItemsTable.php");
+    require("../config/CreateAndPopulateItemsTable.php");
 
     
 ?>
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./css/home.css">
+        <link rel="stylesheet" href="../css/home.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
@@ -68,7 +68,7 @@
             if (category === "Kid's Room") category = category.replace("'", "");
 
             $(".products-flex").empty()
-            $.get(`getProducts.php?category=${category}`, function(data, status) {
+            $.get(`../getProducts.php?category=${category}`, function(data, status) {
                 if(status ==='success') {
                     data = JSON.parse(data);
 
@@ -220,7 +220,7 @@
                     <div class="products-flex">
                     
                     </div>
-                    <form type="post" action="processUserOrder.php" >
+                    <form type="post" action="./processUserOrder.php" >
                         <div class="shopping-cart" ondragover="dragOver(event)" ondrop="drop(event)">
                             <h2 class="center" id="shoppingCartH2">SHOPPING CART</h2>
                             <table>
