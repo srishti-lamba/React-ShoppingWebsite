@@ -88,6 +88,12 @@ body {
     transition: width .3s;
 }
 
+.orderNotification {
+    color: green;
+    font-size: 20px;
+    text-align: center;
+}
+
 /*Right side of window, display products*/
 #productH2{
     margin-top: -5px;

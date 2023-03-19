@@ -2,9 +2,7 @@
     require("./NavBar.php");
     require("./CreateAndPopulateItemsTable.php");
 
-    if(isset($_SESSION['orderId'])) {
-        unset($_SESSION['orderId']);
-    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -198,6 +196,12 @@
                 <p>- Furniture Department -</p>
             </article>
         </div>
+        <?php
+            if(isset($_SESSION['orderConfirmationMessage'])){
+                echo "<script>localStorage.removeItem('shoppinglist');</script>";
+                echo $_SESSION['orderConfirmationMessage'];
+            }
+        ?>
         <div class="product-container">
             <h1 class="center">FURNITURE</h1>
             <main class="wrapper">
@@ -246,7 +250,5 @@
                 </div>
             </main>
         </div>
-        <p>temp login (xammp apache and mysql needed):</p>
-        <p>User: john_smith<br>pass: 1234</p>
     </body>
 </html>

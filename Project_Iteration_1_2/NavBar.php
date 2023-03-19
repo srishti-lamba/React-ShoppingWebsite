@@ -109,7 +109,7 @@
 
     <body>
         <header>
-            <div class="logo">System Logo</div>
+            <!-- <div class="logo"><img src="https://t3.ftcdn.net/jpg/03/59/58/18/360_F_359581872_hMDiF4RkLXiJ7fTKq0VGvhdLdepLncMK.jpg"  style="height: 75px; width: 100px;"/></div> -->
 
             <!-- Navigation -->
             <nav class="nav navbar">
@@ -118,18 +118,27 @@
                     <li><a href="./aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
                     <li><a href="./contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
                     <li><a href="./services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
-                    <li class="searchLbl" onclick='openSearch()'><i class="fa-solid fa-magnifying-glass"></i> SEARCH</li>
+                    <?php
+                        if(isset($_SESSION['loggedin'])) {
+                            echo "<li class=\"searchLbl\" onclick='openSearch()'><i class=\"fa-solid fa-magnifying-glass\"></i> SEARCH</li>";
+                        }
+                    ?>
 
                     <!-- Database Maintain Dropdown -->
-                    <li class="dbMaintain"> 
-                        <div class="dbMaintain-btn" onclick="toggleDropdown()"><i class="fa-solid fa-screwdriver-wrench"></i> DB MAINTAIN</div>
-                        <div class="dbMaintain-options">
-                            <a href="./dbInsert.php"><i class="fa-solid fa-plus"></i> Insert</a>
-                            <a href="./dbDelete.php"><i class="fa-solid fa-minus"></i> Delete</a>
-                            <a href="./dbSelect.php"><i class="fa-solid fa-hand-pointer"></i> Select</a>
-                            <a href="./dbUpdate.php"><i class="fa-solid fa-pen"></i> Update</a>
-                        </div>
-                    </li>
+                    <?php
+                        if(isset($_SESSION['loggedin']) && $_SESSION['userId'] == 0) {
+                            echo "<li class=\"dbMaintain\">"; 
+                                echo "<div class=\"dbMaintain-btn\" onclick=\"toggleDropdown()\"><i class=\"fa-solid fa-screwdriver-wrench\"></i> DB MAINTAIN</div>";
+                                echo "<div class=\"dbMaintain-options\">";
+                                    echo "<a href=\"./dbInsert.php\"><i class=\"fa-solid fa-plus\"></i> Insert</a>";
+                                    echo "<a href=\"./dbDelete.php\"><i class=\"fa-solid fa-minus\"></i> Delete</a>";
+                                    echo "<a href=\"./dbSelect.php\"><i class=\"fa-solid fa-hand-pointer\"></i> Select</a>";
+                                    echo "<a href=\"./dbUpdate.php\"><i class=\"fa-solid fa-pen\"></i> Update</a>";
+                                echo "</div>";
+                            echo "</li>";
+                        }
+                    ?>
+                    
                 </ul>
             </nav>
 
@@ -137,7 +146,7 @@
             <ul class="right">
                 <?php
                     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
-                        echo "<li><div class='cart'><i class='fa-solid fa-cart-shopping'></i> Cart</div></li>";
+                        //echo "<li><div class='cart'><i class='fa-solid fa-cart-shopping'></i> Cart</div></li>";
                         echo "<li><p>Hello, ". $_SESSION['username'] ."! </p></li>";
                         echo "<li><form action='./logout.php'>  <button type=\"submit\">Log Out</button> </form></li>";
                     }
