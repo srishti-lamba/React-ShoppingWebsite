@@ -14,8 +14,8 @@
         totalPrice DECIMAL(6,2) UNSIGNED NOT NULL);";
     
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try {

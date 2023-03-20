@@ -18,8 +18,8 @@
     $query4 = "INSERT INTO Trucks (availabilityCode) VALUES('Available');";
 
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try {

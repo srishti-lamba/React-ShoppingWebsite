@@ -16,8 +16,8 @@
         truckId INT(6) REFERENCES Trucks(truckId));";
     
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try {
