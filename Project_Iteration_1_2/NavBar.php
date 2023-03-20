@@ -28,6 +28,9 @@
         $(".sign-up").click(function(){
             window.location.href = "./register.php";
         });
+        $(".logo").click(function(){
+            window.location.href = "./home.php";
+        });
         $(".dbMaintain").mouseleave( function(){
             $(".dbMaintain-options").css("display", "none");
         });
@@ -109,7 +112,7 @@
 
     <body>
         <header>
-            <!-- <div class="logo"><img src="https://t3.ftcdn.net/jpg/03/59/58/18/360_F_359581872_hMDiF4RkLXiJ7fTKq0VGvhdLdepLncMK.jpg"  style="height: 75px; width: 100px;"/></div> -->
+            <div class="logo"><img src="https://t3.ftcdn.net/jpg/03/59/58/18/360_F_359581872_hMDiF4RkLXiJ7fTKq0VGvhdLdepLncMK.jpg"  style="mix-blend-mode: multiply; margin: -50px; height: 150px"/></div> 
 
             <!-- Navigation -->
             <nav class="nav navbar">
