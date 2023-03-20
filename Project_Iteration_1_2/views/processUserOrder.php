@@ -104,7 +104,7 @@
     </body>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUm2IsAwT5P2q3Xu1-2EDJyTpR2t3HPC0&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="./processUserOrder.js"></script>
+    <script src="../controllers/processUserOrder.js"></script>
     <?php
         if(isset($_SESSION['purchase-err'])) {
             echo "<script>displayErrorMessage('" .$_SESSION['purchase-err'] . "')</script>";
