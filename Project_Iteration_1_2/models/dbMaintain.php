@@ -125,7 +125,8 @@
             array_push($colDisplayArr, $display);
             array_push($colSqlArr, $sql);
             
-            $resultHtml .= "<th>" . $display . "</th>";
+            if ($display != "IGNORE")
+            { $resultHtml .= "<th>" . $display . "</th>"; }
         }
         $resultHtml .= 
         "    </tr>
@@ -142,7 +143,8 @@
                 $colDisplay = $colDisplayArr[$i];
                 $colSql = $colSqlArr[$i];
                 
-                if (($colDisplay == "Price") || ($colDisplay == "Balance"))
+                if ($colDisplay == "IGNORE") {}
+                else if (($colDisplay == "Price") || ($colDisplay == "Balance"))
                     { $resultHtml .= "<td>$" . $row[$colSql] . "</td>"; }
                 else if ($colDisplay == "Image URL") 
                     { $resultHtml .= "<td style='font-size: 0.75em'>" . $row[$colSql] . "</td>"; }
@@ -206,6 +208,7 @@
                     array("Payment Code", "paymentCode"),
                     array("User ID", "userId"),
                     array("Trip ID", "tripId"),
+                    array("IGNORE", "receiptId"),
                     array("Order Status", "orderStatus")
                 );
                 break;
