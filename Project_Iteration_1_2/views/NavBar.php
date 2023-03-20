@@ -13,9 +13,107 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="../controllers/NavBar.js"></script>
     </head>
+    <script>
+    $(document).ready(function() {
+        $("#username").click(function(){
+            $('#errMsg').css({"display": 'none'});
+            $('#errMsg2').css({"display": 'none'});
+        });
+        $("#password").click(function(){
+            $('#errMsg').css({"display": 'none'});
+            $('#errMsg2').css({"display": 'none'});
+        });
+        $(".cart").click(function(){
+            window.location.href = "./processUserOrder.php";
+        });
+        $(".sign-up").click(function(){
+            window.location.href = "./register.php";
+        });
+        $(".logo").click(function(){
+            window.location.href = "./home.php";
+        });
+        $(".dbMaintain").mouseleave( function(){
+            $(".dbMaintain-options").css("display", "none");
+        });
+        $(".dbMaintain-btn").mouseenter( function(){
+            $(".dbMaintain-options").css("display", "block");
+        });
+    });
+
+    // Screen Dim
+
+    function toggleOffOverlay(){
+        $('#overlay').css({"display": 'none'});
+        $('#loginWindow').css({"display": 'none'});
+        $('#searchWindow').css({"display": 'none'});
+    }
+
+    // Login
+
+    function openLogin() {
+        $('#overlay').css({"display": 'block'});
+        $('#loginWindow').css({"display": 'block'});
+    }
+
+    function submitLogin(){
+        if($("#username").val() == "" || $("#password").val() == ""){
+            $('#errMsg2').css({"display": 'block'});
+        }
+        else{
+            $("#loginForm").submit();
+        }
+    }
+
+    function displayLoginError(){
+        openLogin();
+        $('#errMsg').css({"display": 'block'});
+    }
+
+    // Search
+
+    function openSearch() {
+        $('#overlay').css({"display": 'block'});
+        $('#searchWindow').css({"display": 'block'});
+    }
+
+    function submitSearch() {
+        $("#searchForm").submit();
+    }
+
+    function displaySearch(resultHtml) {
+        openSearch();
+        var tableHtml = 
+        `<table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>`
+                + resultHtml +
+            `</tbody>
+        </table>`;
+        $("#searchTable").html(tableHtml);
+    }
+
+    // Dropdown
+
+    function toggleDropdown() {
+        if ( $(".dbMaintain-options").css("display") == "none" )
+            { $(".dbMaintain-options").css("display", "block"); }
+        else 
+            { $(".dbMaintain-options").css("display", "none"); }
+    }
+
+    </script>
+
     <body>
         <header>
-            <!-- <div class="logo"><img src="https://t3.ftcdn.net/jpg/03/59/58/18/360_F_359581872_hMDiF4RkLXiJ7fTKq0VGvhdLdepLncMK.jpg"  style="height: 75px; width: 100px;"/></div> -->
+            <div class="logo"><img src="https://t3.ftcdn.net/jpg/03/59/58/18/360_F_359581872_hMDiF4RkLXiJ7fTKq0VGvhdLdepLncMK.jpg"  style="mix-blend-mode: multiply; margin: -50px; height: 150px"/></div> 
 
             <!-- Navigation -->
             <nav class="nav navbar">

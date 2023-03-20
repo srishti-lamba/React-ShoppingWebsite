@@ -21,9 +21,6 @@ header {
     padding: 0px 20px;
 }
 
-.nav {
-    padding-left: 9.5%;
-}
 
 .logo {
     cursor: pointer;
@@ -97,31 +94,53 @@ a {
     position: absolute;
     border-radius: 8px;
     z-index: 4;
-    padding: 20px 40px;
-    background-color: #232F3E;
+    padding: 20px 30px;
+    background-color: #675a4c;
     width: 30%;
     left: 35%;
     display: none;
+    min-width: 450px;
+    margin-top: 50px;
 }
 
     #loginWindow input[type = "text"], #loginWindow input[type = "password"] {
         border: 0;
-        background: #3b414a;
+        background: #847361;
         display: block;
         margin: 20px auto;
         text-align: left;
         padding: 14px 10px;
         max-width: 990px;
-        width: 70%;
+        width: 78%;
         outline: none;
         color: white;
-        border-bottom: #2b2d30 3px solid;
+        border-bottom: #644d35 3px solid;
+        min-width: 260px;
+    }
+
+    ::placeholder {
+        color: white;
     }
 
     #loginWindow h1 {
         color: white;
         font-weight: 500;
         text-align: center;
+    }
+
+    .submit {
+        border: 0;
+        background: none;
+        display: block;
+        margin: 40px auto;
+        text-align: center;
+        background-color: white;
+        border-radius: 5px;
+        padding: 14px 40px;
+        min-width: 130px;
+        outline: none;
+        color: black;
+        cursor: pointer;
     }
 
 /* Search */
@@ -311,21 +330,6 @@ a {
         margin-bottom: 10px;
     }
 
-
-.submit {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 40px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    width: 220px;
-    outline: none;
-    color: white;
-    transition: 0.25s;
-    cursor: pointer;
-}
 
 #errMsg, #errMsg2 {
     color: #ba0f37;
