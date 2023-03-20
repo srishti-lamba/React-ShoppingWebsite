@@ -13,6 +13,9 @@ $(document).ready(function() {
     $(".sign-up").click(function(){
         window.location.href = "./register.php";
     });
+    $(".logo").click(function(){
+        window.location.href = "./home.php";
+    });
     $(".dbMaintain").mouseleave( function(){
         $(".dbMaintain-options").css("display", "none");
     });
