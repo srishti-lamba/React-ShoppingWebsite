@@ -1,6 +1,6 @@
 <?php
     include('./NavBar.php');
-    include('../controllers/fetchLocations.php');
+    include('../models/fetchLocations.php');
     include('../config/CreateAndPopulateTruckTable.php');
     include('../config/CreateAndPopulateLocationsTable.php');
     //include('./config/CreateTripTable.php');
@@ -20,7 +20,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
-        <form method="post" action="../controllers/processUserPayment.php">
+        <form method="post" action="../models/processUserPayment.php">
             <div class="formContainer">
                 <main>
                     <section class="selectBranchContainer">

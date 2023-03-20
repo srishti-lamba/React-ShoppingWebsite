@@ -21,7 +21,7 @@
             <div id="successMsg"></div>
 
             <!-- Table Name -->
-            <form id="tableNameForm" action="../controllers/dbMaintain.php" method="POST">
+            <form id="tableNameForm" action="../models/dbMaintain.php" method="POST">
                 <label for="tableName">Table name:</label>
                 <select name="tableName" id="tableName">
                     <option value="select" disabled selected hidden>Select table name</option>
@@ -35,7 +35,7 @@
             </form>
 
             <!-- Input Values -->
-            <form id="inputValuesForm" action="../controllers/dbMaintain.php" method="POST">
+            <form id="inputValuesForm" action="../models/dbMaintain.php" method="POST">
                 <hr>
                 <label for"inputValues">Conditions:</label>
                 <div id="inputValues"></div>
@@ -45,7 +45,7 @@
             <p id="queryDisplay"></p>
 
             <!-- Submit Query -->
-            <form id="querySubmitForm" action="../controllers/dbMaintain.php" method="POST">
+            <form id="querySubmitForm" action="../models/dbMaintain.php" method="POST">
                 <input type="text" name="querySubmit" id="querySubmit" style="display: none">
                 <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuery()">Run Query</button>
             </form>

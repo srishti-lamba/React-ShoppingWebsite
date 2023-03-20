@@ -68,7 +68,7 @@
             if (category === "Kid's Room") category = category.replace("'", "");
 
             $(".products-flex").empty()
-            $.get(`../controllers/getProducts.php?category=${category}`, function(data, status) {
+            $.get(`../models/getProducts.php?category=${category}`, function(data, status) {
                 if(status ==='success') {
                     data = JSON.parse(data);
 
