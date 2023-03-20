@@ -211,7 +211,7 @@
             case "locations":
                 $resultArray = 
                 array (
-                    array("Locations", "BranchLocations"),
+                    array("Locations", "BranchLocations", "locations"),
                     array("Location ID", "location_id"),
                     array("Address", "locationAddress"),
                     array("Latitude", "latitude"),
