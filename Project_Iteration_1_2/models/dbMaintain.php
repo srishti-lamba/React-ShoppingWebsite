@@ -94,7 +94,6 @@
     function getTableView($tableName) {
         $columnArray = getColumns($tableName);
 
-        include_once($columnArray[0][3]);
         $query = "SELECT * FROM " . $columnArray[0][1] . ";";
         $resultSql = sendQuery($query);
 
@@ -104,7 +103,6 @@
     function getResultTableView($tableName, $query) {
         $columnArray = getColumns($tableName);
 
-        include_once($columnArray[0][3]);
         $resultSql = submitQuery($query);
 
         return makeTable($columnArray, $resultSql);
@@ -167,7 +165,7 @@
                 $resultArray = 
                 array (
                     // Display Name | SQL Name | HTML Element Value Name | Create PHP File Name
-                    array("Users", "Users", "users", "../config/CreateAndPopulateUsersTable.php"),
+                    array("Users", "Users", "users"),
                     array("User ID", "user_id"),
                     array("Name", "userName"),
                     array("Phone Number", "telephoneNum"),
@@ -183,7 +181,7 @@
             case "items":
                 $resultArray = 
                 array (
-                    array("Items", "Items", "items", "../config/CreateAndPopulateItemsTable.php"),
+                    array("Items", "Items", "items"),
                     array("Item ID", "item_id"),
                     array("Product Name", "productName"),
                     array("Price", "price"),
@@ -197,7 +195,7 @@
             case "orders":
                 $resultArray = 
                 array (
-                    array("Orders", "Orders", "orders", "../config/CreateOrderTable.php"),
+                    array("Orders", "Orders", "orders"),
                     array("Order ID", "orderId"),
                     array("Date Issued", "dateIssued"),
                     array("Delivery Date", "deliveryDate"),
@@ -213,7 +211,7 @@
             case "locations":
                 $resultArray = 
                 array (
-                    array("Locations", "BranchLocations", "locations", "../config/CreateAndPopulateLocationsTable.php"),
+                    array("Locations", "BranchLocations"),
                     array("Location ID", "location_id"),
                     array("Address", "locationAddress"),
                     array("Latitude", "latitude"),
@@ -224,7 +222,7 @@
             case "trucks":
                 $resultArray = 
                 array (
-                    array("Trucks", "Trucks", "trucks", "../config/CreateAndPopulateTruckTable.php"),
+                    array("Trucks", "Trucks", "trucks"),
                     array("Truck ID", "truckId"),
                     array("Availability", "availabilityCode")
                 );
@@ -233,7 +231,7 @@
             case "trips":
                 $resultArray = 
                 array (
-                    array("Trips", "Trips", "trips", "../config/CreateTripTable.php"),
+                    array("Trips", "Trips", "trips"),
                     array("Trip ID", "tripId"),
                     array("Departure", "source"),
                     array("Destination", "destination"),

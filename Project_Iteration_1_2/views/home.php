@@ -1,6 +1,6 @@
 <?php 
     require("./NavBar.php");
-    require("../config/CreateAndPopulateItemsTable.php");
+    //require("../config/CreateAndPopulateItemsTable.php");
 
     
 ?>
