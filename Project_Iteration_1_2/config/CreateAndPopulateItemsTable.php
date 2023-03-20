@@ -57,8 +57,8 @@
     //  VALUES ('Test', 1, 'Living Room', 'Test', 1, 'https://m.media-amazon.com/images/I/71tq-TnCm0S._AC_SL1200_.jpg')";
     
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
 
     //Create + Insert
     try {
@@ -81,5 +81,5 @@
         //$conn-> query($query16);
     } 
     catch(mysqli_sql_exception $exception) 
-    { echo("Error on Items:" . $conn->error); }
+    { echo("<script>console.log(`Error on Items: $conn->error`)</script>"); }
 ?>

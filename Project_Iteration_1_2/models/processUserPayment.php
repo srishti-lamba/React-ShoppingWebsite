@@ -1,6 +1,10 @@
 <?php
     ob_start();
     include('../views/NavBar.php');
+    include('../config/CreateAndPopulateTruckTable.php');
+    include('../config/CreateTripTable.php');
+    include('../config/CreateOrderTable.php');
+
     //Set Session Variables to repopulate form on failure
     $_SESSION['order-location'] = $_POST['location'];
     $_SESSION['order-destination'] = $_POST['destination'];
@@ -112,9 +116,8 @@
 
             echo "<script>localStorage.removeItem('shoppinglist');</script>";
 
-        } catch(mysqli_sql_exception $e) {
-            echo $conn->error;
-        }
+        } catch(mysqli_sql_exception $e) 
+            { echo("<script>console.log(`Error on processUserPayment.php: $conn->error`)</script>"); }
     }
     ob_end_flush();
 ?>

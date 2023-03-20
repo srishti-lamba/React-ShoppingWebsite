@@ -78,7 +78,11 @@
 
         $conn = new mysqli($servername, $username, $password, $dbname);
         $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$password1')";
-        $conn->query($query);
+        
+        try 
+            { $conn->query($query); }
+        catch (mysqli_sql_exception $exception)
+            { echo("<script>console.log(`Error on validateRegistration.php: $conn->error`)</script>"); }
         
         session_unset();
         $_SESSION['register-success'] = "true";

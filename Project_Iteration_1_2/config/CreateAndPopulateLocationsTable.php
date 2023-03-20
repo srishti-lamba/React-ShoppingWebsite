@@ -30,8 +30,8 @@
     VALUES('201 Britannia Road East, Mississauga, Ontario L4Z 3X8, Canada', 43.631580, -79.675940);";
 
     //Drop
-    try {$conn-> query($queryDrop);}
-    catch(mysqli_sql_exception $exception) {}
+    //try {$conn-> query($queryDrop);}
+    //catch(mysqli_sql_exception $exception) {}
     
     //Create + Insert
     try{
@@ -43,5 +43,5 @@
         $conn->query($query5);
     } 
     catch (mysqli_sql_exception $exception)
-    { echo("Error on BranchLocations:" . $conn->error); }
+    { echo("<script>console.log(`Error on BranchLocations: $conn->error`)</script>"); }
 ?>

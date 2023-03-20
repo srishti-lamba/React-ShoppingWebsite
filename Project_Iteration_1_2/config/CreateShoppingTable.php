@@ -23,5 +23,5 @@
         //echo "Executed Query";
     }
     catch (mysqli_sql_exception $exception)
-    { echo("Error on Orders:" . $conn->error); }
+    { echo("<script>console.log(`Error on Shopping: $conn->error`)</script>"); }
 ?>

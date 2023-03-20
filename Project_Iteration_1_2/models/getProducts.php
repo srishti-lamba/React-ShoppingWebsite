@@ -21,10 +21,9 @@
                 }
 
                 return json_encode($output);
-
-            } catch (mysqli_sql_exception $e) {
-                echo $e;
-            }
+            } 
+            catch (mysqli_sql_exception $e)
+                { echo("<script>console.log(`Error on getProducts.php: $conn->error`)</script>"); }
         }
 
         $category = $_REQUEST['category'];

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    //include_once('../config/CreateOrderTable.php');
+    include_once('../config/CreateOrderTable.php');
 
     function test_input($data) {
         $data = trim($data);
@@ -46,7 +46,7 @@
         echo ("<script>console.log(\"Order search successful.\")</script>");
     }
     catch (mysqli_sql_exception $exception)
-    { echo ("<script>console.log(\"Error on Order Search: " . $conn->error . "\")</script>"); }
+        { echo("<script>console.log(`Error on search.php: $conn->error`)</script>"); }
     $conn->close();
 
     // Fill rows

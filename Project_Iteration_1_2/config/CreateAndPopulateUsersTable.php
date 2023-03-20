@@ -18,8 +18,11 @@
         loginId VARCHAR(10) NOT NULL,
         password VARCHAR(20) NOT NULL,
         balance DECIMAL(6,2) SIGNED NOT NULL DEFAULT 0);";
+
+    $query1 = "INSERT INTO USERS (user_id, userName, telephoneNum, email, address, postalCode, loginId, password) 
+            VALUES (0, 'Admin User', '4167654321', 'admin.smartcustomerservices.ca', '827 Smart Ave', 'K2J4H9', 'admin_user', '1234') ";
         
-    $query1 = "INSERT INTO Users (userName, telephoneNum, email, address, postalCode, loginId, password)
+    $query2 = "INSERT INTO Users (userName, telephoneNum, email, address, postalCode, loginId, password)
               VALUES('John Smith', '4161234567', 'john.smith@gmail.com', '258 Avro Rd', 'L6A1X8', 'john_smith', '1234') ";
     
     //Drop
@@ -29,11 +32,9 @@
     //Create + Insert
     try {
         $conn->query($queryCreate);
-        include("./addAdminUser.php");
         $conn->query($query1);
-        //echo "Query executed successfully";
-
+        $conn->query($query2);
     }
     catch(mysqli_sql_exception $exception)
-    { echo("Error on Users:" . $conn->error); }
+    { echo("<script>console.log(`Error on Users: $conn->error`)</script>"); }
 ?>

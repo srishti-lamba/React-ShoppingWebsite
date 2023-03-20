@@ -1,8 +1,8 @@
 <?php
     include('./NavBar.php');
     include('../models/fetchLocations.php');
-    //include('../config/CreateAndPopulateTruckTable.php');
-    //include('../config/CreateAndPopulateLocationsTable.php');
+    include('../config/CreateAndPopulateTruckTable.php');
+    include('../config/CreateAndPopulateLocationsTable.php');
     //include('./config/CreateTripTable.php');
     //include('./config/CreateOrderTable.php');
     // if(!isset($_SESSION['loggedin'])) {

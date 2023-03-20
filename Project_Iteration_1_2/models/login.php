@@ -1,6 +1,6 @@
 <?php
     session_start();
-    //include_once('../config/CreateAndPopulateUsersTable.php');
+    include_once('../config/CreateAndPopulateUsersTable.php');
 
     function test_input($data) {
         $data = trim($data);
@@ -12,8 +12,20 @@
     $username = test_input($_POST["username"]);
     $password = test_input($_POST["password"]);
 
+    $servername = "localhost";
+    $usrnm = "root";
+    $pswrd = "";
+    $dbname = "cps630";
+    $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
+
     $sql = "SELECT * FROM users WHERE (loginId = '$username' AND `password` = '$password')";
-    $result = $conn->query($sql);
+    $result;
+
+    try 
+        { $result = $conn->query($sql);}
+    catch (mysqli_sql_exception $exception)
+        { echo("<script>console.log(`Error on login.php: $conn->error`)</script>"); }
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $_SESSION['loggedin'] = true;
