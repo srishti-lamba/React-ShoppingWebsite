@@ -98,8 +98,8 @@
             $getTripIdQueryResult = $conn->query($getTripIdQuery);
             $tripId = $getTripIdQueryResult->fetch_assoc()['LAST_INSERT_ID()'];
 
-            $insertOrderQuery = "INSERT INTO Orders (deliveryDate, deliveryTime, totalPrice, paymentCode, userId, tripId, receiptId)
-                                VALUES('$date', '$deliveryTime', $total, $cardNumber, $user, $tripId, 1);";
+            $insertOrderQuery = "INSERT INTO Orders (deliveryDate, deliveryTime, totalPrice, paymentCode, userId, tripId)
+                                VALUES('$date', '$deliveryTime', $total, $cardNumber, $user, $tripId);";
 
             $conn->query($insertOrderQuery);
 

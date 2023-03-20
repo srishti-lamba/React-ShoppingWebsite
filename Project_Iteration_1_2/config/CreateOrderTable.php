@@ -8,6 +8,8 @@
 
     $queryDrop = "DROP TABLE Orders;";
 
+    $querySequence = "CREATE SEQUENCE `order-sequence` START WITH 1 INCREMENT BY 1;";
+
     $queryCreate = "CREATE TABLE Orders(
         orderId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         dateIssued TIMESTAMP,
@@ -17,7 +19,7 @@
         paymentCode INT(19) UNSIGNED,
         userId INT(6) REFERENCES Users(user_id),
         tripId INT(6) REFERENCES Trips(tripId),
-        receiptId INT(6) UNSIGNED,
+        receiptId INT(6) UNSIGNED DEFAULT( NEXT VALUE FOR `order-sequence` ),
         orderStatus VARCHAR(50) NOT NULL DEFAULT 'Processing');";
 
     //          1234567890
@@ -31,6 +33,7 @@
     
     //Create + Insert
     try {
+        $conn->query($querySequence);
         $conn->query($queryCreate);
         //echo ("<script>console.log(\"Order table created.\")</script>");
     }

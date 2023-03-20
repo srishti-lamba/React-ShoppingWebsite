@@ -28,30 +28,30 @@
         VALUES ('GLOSTAD Loveseat', 249.00, 'Living Room', 'United States', 1, 'https://www.ikea.com/ca/en/images/products/glostad-loveseat-knisa-medium-blue__0987359_pe817504_s5.jpg')";
     
     $query5 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('MALM Pull Up Storage Bed', 699.00, 'Bedroom', 'China', 1, 'https://www.ikea.com/ca/en/images/products/malm-pull-up-storage-bed-black-brown__1154402_pe886049_s5.jpg?f=s')";
+        VALUES ('MALM Pull Up Storage Bed', 699.00, 'Bedroom', 'China', 2, 'https://www.ikea.com/ca/en/images/products/malm-pull-up-storage-bed-black-brown__1154402_pe886049_s5.jpg?f=s')";
     $query6 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('HEMNES Nightstand', 79.00, 'Bedroom', 'China', 1, 'https://www.ikea.com/ca/en/images/products/hemnes-nightstand-white-stain__0380136_pe555081_s5.jpg?f=s')";
+        VALUES ('HEMNES Nightstand', 79.00, 'Bedroom', 'China', 2, 'https://www.ikea.com/ca/en/images/products/hemnes-nightstand-white-stain__0380136_pe555081_s5.jpg?f=s')";
     $query7 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('MALM 6-Drawer Dresser', 279.00, 'Bedroom', 'China', 1, 'https://www.ikea.com/ca/en/images/products/malm-6-drawer-dresser-black-brown__1154387_pe886016_s5.jpg?f=s')";
+        VALUES ('MALM 6-Drawer Dresser', 279.00, 'Bedroom', 'China', 2, 'https://www.ikea.com/ca/en/images/products/malm-6-drawer-dresser-black-brown__1154387_pe886016_s5.jpg?f=s')";
     $query8 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('Beauty4U Full Length Mirror Floor Mirror', 246.61, 'Bedroom', 'China', 1, 'https://m.media-amazon.com/images/I/71zbt32XAJL._AC_SL1500_.jpg')";
+        VALUES ('Beauty4U Full Length Mirror Floor Mirror', 246.61, 'Bedroom', 'China', 2, 'https://m.media-amazon.com/images/I/71zbt32XAJL._AC_SL1500_.jpg')";
     
     $query9 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('Rustic Farmhouse Dinning Room Table', 1500.00, 'Dining Room', 'Canada', 1, 'https://i.etsystatic.com/12628434/r/il/da97f3/3300346963/il_fullxfull.3300346963_scc6.jpg')";
+        VALUES ('Rustic Farmhouse Dinning Room Table', 1500.00, 'Dining Room', 'Canada', 3, 'https://i.etsystatic.com/12628434/r/il/da97f3/3300346963/il_fullxfull.3300346963_scc6.jpg')";
     $query10 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('LOMMARP Cabinet With Glass Doors', 549.00, 'Dining Room', 'United States', 1, 'https://www.ikea.com/ca/en/images/products/lommarp-cabinet-with-glass-doors-dark-blue-green__0740569_pe742075_s5.jpg')";
+        VALUES ('LOMMARP Cabinet With Glass Doors', 549.00, 'Dining Room', 'United States', 3, 'https://www.ikea.com/ca/en/images/products/lommarp-cabinet-with-glass-doors-dark-blue-green__0740569_pe742075_s5.jpg')";
     
     $query11 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('KURA Reversible Bed', 299.00, 'Kids Room', 'China', 1, 'https://www.ikea.com/ca/en/images/products/kura-reversible-bed-white-pine__0937447_pe793736_s5.jpg')";
+        VALUES ('KURA Reversible Bed', 299.00, 'Kids Room', 'China', 4, 'https://www.ikea.com/ca/en/images/products/kura-reversible-bed-white-pine__0937447_pe793736_s5.jpg')";
     $query12 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('Kids Desk', 749.99, 'Kids Room', 'China', 1, 'https://secure.img1-cg.wfcdn.com/im/62817136/resize-h600-w600%5Ecompr-r85/1355/135550686/Guidecraft+Taiga+44%22+W+Kids+Desk+with+Hutch+and+Chair+Set.jpg')";
+        VALUES ('Kids Desk', 749.99, 'Kids Room', 'China', 4, 'https://secure.img1-cg.wfcdn.com/im/62817136/resize-h600-w600%5Ecompr-r85/1355/135550686/Guidecraft+Taiga+44%22+W+Kids+Desk+with+Hutch+and+Chair+Set.jpg')";
     
     $query13 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('SEDETA Home Office Desk', 651.88, 'Home Office', 'China', 1, 'https://m.media-amazon.com/images/I/81WFP8Ys8ZL._AC_SL1500_.jpg')";
+        VALUES ('SEDETA Home Office Desk', 651.88, 'Home Office', 'China', 5, 'https://m.media-amazon.com/images/I/81WFP8Ys8ZL._AC_SL1500_.jpg')";
     $query14 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('XUER Ergonomic Office Chair', 150.00, 'Home Office', 'China', 1, 'https://m.media-amazon.com/images/I/81KGPhfAC3L._AC_SX466_.jpg')";
+        VALUES ('XUER Ergonomic Office Chair', 150.00, 'Home Office', 'China', 5, 'https://m.media-amazon.com/images/I/81KGPhfAC3L._AC_SX466_.jpg')";
     $query15 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url) 
-        VALUES ('HSH Solid Wood Bookshelf', 549.82, 'Home Office', 'China', 1, 'https://m.media-amazon.com/images/I/71tq-TnCm0S._AC_SL1200_.jpg')";
+        VALUES ('HSH Solid Wood Bookshelf', 549.82, 'Home Office', 'China', 5, 'https://m.media-amazon.com/images/I/71tq-TnCm0S._AC_SL1200_.jpg')";
     
     //$query16 = "INSERT INTO Items (productName, price, category, made_in, department_code, image_url)
     //  VALUES ('Test', 1, 'Living Room', 'Test', 1, 'https://m.media-amazon.com/images/I/71tq-TnCm0S._AC_SL1200_.jpg')";
