@@ -24,6 +24,7 @@
             if(isset($_SESSION['orderConfirmationMessage'])){
                 echo "<script>localStorage.removeItem('shoppinglist');</script>";
                 echo $_SESSION['orderConfirmationMessage'];
+                unset($_SESSION['orderConfirmationMessage']);
             }
         ?>
         <div class="product-container">
