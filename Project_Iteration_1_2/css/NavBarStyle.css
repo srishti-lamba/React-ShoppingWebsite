@@ -285,11 +285,11 @@ a {
     }
 
     #searchTable tbody tr td:first-of-type {
-        border-left: 1.5px solid #91806E;
+        border-left: 1.5px solid #c9c0b6;
     }
 
     #searchTable tbody tr td:last-of-type {
-        border-right: 1.5px solid #91806E;
+        border-right: 1.5px solid #c9c0b6;
     }
 
 /* Database Maintain*/
