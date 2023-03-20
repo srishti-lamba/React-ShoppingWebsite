@@ -1,10 +1,10 @@
 <?php
-    include('NavBar.php');
-    include('fetchLocations.php');
-    include('./CreateAndPopulateTruckTable.php');
-    include('./CreateAndPopulateLocationsTable.php');
-    //include('./CreateTripTable.php');
-    //include('./CreateOrderTable.php');
+    include('./NavBar.php');
+    include('../models/fetchLocations.php');
+    include('../config/CreateAndPopulateTruckTable.php');
+    include('../config/CreateAndPopulateLocationsTable.php');
+    //include('./config/CreateTripTable.php');
+    //include('./config/CreateOrderTable.php');
     // if(!isset($_SESSION['loggedin'])) {
     //     echo "<h2>You need to be logged in to purchase items</h2>";
     // }
@@ -15,12 +15,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./processUserOrder.css">
+        <link rel="stylesheet" href="../css/processUserOrder.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
-        <form method="post" action="./processUserPayment.php">
+        <form method="post" action="../models/processUserPayment.php">
             <div class="formContainer">
                 <main>
                     <section class="selectBranchContainer">
@@ -104,7 +104,7 @@
     </body>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUm2IsAwT5P2q3Xu1-2EDJyTpR2t3HPC0&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="./processUserOrder.js"></script>
+    <script src="../controllers/processUserOrder.js"></script>
     <?php
         if(isset($_SESSION['purchase-err'])) {
             echo "<script>displayErrorMessage('" .$_SESSION['purchase-err'] . "')</script>";

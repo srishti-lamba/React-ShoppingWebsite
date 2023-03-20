@@ -4,9 +4,9 @@
         <title>Register</title>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./register.css">
+        <link rel="stylesheet" href="../css/register.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script src="./register.js"></script>
+        <script src="../controllers/register.js"></script>
     </head>
     <body>
         <?php
@@ -14,7 +14,7 @@
         ?>
         <main class="reg-container">
             <h1 class="registration-h1">Registration</h1>
-            <form class="register-form" action="./validateRegistration.php" method="post">
+            <form class="register-form" action="../models/validateRegistration.php" method="post">
                 <p class="register-err">Error Message</p>
                 <p class="register-success">Registered successfully!</p>
 

@@ -1,5 +1,7 @@
 <?php
     require("./NavBar.php");
+    if (session_id() === "") { session_start(); }
+
     $columnArray = $_SESSION['db-columns'] ?? null;
 ?>
 
@@ -8,20 +10,24 @@
     <head>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="dbMaintain.css">
+        <link rel="stylesheet" href="../css/dbMaintain.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
         <div id="pageBox">
 
-            <h1>DATABASE: DELETE</h1>
+            <h1>DATABASE: SELECT</h1>
 
             <!-- Result -->
             <div id="errorMsg"></div>
             <div id="successMsg"></div>
+            <div id="resultTableView">
+                <p></p>
+                <table></table>
+            </div>
 
             <!-- Table Name -->
-            <form id="tableNameForm" action="./dbMaintain.php" method="POST">
+            <form id="tableNameForm" action="../models/dbMaintain.php" method="POST">
                 <label for="tableName">Table name:</label>
                 <select name="tableName" id="tableName">
                     <option value="select" disabled selected hidden>Select table name</option>
@@ -34,8 +40,15 @@
                 </select>
             </form>
 
+            <!-- InputColumns -->
+            <div id="inputColumns">
+                <hr>
+                <label>Columns:</label>
+                <div id="inputColumnsBtn"></div>
+            </div>
+
             <!-- Input Values -->
-            <form id="inputValuesForm" action="./dbMaintain.php" method="POST">
+            <form id="inputValuesForm" action="../models/dbMaintain.php" method="POST">
                 <hr>
                 <label for"inputValues">Conditions:</label>
                 <div id="inputValues"></div>
@@ -45,8 +58,9 @@
             <p id="queryDisplay"></p>
 
             <!-- Submit Query -->
-            <form id="querySubmitForm" action="./dbMaintain.php" method="POST">
+            <form id="querySubmitForm" action="../models/dbMaintain.php" method="POST">
                 <input type="text" name="querySubmit" id="querySubmit" style="display: none">
+                <input type="text" name="querySubmit-tableName" id="querySubmit-tableName" style="display: none">
                 <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuery()">Run Query</button>
             </form>
 
@@ -65,6 +79,7 @@
     var columnArray = <?php echo json_encode($columnArray); ?>;
     var queryDisplay = "";
     var querySQL = "";
+    var resultTableName = "";
 
     $(document).ready(function() {
 
@@ -76,6 +91,10 @@
             updateQuery();
         });
 
+        $('#inputColumnsBtn input[type="checkbox"]').change(function(){
+            updateQuery();
+        });
+
     });
 
     function showErrorMessage(error) {
@@ -83,7 +102,7 @@
     }
 
     function showSuccessMessage() {
-        $("#successMsg").html("Record(s) have been successfully deleted.");
+        $("#successMsg").html("Here are the query results:");
     }
 
     function displayTable(tableHtml) {
@@ -94,6 +113,22 @@
 
     function updateQueryDisplay() {
         $("#queryDisplay").html(queryDisplay);
+    }
+
+    function displayColumnSelector() {
+        $("#inputColumns").css("display", "block");
+
+        if (columnArray != "") {
+            var resultHtml = "";
+            for (let i = 1; i < columnArray.length; i++) {
+                let display = columnArray[i][0];
+                let value = columnArray[i][1];
+
+                resultHtml += `<input type="checkbox" id="col-${value}" name="${value}" value="${value}">`;
+                resultHtml += `<label for='col-${value}'>${display}</label>`;
+            }
+            $("#inputColumnsBtn").html(resultHtml);
+        }
     }
 
     function displayColumns() {
@@ -130,8 +165,8 @@
 
     function resetQuery() {
         if (columnArray != "") {
-            queryDisplay = `DELETE FROM <div class="bold">${columnArray[0][0]}</div>`;
-            querySQL = `DELETE FROM ${columnArray[0][1]}`;
+            queryDisplay = `SELECT * FROM <div class="bold">${columnArray[0][0]}</div>`;
+            querySQL = `SELECT * FROM ${columnArray[0][1]}`;
             updateQueryDisplay();
         }
     }
@@ -139,6 +174,22 @@
     function updateQuery() {
         resetQuery();
 
+        // Getting selected columns
+        var selDisColArr = [];
+        var selSqlColArr = [];
+
+        $("#inputColumnsBtn input[type='checkbox']").each(function(index, domEle) {
+            let dis = columnArray[index+1][0];
+            let sql = columnArray[index+1][1];
+            let isChecked = $(this).prop("checked");
+
+            if (isChecked == true) {
+                selDisColArr.push(dis);
+                selSqlColArr.push(sql);
+            }
+        });
+
+        // Getting conditions
         var disColArr = [];
         var sqlColArr = [];
         var valArr = [];
@@ -150,7 +201,6 @@
             let value = $(this).children("input").val();
             let comp = $( `input[name='queryColumnBtn-${sql}']:checked` ).val();
 
-            // Getting used columns
             if (value != "") {
                 disColArr.push(dis);
                 sqlColArr.push(sql);
@@ -159,6 +209,27 @@
             }
         });
 
+        // Appending selected columns
+        if (selDisColArr.length > 0) {
+            $("#querySubmitForm").css("display", "block");
+            queryDisplay = `SELECT `;
+            querySQL = `SELECT `;
+
+            for (let i = 0; i < selDisColArr.length; i++) {
+                if (i != 0) {
+                    queryDisplay += ", ";
+                    querySQL += ", ";
+                }
+                queryDisplay += `<div class="bold">${selDisColArr[i]}</div>`;
+                querySQL += `${selSqlColArr[i]}`;
+            }
+
+            queryDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`;
+            querySQL += ` FROM ${columnArray[0][1]}`;
+        }
+
+
+        // Appending conditions
         if (disColArr.length > 0) {
             $("#querySubmitForm").css("display", "block");
             queryDisplay += " WHERE ";
@@ -181,7 +252,14 @@
 
     function submitQuery() {
         $("#querySubmit").val(querySQL);
+        $("#querySubmit-tableName").val(columnArray[0][2]);
         $("#querySubmitForm").submit();
+    }
+
+    function showQueryResult(tableHtml) {
+        $("#resultTableView").css("display", "block");
+        $("#resultTableView table").html(tableHtml);
+        $("#resultTableView p").html(columnArray[0][0].toUpperCase() + " TABLE");
     }
 
 </script>
@@ -193,11 +271,15 @@
     }
 
     function consoleLog($script) {
-        echoJavascript("console.log('$script');");
+        echoJavascript("console.log(`$script`);");
     }
 
     if(isset($_SESSION['db-success']) && $_SESSION['db-success'] == true){
         echoJavascript("showSuccessMessage();");
+        echoJavascript("resultTableName = " . $_SESSION['db-columns'][0][0] . ".toUpperCase()");        
+        echoJavascript("showQueryResult(`" . $_SESSION['db-tableView'] . "`)");
+
+        consoleLog($_SESSION['db-tableView']);
         unset($_SESSION['db-success']);
         unset($_SESSION['db-error']);
         unset($_SESSION['db-tableView']);
@@ -210,8 +292,12 @@
     }
 
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
+        consoleLog(isset($_SESSION['db-columns']));
+        consoleLog($_SESSION['db-columns'][0][0]);
+
         echoJavascript("displayTable(`" . $_SESSION['db-tableView'] . "`);");
         echoJavascript("resetQuery();");
+        echoJavascript("displayColumnSelector();");
         echoJavascript("displayColumns();");
         unset($_SESSION['db-tableView']);
     }

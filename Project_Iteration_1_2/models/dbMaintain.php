@@ -167,7 +167,7 @@
                 $resultArray = 
                 array (
                     // Display Name | SQL Name | HTML Element Value Name | Create PHP File Name
-                    array("Users", "Users", "users", "./CreateAndPopulateUsersTable.php"),
+                    array("Users", "Users", "users", "../config/CreateAndPopulateUsersTable.php"),
                     array("User ID", "user_id"),
                     array("Name", "userName"),
                     array("Phone Number", "telephoneNum"),
@@ -183,7 +183,7 @@
             case "items":
                 $resultArray = 
                 array (
-                    array("Items", "Items", "items", "./CreateAndPopulateItemsTable.php"),
+                    array("Items", "Items", "items", "../config/CreateAndPopulateItemsTable.php"),
                     array("Item ID", "item_id"),
                     array("Product Name", "productName"),
                     array("Price", "price"),
@@ -197,7 +197,7 @@
             case "orders":
                 $resultArray = 
                 array (
-                    array("Orders", "Orders", "orders", "./CreateOrderTable.php"),
+                    array("Orders", "Orders", "orders", "../config/CreateOrderTable.php"),
                     array("Order ID", "orderId"),
                     array("Date Issued", "dateIssued"),
                     array("Delivery Date", "deliveryDate"),
@@ -213,7 +213,7 @@
             case "locations":
                 $resultArray = 
                 array (
-                    array("Locations", "BranchLocations", "locations", "./CreateAndPopulateLocationsTable.php"),
+                    array("Locations", "BranchLocations", "locations", "../config/CreateAndPopulateLocationsTable.php"),
                     array("Location ID", "location_id"),
                     array("Address", "locationAddress"),
                     array("Latitude", "latitude"),
@@ -224,7 +224,7 @@
             case "trucks":
                 $resultArray = 
                 array (
-                    array("Trucks", "Trucks", "trucks", "./CreateAndPopulateTruckTable.php"),
+                    array("Trucks", "Trucks", "trucks", "../config/CreateAndPopulateTruckTable.php"),
                     array("Truck ID", "truckId"),
                     array("Availability", "availabilityCode")
                 );
@@ -233,7 +233,7 @@
             case "trips":
                 $resultArray = 
                 array (
-                    array("Trips", "Trips", "trips", "./CreateTripTable.php"),
+                    array("Trips", "Trips", "trips", "../config/CreateTripTable.php"),
                     array("Trip ID", "tripId"),
                     array("Departure", "source"),
                     array("Destination", "destination"),
