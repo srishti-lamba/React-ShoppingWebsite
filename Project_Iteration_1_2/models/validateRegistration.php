@@ -77,6 +77,26 @@
         return 1;
     }
 
+    function checkLengthOfUserName($username) {
+        if(strlen($username) > 10) {
+            $_SESSION['reg-error'] = "Username can only have at most 10 characters";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            return true;
+        }
+
+        return false;
+    }
+
+    function checkLengthOfPassword($pass) {
+        if(strlen($pass) > 20){
+            $_SESSION['reg-error'] = "Password can only have at most 20 characters";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            return true;
+        }
+
+        return false;
+    }
+
     
     function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode, $isAdmin){
         include_once('../config/CreateAndPopulateUsersTable.php');
@@ -137,6 +157,8 @@
         if(checkDuplicate($email, 'Email', 'Email')){exit();}
         if(checkDuplicate($telephone, 'telephoneNum', 'Telephone Number')){exit();}
         if(checkDuplicate($username, 'loginId', 'Username')){exit();}
+        if(checkLengthOfUserName($username)) {exit();}
+        if(checkLengthOfPassword($password1)) {exit();}
 
 
         //If all above failed, append user to database
