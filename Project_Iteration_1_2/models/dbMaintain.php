@@ -176,7 +176,8 @@
                     array("Postal Code", "postalCode"),
                     array("Username", "loginId"),
                     array("Password", "password"),
-                    array("Balance", "balance")
+                    array("Balance", "balance"),
+		    array("Admin", "isAdmin")
                 );
                 break;
 
