@@ -16,7 +16,7 @@
         deliveryDate DATE,
         deliveryTime TIME,
         totalPrice DECIMAL(6,2) UNSIGNED NOT NULL,
-        paymentCode INT(19) UNSIGNED,
+        paymentCode VARCHAR(19) NOT NULL,
         userId INT(6) REFERENCES Users(user_id),
         tripId INT(6) REFERENCES Trips(tripId),
         receiptId INT(6) UNSIGNED DEFAULT( NEXT VALUE FOR `order-sequence` ),

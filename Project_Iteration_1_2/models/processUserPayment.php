@@ -98,6 +98,8 @@
             $getTripIdQueryResult = $conn->query($getTripIdQuery);
             $tripId = $getTripIdQueryResult->fetch_assoc()['LAST_INSERT_ID()'];
 
+            $cardNumber = (string)$cardNumber; //cast credit card number to string
+
             $insertOrderQuery = "INSERT INTO Orders (deliveryDate, deliveryTime, totalPrice, paymentCode, userId, tripId)
                                 VALUES('$date', '$deliveryTime', $total, $cardNumber, $user, $tripId);";
 
