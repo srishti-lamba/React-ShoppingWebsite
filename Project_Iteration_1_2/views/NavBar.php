@@ -24,6 +24,7 @@
                     <li><a href="../views/aboutus.php"><i class="fa-solid fa-people-group"></i> ABOUT US</a></li>
                     <li><a href="../views/contactus.php"><i class="fa-solid fa-headset"></i> CONTACT US</a></li>
                     <li><a href="../views/services.php"><i class="fa-solid fa-hand-holding-heart"></i> TYPES OF SERVICES</a></li>
+                    <li><a href="../views/reviews.php"><i class="fa-solid fa-star"></i> REVIEWS</a></li>
                     <?php
                         if(isset($_SESSION['loggedin'])) {
                             echo "<li class=\"searchLbl\" onclick='openSearch()'><i class=\"fa-solid fa-magnifying-glass\"></i> SEARCH</li>";
