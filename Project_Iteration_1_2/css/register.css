@@ -16,6 +16,7 @@ body {
     padding: 40px;
     margin-top: 30px;
     max-width: 800px;
+    margin-bottom: 30px;
 }
 
 .registration-h1{
@@ -47,7 +48,13 @@ body {
     margin-top: 5px;
 }
 
-.register-form input{
+input{
+    padding: 7px;
+}
+
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form input[type="email"]{
     height: 33px;
     border: 1px black solid;
 }
@@ -62,3 +69,22 @@ body {
     margin: auto;
     margin-top: 25px;
 }
+
+.userTypeSection p{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.userTypeSection input[type="radio"]{
+    margin-left: 10px;
+}
+
+.userTypeSection div{
+    margin-top: 10px;
+    display: none;
+}
+
+.userTypeSection input[type="password"]{
+    width: 100%;
+}
+

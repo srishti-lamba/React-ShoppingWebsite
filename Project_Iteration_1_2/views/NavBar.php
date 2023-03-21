@@ -33,7 +33,7 @@
 
                     <!-- Database Maintain Dropdown -->
                     <?php
-                        if(isset($_SESSION['loggedin']) && $_SESSION['userId'] == 1) {
+                        if(isset($_SESSION['loggedin']) && $_SESSION['isAdmin'] == 1) {
                             echo "<li class=\"dbMaintain\">"; 
                                 echo "<div class=\"dbMaintain-btn\" onclick=\"toggleDropdown()\"><i class=\"fa-solid fa-screwdriver-wrench\"></i> DB MAINTAIN</div>";
                                 echo "<div class=\"dbMaintain-options\">";

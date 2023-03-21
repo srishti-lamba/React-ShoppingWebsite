@@ -68,7 +68,17 @@
         return false;
     }
 
-    function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode){
+    function verifyAdminCode($adminCode){
+        if(!($adminCode == 1234)){
+            $_SESSION["reg-error"] = "Invalid Admin Code!";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+        return 1;
+    }
+
+    
+    function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode, $isAdmin){
         include_once('../config/CreateAndPopulateUsersTable.php');
 
         $servername = "localhost";
@@ -77,7 +87,7 @@
         $dbname = "cps630";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
-        $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$password1')";
+        $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`, isAdmin) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$password1', '$isAdmin')";
         
         try 
             { $conn->query($query); }
@@ -86,6 +96,11 @@
         
         session_unset();
         $_SESSION['register-success'] = "true";
+        //Log User in
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $name;
+        $_SESSION['failedLogin'] = false;
+        $_SESSION['isAdmin'] = $isAdmin;
         //Redirct to home page
         header("Location: ../views/home.php");
         exit();
@@ -100,6 +115,10 @@
         $password2 = test_input($_POST['reg-password2'], "Passwords");
         $address = test_input($_POST['address'], "Address");
         $postalCode = test_input($_POST['postal-code'], "Postal Code");
+        $isAdmin = 0;
+        if(!($_POST['adminCode']=="")){
+            $isAdmin = verifyAdminCode($_POST['adminCode']);
+        }
 
         if(isset($_SESSION['reg-error'])){exit();}
         if($password1 != $password2){$_SESSION['reg-error'] = "Password do not match!"; exit();}
@@ -121,7 +140,7 @@
 
 
         //If all above failed, append user to database
-        appendUserToDataBase($name, $email, $username, $telephone, $password1, $address, $postalCode);
+        appendUserToDataBase($name, $email, $username, $telephone, $password1, $address, $postalCode, $isAdmin);
     }
 
     validateForm();

@@ -5,6 +5,17 @@ $(document).ready(function() {
     $("#reg-password2").keyup(function() {
         comparePasswords($("#reg-password").val(), $(this).val());
     });
+    $('#admin').click(function() {
+        if($('#admin').is(':checked')) { 
+            $("#adminCodeDiv").css("display", "block");
+        }
+    });
+    $('#customer').click(function() {
+        if($('#customer').is(':checked')) { 
+            $("#adminCodeDiv").css("display", "none");
+            $('#adminCode').val("");
+        }
+    });
 });
 
 function comparePasswords(password, password2){

@@ -17,10 +17,11 @@
         postalCode VARCHAR(6) NOT NULL,
         loginId VARCHAR(10) NOT NULL,
         password VARCHAR(20) NOT NULL,
-        balance DECIMAL(6,2) SIGNED NOT NULL DEFAULT 0);";
+        balance DECIMAL(6,2) SIGNED NOT NULL DEFAULT 0,
+        isAdmin boolean default False);";
 
-    $query1 = "INSERT INTO USERS (user_id, userName, telephoneNum, email, address, postalCode, loginId, password) 
-            VALUES (0, 'Admin User', '4167654321', 'admin.smartcustomerservices.ca', '827 Smart Ave', 'K2J4H9', 'admin_user', '1234') ";
+    $query1 = "INSERT INTO USERS (userName, telephoneNum, email, address, postalCode, loginId, password, isAdmin) 
+            VALUES ('Admin User', '4167654321', 'admin.smartcustomerservices.ca', '827 Smart Ave', 'K2J4H9', 'admin_user', '1234', 1) ";
         
     $query2 = "INSERT INTO Users (userName, telephoneNum, email, address, postalCode, loginId, password)
               VALUES('John Smith', '4161234567', 'john.smith@gmail.com', '258 Avro Rd', 'L6A1X8', 'john_smith', '1234') ";

@@ -54,6 +54,20 @@
                 <input type="text" id="postal-code" name="postal-code" value="<?php 
                     if(isset($_SESSION['postal-code'])){
                         echo $_SESSION['postal-code'];}?>" onclick="hideRegisterSuccess()">
+
+                
+                <section class="userTypeSection">
+                    <p>I am registering as a:</p>
+                    <input type="radio" id="customer" name="userType" checked>
+                    <label for="customer">Customer</label>
+                    <input type="radio" id="admin" name="userType">
+                    <label for="admin">Admin</label>
+                    <br>
+                    <div id="adminCodeDiv">
+                        <label for="adminCode">Enter Admin Access Code:</label>
+                        <input type="password" id="adminCode" name="adminCode" placeholder="1234">
+                    </div>
+                </section>
                 
                 <button type="button" class="reg-button" onclick="validateForm()">Submit</button>
             </form>

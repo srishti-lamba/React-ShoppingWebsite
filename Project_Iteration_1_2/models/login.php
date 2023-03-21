@@ -32,6 +32,7 @@
         $_SESSION['username'] = $row['userName'];
         $_SESSION['userId'] = $row['user_id'];
         $_SESSION['failedLogin'] = false;
+        $_SESSION['isAdmin'] = $row['isAdmin'];
     }
     else{
         $_SESSION['failedLogin'] = true;
