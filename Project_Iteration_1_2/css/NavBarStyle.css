@@ -72,7 +72,9 @@ a {
         transition: width .3s;
     }
 
-/* Screen Dim */
+/* ------------------ */
+/* --- Screen Dim --- */
+/* ------------------ */
 
 #overlay {
     position: fixed;
@@ -88,7 +90,9 @@ a {
     cursor: pointer;
 }
 
-/* Login */
+/* ------------- */
+/* --- Login --- */
+/* ------------- */
 
 #loginWindow {
     position: absolute;
@@ -101,9 +105,11 @@ a {
     display: none;
     min-width: 450px;
     margin-top: 50px;
+    color: white;
 }
 
     #loginWindow input[type = "text"], #loginWindow input[type = "password"] {
+        font-weight: 500;
         border: 0;
         background: #847361;
         display: block;
@@ -118,32 +124,45 @@ a {
         min-width: 260px;
     }
 
-    ::placeholder {
-        color: white;
+        #loginWindow input[type = "text"]::placeholder, #loginWindow input[type = "password"]::placeholder {
+            font-weight: 200;
+            color: white;
+        }
+
+#loginWindow h1 {
+    font-size: revert;
+    margin: 0px auto 10px auto;
+    font-weight: 200;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+}
+
+.submit {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 40px auto;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 14px 40px;
+    min-width: 130px;
+    outline: none;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    transition: box-shadow .3s;
+}
+
+    .submit:hover {
+        box-shadow: 0 0 10px 0px rgb(0, 0, 0, 0.5);
+        transition: box-shadow .3s;
     }
 
-    #loginWindow h1 {
-        color: white;
-        font-weight: 500;
-        text-align: center;
-    }
-
-    .submit {
-        border: 0;
-        background: none;
-        display: block;
-        margin: 40px auto;
-        text-align: center;
-        background-color: white;
-        border-radius: 5px;
-        padding: 14px 40px;
-        min-width: 130px;
-        outline: none;
-        color: black;
-        cursor: pointer;
-    }
-
-/* Search */
+/* -------------- */
+/* --- Search --- */
+/* -------------- */
 
 .searchLbl {
     color: inherit;
@@ -179,6 +198,7 @@ a {
 }
 
     #searchWindow input[type = "text"] {
+        font-weight: 500;
         border: 0;
         background: #847361;
         color: white;
@@ -192,21 +212,28 @@ a {
     }
 
     #searchWindow h1 {
-        font-weight: 500;
+        font-size: revert;
+        margin: 0px auto 10px auto;
+        font-weight: 200;
         text-align: center;
+        border: none;
+        text-decoration: none;
     }
 
     #searchWindow p {
         text-align: center;
+        font-weight: 200;
     }
 
     #searchWindow label {
         display: inline-block;
         width: 100px;
         text-align: right;
+        font-weight: 200;
     }
 
 .searchBtn {
+    font-weight: 600;
     cursor: pointer;
     border: 0;
     border-radius: 4px;
@@ -254,25 +281,21 @@ a {
 
     #searchTable thead tr:first-of-type th:first-child {
         border-top-left-radius: 10px;
-        border-left: 1.5px solid #c9c0b6;
         overflow: hidden;
     }
 
     #searchTable thead tr:first-of-type th:last-child {
         border-top-right-radius: 10px;
-        border-right: 1.5px solid #c9c0b6;
         overflow: hidden;
     }
 
     #searchTable tbody tr:last-of-type td:first-child {
         border-bottom-left-radius: 10px;
-        border-left: 1.5px solid #c9c0b6;
         overflow: hidden;
     }
 
     #searchTable tbody tr:last-of-type td:last-child {
         border-bottom-right-radius: 10px;
-        border-right: 1.5px solid #c9c0b6;
         overflow: hidden;
     }
 
@@ -292,7 +315,9 @@ a {
         border-right: 1.5px solid #c9c0b6;
     }
 
-/* Database Maintain*/
+/* ------------------------- */
+/* --- Database Maintain --- */
+/* ------------------------- */
 
 .dbMaintain-btn {
     color: inherit;
