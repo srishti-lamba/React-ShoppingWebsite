@@ -168,7 +168,7 @@
                 array (
                     // Display Name | SQL Name | HTML Element Value Name | Create PHP File Name
                     array("Users", "Users", "users", "../config/CreateAndPopulateUsersTable.php"),
-                    array("User ID", "userName"),
+                    array("User ID", "user_id"),
                     array("Name", "userName"),
                     array("Phone Number", "telephoneNum"),
                     array("Email", "email"),
