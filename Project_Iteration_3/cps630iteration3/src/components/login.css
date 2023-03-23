@@ -1,0 +1,72 @@
+------------------
+/* --- Screen Dim --- */
+/* ------------------ */
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.loginWindow {
+    position: absolute;
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 20px 30px;
+    background-color: #675a4c;
+    width: 30%;
+    left: 35%;
+    /* display: none; */
+    min-width: 450px;
+    margin-top: 50px;
+    color: white;
+}
+
+    .loginWindow input[type = "text"], .loginWindow input[type = "password"] {
+        font-weight: 500;
+        border: 0;
+        background: #847361;
+        display: block;
+        margin: 20px auto;
+        text-align: left;
+        padding: 14px 10px;
+        max-width: 990px;
+        width: 78%;
+        outline: none;
+        color: white;
+        border-bottom: #644d35 3px solid;
+        min-width: 260px;
+    }
+
+        .loginWindow input[type = "text"]::placeholder, .loginWindow input[type = "password"]::placeholder {
+            font-weight: 200;
+            color: white;
+        }
+
+.loginWindow h1 {
+    font-size: revert;
+    margin: 0px auto 10px auto;
+    font-weight: 200;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+}
+
+.submit:hover {
+    box-shadow: 0 0 10px 0px rgb(0, 0, 0, 0.5);
+    transition: box-shadow .3s;
+}
+
+.errorMsg {
+    color: #ba0f37;
+    text-align: center;
+}
+
