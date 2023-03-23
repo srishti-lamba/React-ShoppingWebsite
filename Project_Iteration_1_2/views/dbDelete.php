@@ -31,6 +31,7 @@
                     <option value="locations">Locations</option>
                     <option value="trucks">Trucks</option>
                     <option value="trips">Trips</option>
+                    <option value="reviews">Reviews</option>
                 </select>
             </form>
 

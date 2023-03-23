@@ -177,7 +177,7 @@
                     array("Username", "loginId"),
                     array("Password", "password"),
                     array("Balance", "balance"),
-		    array("Admin", "isAdmin")
+                    array("Admin", "isAdmin")
                 );
                 break;
 
@@ -241,6 +241,20 @@
                     array("Destination", "destination"),
                     array("Distance", "distance"),
                     array("Truck ID", "truckId")
+                );
+                break;
+
+            case "reviews":
+                $resultArray = 
+                array (
+                    array("Reviews", "Reviews", "reviews", "../config/CreateAndPopulateReviewsTable.php"),
+                    array("Review ID", "reviewId"),
+                    array("User ID", "userID"),
+                    array("Item ID", "itemID"),
+                    array("Date", "dateTime"),
+                    array("Rating", "rating"),
+                    array("Title", "title"),
+                    array("Content", "content")
                 );
                 break;
         }
