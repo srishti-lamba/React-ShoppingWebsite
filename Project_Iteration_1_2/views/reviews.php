@@ -2,14 +2,7 @@
     require("./NavBar.php");
     unset($_SESSION['orderConfirmationMessage']);
 
-    # Review Items
-    if (!isset($_SESSION['review-items'])) {
-        header('Location: ../models/getReviews.php');
-        exit;
-    }
-    else {
-        $reviewArray = $_SESSION['review-reviews'] ?? null;
-    }
+    $reviewArray = $_SESSION['review-reviews'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +23,7 @@
             </article>
 
             <!-- Search -->
+            <form id="emptyForm" action="../models/getReviews.php" method="POST"></form>
             <form id="reviewSearchForm" action="../models/getReviews.php" method="POST">
                 <label for="searchItemList">Search:</label>
                 <input list="searchItemList" name="searchItem" value="<?php 
@@ -60,6 +54,10 @@
 
     function submitReviewSearch() {
         $("#reviewSearchForm").submit();
+    }
+
+    function submitEmpty() {
+        $("#emptyForm").submit();
     }
 
     function checkSearchInput() {
@@ -121,11 +119,16 @@
         echoJavascript("console.log('$script');");
     }
 
+    # Items
     if (isset($_SESSION['review-items'])) {
         echoJavascript("fillDatalist(\"" . $_SESSION['review-items'] . "\")");
         unset($_SESSION['review-items']);
     }
+    else {
+        echoJavascript("submitEmpty();");
+    }
 
+    # Reviews
     if ( isset($_SESSION['review-reviews']) ) {
         echoJavascript("fillReviews();");
     }

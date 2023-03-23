@@ -9,15 +9,15 @@
             header('Location: ' . $_SERVER['HTTP_REFERER'] . '?searchItem=' . $_POST["searchItem"]);
             exit;
         }
+        // Get Items
+        else {
+            getItems();
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
         
     }
 
-    // Get Items
-    else {
-        getItems();
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit;
-    }
 
 
     // -----------------
