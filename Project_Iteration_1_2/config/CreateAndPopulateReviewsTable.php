@@ -10,8 +10,8 @@
 
     $queryCreate = "CREATE TABLE Reviews(
         reviewId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        userID INT(6) NOT NULL,
-        itemID INT(6) NOT NULL,
+        userID INT(6) NOT NULL REFERENCES Users(user_id),
+        itemID INT(6) NOT NULL REFERENCES Items(item_id),
         dateTime TIMESTAMP,
         rating INT(1) NOT NULL CHECK(rating >= 0 AND rating <= 5),
         title VARCHAR(50) NOT NULL,
