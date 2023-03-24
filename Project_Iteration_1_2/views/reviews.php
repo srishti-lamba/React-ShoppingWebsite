@@ -15,10 +15,10 @@
     </head>
     <body>        
         <!-- Page -->
-        <div class="main-image">
+        <div id="main-image">
         
             <!-- Title -->
-            <article class="main-title">
+            <article id="main-title">
                 <h1>Reviews</h1>
             </article>
 
@@ -32,9 +32,27 @@
             </form>
 
             <!-- Review Cards -->
-            <main>
-                <div class="reviewCards"></div>  
-            </main>
+            <div id="reviewCards"></div>  
+
+            <!-- Write Review -->
+            <form id="writeReviewForm" action="../models/getReviews.php" method="POST">
+                <div class="box">
+                    <h4>WRITE A REVIEW</h4>
+
+                    <div>
+                        <label for="reviewTitle">Title:</label>
+                        <input name="reviewTitle" placeholder="Enter title...">
+                    </div>
+
+                    <div>
+                        <label for="reviewContent">Review:</label>
+                        <textarea name="reviewContent" rows="10" maxlength="1000" placeholder="Write review..."></textarea>
+                    </div>
+
+                    <button class="submit" type="button" name="reviewWrite" value="reviewWrite" onclick="submitReviewWrite()">Submit</button>
+                </div> 
+            </form>
+
         </div>
     </body>
 </html>

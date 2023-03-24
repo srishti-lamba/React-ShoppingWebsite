@@ -3,19 +3,18 @@ $(document).ready(function() {
     // Page height
     function setMinHeight() {
         var navHeight = $("header").outerHeight(true);
-
-        if ( (window.innerWidth <= 993) ) 
-            { $(".main-image").css("min-height", window.innerHeight - navHeight - 17); }
-        else 
-            { $(".main-image").css("min-height", window.innerHeight - navHeight); }
+        $("#main-image").css("min-height", $(window).height() - navHeight);
     };
 
-    setMinHeight();
-    window.onresize = setMinHeight;
+    $(window).resize(function () {
+        setMinHeight();
+    });
 
     $("#reviewSearchForm input").blur(function(){
         checkSearchInput();
     });
+
+    setMinHeight();
 
 });
 
@@ -76,5 +75,8 @@ function fillReviews() {
 
     }
         
-    $(".reviewCards").html(resultHtml);
+    $("#reviewCards").html(resultHtml);
+
+    if (resultHtml != "")
+        { $("#writeReviewForm").css("display", "block"); }
 }

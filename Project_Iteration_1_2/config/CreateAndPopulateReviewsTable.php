@@ -15,7 +15,7 @@
         dateTime TIMESTAMP,
         rating INT(1) NOT NULL CHECK(rating >= 0 AND rating <= 5),
         title VARCHAR(50) NOT NULL,
-        content VARCHAR(500) NOT NULL);";
+        content VARCHAR(1000) NOT NULL);";
 
     $query1 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
             VALUES ('3', '1', '2023-01-16', '4', 'Family loves it!', 'My family loves this couch! It is well made and it\'s quality is really good. Shipping was super fast!') ";

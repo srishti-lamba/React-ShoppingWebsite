@@ -1,6 +1,3 @@
-var queryDisplay = "";
-var querySQL = "";
-
 $(document).ready(function () {
 
     $('.queryColumn input').change(function () {

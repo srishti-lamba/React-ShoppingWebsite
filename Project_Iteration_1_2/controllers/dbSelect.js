@@ -1,5 +1,3 @@
-var queryDisplay = "";
-var querySQL = "";
 var resultTableName = "";
 
 $(document).ready(function () {

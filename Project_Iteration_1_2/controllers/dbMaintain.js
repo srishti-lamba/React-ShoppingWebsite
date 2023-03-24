@@ -1,3 +1,6 @@
+var queryDisplay = "";
+var querySQL = "";
+
 $(document).ready(function () {
 
     $('#tableName').change(function () {
