@@ -39,7 +39,7 @@
             VALUES ('3', '4', '2022-6-16', '4', 'Love the material!', 'The material is great! It feels very soft.') ";
 
     $query8 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('4', '5', '2023-02-19', '5', 'Huge storage!', 'There's tons of storage inside! It looks fabulous too!') ";
+            VALUES ('4', '5', '2023-02-19', '5', 'Huge storage!', 'There\'s tons of storage inside! It looks fabulous too!') ";
 
     $query9 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
             VALUES ('5', '6', '2023-01-29', '1', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
@@ -54,22 +54,22 @@
             VALUES ('5', '9', '2022-9-11', '2', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query13 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('3', '', '2023-01-25', '4', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('3', '10', '2023-01-25', '4', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query14 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('4', '', '2022-11-13', '5', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('4', '11', '2022-11-13', '5', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query15 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('5', '', '2023-02-02', '3', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('5', '12', '2023-02-02', '3', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query16 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('3', '', '2023-01-10', '2', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('3', '13', '2023-01-10', '2', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query17 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('4', '', '2023-03-03', '5', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('4', '14', '2023-03-03', '5', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     $query18 = "INSERT INTO Reviews (userID, itemID, dateTime, rating, title, content) 
-            VALUES ('5', '', '2022-12-31', '4', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
+            VALUES ('5', '15', '2022-12-31', '4', 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.') ";
 
     //Drop
     //try {$conn-> query($queryDrop);}
