@@ -26,16 +26,14 @@
             <form id="emptyForm" action="../models/getReviews.php" method="POST"></form>
             <form id="reviewSearchForm" action="../models/getReviews.php" method="POST">
                 <label for="searchItemList">Search:</label>
-                <input list="searchItemList" name="searchItem" value="<?php 
-                            if(isset($_GET["searchItem"])){
-                                echo $_GET["searchItem"];}?>">
+                <input list="searchItemList" name="searchItem" placeholder="Enter item to search...">
                 <datalist id="searchItemList"></datalist>
-                <button class="submit" type="button" name="reviewSearch" value="reviewSearch" onclick="submitReviewSearch()">Go</button>
+                <button class="submit" type="button" name="reviewSearch" value="reviewSearch" onclick="submitReviewSearch()" style="display: none">Go</button>
             </form>
 
             <!-- Review Cards -->
-            <main class="flex reviewCards">
-                
+            <main>
+                <div class="reviewCards"></div>  
             </main>
         </div>
     </body>

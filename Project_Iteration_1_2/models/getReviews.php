@@ -1,18 +1,23 @@
 <?php
     session_start();
+    
+    include("../config/CreateAndPopulateUsersTable.php");
+    include("../config/CreateAndPopulateItemsTable.php");
+    include("../config/CreateAndPopulateReviewsTable.php");
+
 
     // Get Reviews
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
 	    if ( isset($_POST["searchItem"]) ) {
             getReviews();
-            header('Location: ' . $_SERVER['HTTP_REFERER'] . '?searchItem=' . $_POST["searchItem"]);
+            header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
             exit;
         }
         // Get Items
         else {
             getItems();
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
             exit;
         }
         

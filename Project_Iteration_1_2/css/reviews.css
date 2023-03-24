@@ -16,7 +16,7 @@ h1 {
     font-size: 40px;
 }
 
-.flex {
+.reviewCards {
     display: flex;
     justify-content: center;
 }
@@ -87,4 +87,28 @@ h2 {
     flex: 1;
     text-align: center;
     padding: 15px;
+}
+
+/* -------------- */
+/* --- Search --- */
+/* -------------- */
+
+#reviewSearchForm {
+    padding: 10px;
+    margin: 20px auto 10px auto;
+    width: 50%;
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#reviewSearchForm label {
+    width: 600px;
+}
+
+#reviewSearchForm input {
+    width: calc(100% - 4em);
+    font-size: 16px;
+    padding: 0px 5px;
 }
