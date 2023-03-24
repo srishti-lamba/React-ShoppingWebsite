@@ -24,7 +24,7 @@
 
             <!-- Search -->
             <form id="emptyForm" action="../models/getReviews.php" method="POST"></form>
-            <form id="reviewSearchForm" action="../models/getReviews.php" method="POST">
+            <form id="reviewSearchForm" class="box" action="../models/getReviews.php" method="POST">
                 <label for="searchItemList">Search:</label>
                 <input list="searchItemList" name="searchItem" placeholder="Enter item to search...">
                 <datalist id="searchItemList"></datalist>
@@ -43,6 +43,19 @@
     var reviewArray = <?php echo json_encode($reviewArray); ?>;
 
     $(document).ready(function() {
+
+        // Page height
+        function setMinHeight() {
+            var navHeight = $("header").outerHeight(true);
+
+            if ( (window.innerWidth <= 993) ) 
+                { $(".main-image").css("min-height", window.innerHeight - navHeight - 17); }
+            else 
+                { $(".main-image").css("min-height", window.innerHeight - navHeight); }
+        };
+
+        setMinHeight();
+        window.onresize = setMinHeight;
 
         $("#reviewSearchForm input").blur(function(){
             checkSearchInput();
@@ -85,7 +98,7 @@
 
         for (let i = 0; i < reviewArray.length; i++) {
 
-            resultHtml += `<div class="card">`;
+            resultHtml += `<div class="card box">`;
             resultHtml +=       `<div class="user-container">`;
             resultHtml +=           `<img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>`;
             resultHtml +=           `<div class="reviewInfo">`;
