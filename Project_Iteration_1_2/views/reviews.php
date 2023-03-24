@@ -89,15 +89,20 @@
             resultHtml +=       `<div class="user-container">`;
             resultHtml +=           `<img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>`;
             resultHtml +=           `<div class="reviewInfo">`;
-            resultHtml +=               `<p>${reviewArray[i][1]}</p>`;
+            resultHtml +=               `<h3>${reviewArray[i][1]}</h3>`;            //Name
             
             for (let star = 0; star < parseInt(reviewArray[i][4]); star++) {
-                resultHtml +=           `<i class="fa fa-star checked"></i>`;
+                resultHtml +=           `<i class="fa fa-star star"></i>`;          //Rating
+            }
+
+            for (let star = parseInt(reviewArray[i][4]); star < 5; star++) {
+                resultHtml +=           `<i class="fa fa-star-o star"></i>`;        //Rating
             }
             
             resultHtml +=           `</div>`;
             resultHtml +=       `</div>`;
-            resultHtml +=       `<p class="review center">${reviewArray[i][6]}</p>`;
+            resultHtml +=       `<h4>${reviewArray[i][5]}</h4>`;                    //Title
+            resultHtml +=       `<p class="review">${reviewArray[i][6]}</p>`;       //Content
             resultHtml += `</div>`;
 
         }
