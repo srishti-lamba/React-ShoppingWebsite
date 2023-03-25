@@ -10,24 +10,20 @@ $(document).ready(function() {
         setMinHeight();
     });
 
+    // Search check
     $("#reviewSearchForm input").blur(function(){
         checkSearchInput();
     });
 
     // Star rating
-    //$(".rate").change(function () {
-    //    console.log(`rate value: ${$(".rate").val()}`)
-    //    $(".rate").each(function (index, domEle) {
-    //        if ( $(this).val() <= $(".rate").val() )
-    //            { $(this).html(" <i class='fa fa-star star'></i> "); }
-    //        else
-    //            { $(this).html(" <i class='fa fa-star-o star'></i> "); }
-    //    });
-    //});
+    $("#reviewStars label").css("color", "lightgray");
 
-    //https://codepen.io/hesguru/pen/BaybqXv
-    //https://stackoverflow.com/questions/24211730/jquery-event-listener-for-radio-buttons
-    //http://localhost/repos/Project_Iteration_1_2/views/reviews.php
+    $("input[type='radio'][name='rate']").change(function () {
+        let value = $(this).val();
+        $("#reviewStarsText").html(`${value} stars`);
+
+        $("#reviewStars label").css("color", "");
+    });
 
     setMinHeight();
 

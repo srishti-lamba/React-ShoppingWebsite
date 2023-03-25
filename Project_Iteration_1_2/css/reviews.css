@@ -194,22 +194,49 @@ h2 {
                 width: calc( 100% - 65px );
             }
 
+        /* Star Box */
+
         #writeReviewForm .box #reviewStars {
             display: inline-block;
-            padding: 0px;
+            padding: 0px 0px 0px 60px;
+            margin: 0px
         }
 
             #writeReviewForm .box #reviewStars input[type='radio'] {
-                display: none;
+                position: absolute;
+                opacity: 0;
+                width: 1em;
+                height: 1em;
             }
 
-                #writeReviewForm .box #reviewStars input[type='radio'] + label {
+                /* Star Focus for Accessability */
 
+                #writeReviewForm .box #reviewStars input[type='radio']:focus + label {
+                    outline: 3px solid orange;
+                    outline-offset: 2px;
+                }
+
+                #writeReviewForm .box #reviewStars input[type='radio']:focus:not(:focus-visible) + label {
+                    outline: none;
+                }
+
+                /* Star Colour Change */
+
+                #writeReviewForm .box #reviewStars input[type='radio'] + label {
+                    padding: 0px;
+                    width: fit-content;
+                    color: lightgray;
                 }
 
                 #writeReviewForm .box #reviewStars input[type='radio']:checked + label {
-                    color: black;
+                    color: orange;
                 }
+
+                #writeReviewForm .box #reviewStars input[type='radio'] + label:not( #reviewStars input[type='radio']:checked ~ label) {
+                    color: orange;
+                }
+
+        /* Submit Button */
 
         #writeReviewForm .box button {
             box-shadow: 0 0 10px 0px rgb(0, 0, 0, 0.2);
