@@ -29,6 +29,21 @@ h2 {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+/*For Screen Readers*/
+.visuallyHidden {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+    clip: rect(1px, 1px, 1px, 1px); /*maybe deprecated but we need to support legacy browsers */
+    clip-path: inset(50%); /*modern browsers, clip-path works inwards from each corner*/
+    white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+}
+
 /* ------------ */
 /* --- Main --- */
 /* ------------ */
@@ -119,7 +134,11 @@ h2 {
             }
 
             /* Rating */
-            .card .user-container .reviewInfo .star {
+            .card .user-container .reviewInfo .star-unchecked {
+                color: lightgrey;
+            }
+
+            .card .user-container .reviewInfo .star-checked {
                 color: orange;
             }
 
@@ -169,11 +188,28 @@ h2 {
                 vertical-align: top;
             }
 
-            #writeReviewForm .box div input, #writeReviewForm .box div textarea {
+            #writeReviewForm .box div input[type='text'], #writeReviewForm .box div textarea {
                 font-size: 16px;
                 font-weight: 500;
                 width: calc( 100% - 65px );
             }
+
+        #writeReviewForm .box #reviewStars {
+            display: inline-block;
+            padding: 0px;
+        }
+
+            #writeReviewForm .box #reviewStars input[type='radio'] {
+                display: none;
+            }
+
+                #writeReviewForm .box #reviewStars input[type='radio'] + label {
+
+                }
+
+                #writeReviewForm .box #reviewStars input[type='radio']:checked + label {
+                    color: black;
+                }
 
         #writeReviewForm .box button {
             box-shadow: 0 0 10px 0px rgb(0, 0, 0, 0.2);

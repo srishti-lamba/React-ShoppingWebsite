@@ -39,9 +39,26 @@
                 <div class="box">
                     <h4>WRITE A REVIEW</h4>
 
+                    <div id="reviewStars">
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text"> <span class="visuallyHidden">1</span> <i class="fa fa-star star"></i> </label>
+
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text"> <span class="visuallyHidden">2</span> <i class="fa fa-star star"></i> </label>
+
+                        <input type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text"> <span class="visuallyHidden">3</span> <i class="fa fa-star star"></i> </label>
+
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text"> <span class="visuallyHidden">4</span> <i class="fa fa-star star"></i> </label>
+
+                        <input type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text"> <span class="visuallyHidden">5</span> <i class="fa fa-star star"></i> </label>
+                    </div>
+
                     <div>
                         <label for="reviewTitle">Title:</label>
-                        <input name="reviewTitle" placeholder="Enter title...">
+                        <input type="text" name="reviewTitle" placeholder="Enter title...">
                     </div>
 
                     <div>

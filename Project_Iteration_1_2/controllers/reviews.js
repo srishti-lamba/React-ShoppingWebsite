@@ -14,6 +14,21 @@ $(document).ready(function() {
         checkSearchInput();
     });
 
+    // Star rating
+    //$(".rate").change(function () {
+    //    console.log(`rate value: ${$(".rate").val()}`)
+    //    $(".rate").each(function (index, domEle) {
+    //        if ( $(this).val() <= $(".rate").val() )
+    //            { $(this).html(" <i class='fa fa-star star'></i> "); }
+    //        else
+    //            { $(this).html(" <i class='fa fa-star-o star'></i> "); }
+    //    });
+    //});
+
+    //https://codepen.io/hesguru/pen/BaybqXv
+    //https://stackoverflow.com/questions/24211730/jquery-event-listener-for-radio-buttons
+    //http://localhost/repos/Project_Iteration_1_2/views/reviews.php
+
     setMinHeight();
 
 });
@@ -53,19 +68,24 @@ function fillReviews() {
 
     for (let i = 0; i < reviewArray.length; i++) {
 
+        let starNum = reviewArray[i][4];
+
         resultHtml += `<div class="card box">`;
         resultHtml +=       `<div class="user-container">`;
         resultHtml +=           `<img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>`;
         resultHtml +=           `<div class="reviewInfo">`;
         resultHtml +=               `<h3>${reviewArray[i][1]}</h3>`;            //Name
-            
-        for (let star = 0; star < parseInt(reviewArray[i][4]); star++) {
-            resultHtml +=           `<i class="fa fa-star star"></i>`;          //Rating
+
+        for (let star = 0; star < parseInt(starNum); star++) {
+            resultHtml +=           `<i class="fa fa-star star-checked"></i>`;      //Rating
         }
 
-        for (let star = parseInt(reviewArray[i][4]); star < 5; star++) {
-            resultHtml +=           `<i class="fa fa-star-o star"></i>`;        //Rating
+        for (let star = parseInt(starNum); star < 5; star++) {
+            resultHtml +=           `<i class="fa fa-star star-unchecked"></i>`;        //Rating
         }
+
+        // For screen readers
+        resultHtml +=               `<span class="visuallyHidden">${starNum} stars</span>`
             
         resultHtml +=           `</div>`;
         resultHtml +=       `</div>`;
