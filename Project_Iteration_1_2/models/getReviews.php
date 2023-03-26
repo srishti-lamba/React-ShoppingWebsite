@@ -81,7 +81,7 @@
         
         echo("<script>console.log(\"Query: $query\")</script>");
         
-        sendQuery($query);
+        $resultSql = writeQuery($query);
     }
 
     // ------------------------
@@ -102,6 +102,26 @@
         }
         catch(mysqli_sql_exception $exception) {
             echo("<script>console.log(`Error on getReviews.php: $conn->error`)</script>");
+            exit;
+        }
+
+        return $resultSql;
+    }
+
+    function writeQuery($query) {
+        $servername = "localhost";
+        $usrnm = "root";
+        $pswrd = "";
+        $dbname = "cps630";
+        $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
+
+        try {
+            $conn->query($query);
+            $_SESSION['review-success'] = true;
+        }
+        catch(mysqli_sql_exception $exception) {
+            echo("<script>console.log(`Error on getReviews.php: $conn->error`)</script>");
+            $_SESSION['review-error'] = $conn->error;
             exit;
         }
 

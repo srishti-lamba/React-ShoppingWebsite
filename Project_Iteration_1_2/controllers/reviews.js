@@ -86,3 +86,14 @@ function showWriteReview(userID, itemID) {
 
     $("#writeReviewForm").css("display", "block");
 }
+
+function showSuccessMsg() {
+    $("#reviewSearchForm + .box").css("display", "block");
+    $("#successMsg").css("display", "block");
+}
+
+function showErrorMsg(msg) {
+    $("#reviewSearchForm + .box").css("display", "block");
+    $("#errorMsg").css("display", "block");
+    $("#errorMsg").html(msg);
+}

@@ -30,6 +30,12 @@
                 <button class="submit" type="button" name="reviewSearch" value="reviewSearch" onclick="submitReviewSearch()" style="display: none">Go</button>
             </form>
 
+            <!-- Result -->
+            <div class="box" style="display:none">
+                <div id="successMsg">Your review has been posted.</div>
+                <div id="errorMsg"></div>
+            </div>
+
             <!-- Review Cards -->
             <div id="reviewCards"></div>  
 
@@ -91,6 +97,18 @@
     // Items
     if (isset($_SESSION['review-items'])) {
         echoJavascript("fillDatalist(`" . $_SESSION['review-items'] . "`)");
+
+        // Error
+        if (isset($_SESSION['review-error'])) {
+            echoJavascript("showErrorMsg('" . $_SESSION['review-error'] . "');");
+            unset($_SESSION['review-error']);
+        }
+
+        // Success
+        if (isset($_SESSION['review-success'])) {
+            echoJavascript("showSuccessMsg();");
+            unset($_SESSION['review-success']);
+        }
 
         // Reviews
         if (isset($_SESSION['review-reviews'])) {
