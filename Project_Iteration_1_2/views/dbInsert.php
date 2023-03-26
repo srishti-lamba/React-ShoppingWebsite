@@ -31,6 +31,7 @@
                     <option value="locations">Locations</option>
                     <option value="trucks">Trucks</option>
                     <option value="trips">Trips</option>
+                    <option value="reviews">Reviews</option>
                 </select>
             </form>
 
@@ -61,131 +62,9 @@
     </body>
 </html>
 
-<script>
-    var columnArray = <?php echo json_encode($columnArray); ?>;
-    var queryDisplay = "";
-    var querySQL = "";
-
-    $(document).ready(function() {
-
-        $('#tableName').change(function(){
-            $("#tableNameForm").submit();
-        });
-
-        $('.queryColumn input').change(function(){
-            updateQuery();
-            $("#querySubmitForm").css("display", "block");
-        });
-
-    });
-
-    function showErrorMessage(error) {
-        $("#errorMsg").html(error);
-    }
-
-    function showSuccessMessage() {
-        $("#successMsg").html("Record has been successfully inserted.");
-    }
-
-    function displayTable(tableHtml) {
-        $("#tableView").css("display", "block");
-        $("#tableView table").html(tableHtml);
-        $("#tableView p").html(columnArray[0][0].toUpperCase() + " TABLE");
-    }
-
-    function updateQueryDisplay() {
-        $("#queryDisplay").html(queryDisplay);
-    }
-
-    function displayColumns() {
-        $("#inputValuesForm").css("display", "block");
-
-        if (columnArray != "") {
-            $("#tableName option[value='select']").prop("selected", false);
-            $("#tableName option[value='" + columnArray[0][2] + "']").prop("selected", true);
-            var resultHtml = "";
-            for (let i = 1; i < columnArray.length; i++) {
-                let display = columnArray[i][0];
-                let value = columnArray[i][1];
-
-                resultHtml += `<div class='queryColumn'>`;
-                resultHtml += `<label for='${value}'>${display}</label>`;
-                resultHtml += `<input type='text' name='${value}' id='db-${value}' placeholder='Enter value'>`;
-                resultHtml += `</div>`;
-            }
-            $("#inputValues").html(resultHtml);
-        }
-
-        if ( $("#tableView table").width() > $('#tableView').parent().width()) {
-            $("#tableView table").css("width", "100%");
-        }
-    }
-
-    function resetQuery() {
-        if (columnArray != "") {
-            queryDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`;
-            querySQL = `INSERT INTO ${columnArray[0][1]}`;
-            updateQueryDisplay();
-        }
-    }
-
-    function updateQuery() {
-        resetQuery();
-
-        var disColArr = [];
-        var sqlColArr = [];
-        var valArr = [];
-
-        $(".queryColumn").each(function(index, domEle) {
-            let value = $(this).children("input").val();
-
-            // Getting used columns
-            if (value != "") {
-                disColArr.push(columnArray[index+1][0]);
-                sqlColArr.push(columnArray[index+1][1]);
-                valArr.push(value);
-            }
-        });
-
-        if (disColArr.length > 0) {
-            // Part 1 of query
-            queryDisplay += "(";
-            querySQL += "(";
-
-            for (let i = 0; i < disColArr.length; i++) {
-                if (i != 0) {
-                    queryDisplay += ", ";
-                    querySQL += ", ";
-                }
-                queryDisplay += disColArr[i];
-                querySQL += sqlColArr[i];
-            }
-
-            // Part 2 of Query
-            queryDisplay += ") VALUES (";
-            querySQL += ") VALUES (";
-
-            for (let i = 0; i < valArr.length; i++) {
-                if (i != 0) {
-                    queryDisplay += ", ";
-                    querySQL += ", ";
-                }
-                queryDisplay += `'<div class="bold">${valArr[i]}</div>'`;
-                querySQL += `'${valArr[i]}'`;
-            }
-
-            queryDisplay += ");";
-            querySQL += ");";
-        }
-        updateQueryDisplay();
-    }
-
-    function submitQuery() {
-        $("#querySubmit").val(querySQL);
-        $("#querySubmitForm").submit();
-    }
-
-</script>
+<script> var columnArray = <?php echo json_encode($columnArray); ?>; </script>
+<script src="../controllers/dbMaintain.js"></script>
+<script src="../controllers/dbInsert.js"></script>
 
 <?php
 
