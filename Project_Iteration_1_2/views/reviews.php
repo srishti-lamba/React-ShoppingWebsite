@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/reviews.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="../controllers/reviews.js"></script>
     </head>
     <body>        
         <!-- Page -->
@@ -77,9 +78,6 @@
     </body>
 </html>
 
-
-<script src="../controllers/reviews.js"></script>
-
 <?php
    
     function echoJavascript($script) {
@@ -97,14 +95,19 @@
         // Reviews
         if (isset($_SESSION['review-reviews'])) {
             echoJavascript("fillReviews(`" . $_SESSION['review-reviews'] . "`)");
+
+            //Write
+            if (  isset($_SESSION['review-search']) && isset($_SESSION['userId']) && $_SESSION['review-reviews'] != "" ) {
+                echoJavascript("showWriteReview('" . $_SESSION['userId'] . "', '" . $_SESSION['review-search'] . "');");
+                unset($_SESSION['review-search']);
+            }
+
             unset($_SESSION['review-reviews']);
         }
 
         unset($_SESSION['review-items']);
-        consoleLog("fillDatalist");
     }
     else {
-        consoleLog("fetchDatalist");
         echoJavascript("submitEmpty();");
     }
 

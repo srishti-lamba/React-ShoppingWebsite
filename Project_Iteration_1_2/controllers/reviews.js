@@ -77,7 +77,12 @@ function fillDatalist(data) {
 
 function fillReviews(data) {        
     $("#reviewCards").html(data);
+}
 
-    if (data != "")
-        { $("#writeReviewForm").css("display", "block"); }
+function showWriteReview(userID, itemID) {
+
+    $("#reviewUserID").val(userID);
+    $("#reviewItemID").val(itemID);
+
+    $("#writeReviewForm").css("display", "block");
 }
