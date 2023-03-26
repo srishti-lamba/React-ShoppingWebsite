@@ -1,14 +1,17 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect } from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
-import { useSelector } from "react-redux";
+import { selectOrderId } from "../features/orderIdSlice";
+import { resetOrderId } from "../features/orderIdSlice";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import ProductCard from "../components/productCard";
 import { useNavigate } from "react-router-dom";
 import './home.css';
 
 const Home = ({showLogin, toggleLogin}) => {
+    const dispatch = useDispatch();
     const [productCategory, setProductCategory] = useState('living room');
     const [categoryDisplay, setCategoryDisplay] = useState('Living Room');
     const [shoppingCart, setShoppingCart] = useState([]);
@@ -16,6 +19,7 @@ const Home = ({showLogin, toggleLogin}) => {
     const [products, setProducts] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
     const user = useSelector(selectUser);
+    const orderId = useSelector(selectOrderId);
     const navigate = useNavigate();
     {user !== null && toggleLogin(false)}
 
@@ -94,6 +98,15 @@ const Home = ({showLogin, toggleLogin}) => {
         }
     }, [])
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('hello')
+            dispatch(resetOrderId());
+        }, 30000)
+
+        return () => clearTimeout(timer);
+    }, [])
+
 
 
     const checkOutOrder = () => {
@@ -122,6 +135,8 @@ const Home = ({showLogin, toggleLogin}) => {
                     <p>- Furniture Department -</p>
                 </article>
             </div>
+
+            {orderId !== null && <p className="orderNotification">Your order id is {orderId.orderId}, use this number to track your order!</p>}
 
             <div className="product-container">
             <h1 className="center">FURNITURE</h1>

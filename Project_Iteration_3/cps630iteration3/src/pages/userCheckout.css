@@ -1,0 +1,153 @@
+.formContainer{
+    display: flex;
+    justify-content: center
+}
+
+.mainContainer {
+    background-color: white;
+    margin: 15px;
+    margin-right: 0px;
+    width: 70%;
+    max-width: 900px;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.selectBranchContainer {
+    margin-top: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+}
+
+.selectBranchContainer input {
+    margin: 7px 0px 7px 0px;
+}
+
+.selectBranchContainer input {
+    padding: 5px;
+}
+
+.locationSelector, .selectPaymentOption {
+    margin-top: 5px;
+    background-color: #8D7B68;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.selectBranchHeader{
+    align-self: flex-start;
+    border-bottom: 2px solid #EDF1D6;
+    width: 95%;
+    margin: auto;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+
+.errorMessage {
+    color:red;
+    display: none;
+}
+
+.paymentContainer h1{
+    font-weight: 600;
+    border-bottom: 2px solid #EDF1D6;
+    width: 95%;
+    margin: auto;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.aside-flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.submitContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.submitContainer > input {
+    padding: 10px 20px 10px 20px;
+    background-color: #8D7B68;
+    border: none;
+    color: white;
+    cursor:pointer;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.submitContainer > input:hover {
+    background-color: #3d546f;
+}
+
+.destination, .cardNumber {
+    height: 36px;
+    width: 449px;
+    border-radius: 4px;
+    margin-bottom: -5px;
+    margin-top: 5px;
+    border: 3px solid #8D7B68;
+}
+
+.mapErrMsg{
+    color: red;
+    margin-top: 8px;
+    display: none;
+}
+
+.distanceMsg{
+    display: none;
+}
+
+.distanceMsg p{
+    margin-top: 9px;
+    font-size: 15px;
+    font-weight: 10px;
+    display: inline-block;
+}
+
+
+.googleMap {
+    width: 90%;
+    height: 500px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/*Side Bar css*/
+.aside-container {
+    background-color: white;
+    margin: 15px;
+    margin-left: 8px;
+    width:30%;
+    max-width: 385px;
+    margin-bottom: 45%;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.aside-h1{
+    border-bottom: 2px solid #EDF1D6;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.shoppinglist {
+    background-color: white;
+}
+
+.shoppinglist td {
+    padding: 10px;
+}

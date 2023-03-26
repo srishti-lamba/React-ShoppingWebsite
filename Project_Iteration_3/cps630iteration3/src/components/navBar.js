@@ -4,6 +4,7 @@ import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { resetUser } from '../features/userSlice';
+import { resetOrderId } from '../features/orderIdSlice';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ const NavBar = ({toggleLogin}) => {
             toggleLogin(true)
         } else {
             dispatch(resetUser())
+            dispatch(resetOrderId())
             navigate('/')
         }
     }
