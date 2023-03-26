@@ -35,7 +35,6 @@ const Services = ({showLogin, toggleLogin}) => {
                             select a branch location, date and time for delivery, and a destination for delivery. All you need to 
                             do is review and confirm your purchase. Before you know it, your order will be ready on the front of your doorstep.</p>
                         <p className="redirect center"><Link to='/'>Go to Cart</Link></p>
-                        {/* need to update link one processorder page is made */}
                     </div>
                     <div className="services-card">
                         <img src="https://cdn-icons-png.flaticon.com/512/9078/9078956.png"/>

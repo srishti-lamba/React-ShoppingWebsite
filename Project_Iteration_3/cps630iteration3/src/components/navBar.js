@@ -53,9 +53,8 @@ const NavBar = ({toggleLogin}) => {
             </nav>
 
             <ul className="right">
-                <li>
-                    <button className='sign-up'>Sign-Up</button>
-                </li>
+                {user === null ? <li><button onClick={() => navigate('/signup')} className='sign-up'>Sign-Up</button></li> : <li>Hello, {user.user.userName}</li>}
+                
 
                 <li>
                     <button className='login' onClick={loginBtnOnClick} >{user === null ? "Login" : "Logout"}</button>
