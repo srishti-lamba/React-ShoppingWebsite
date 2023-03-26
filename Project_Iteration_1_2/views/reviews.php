@@ -91,44 +91,40 @@
     }
 
     function consoleLog($script) {
-        echoJavascript("console.log('$script');");
+        echoJavascript("console.log(`$script`);");
     }
 
     // Items
     if (isset($_SESSION['review-items'])) {
         echoJavascript("fillDatalist(`" . $_SESSION['review-items'] . "`)");
-
-        // Error
-        if (isset($_SESSION['review-error'])) {
-            echoJavascript("showErrorMsg('" . $_SESSION['review-error'] . "');");
-            unset($_SESSION['review-error']);
-        }
-
-        // Success
-        if (isset($_SESSION['review-success'])) {
-            echoJavascript("showSuccessMsg();");
-            unset($_SESSION['review-success']);
-        }
-
-        // Reviews
-        if (isset($_SESSION['review-reviews'])) {
-            echoJavascript("fillReviews(`" . $_SESSION['review-reviews'] . "`)");
-
-            //Write
-            if (  isset($_SESSION['review-search']) && isset($_SESSION['userId']) && $_SESSION['review-reviews'] != "" ) {
-                echoJavascript("showWriteReview('" . $_SESSION['userId'] . "', '" . $_SESSION['review-search'] . "');");
-                unset($_SESSION['review-search']);
-            }
-
-            unset($_SESSION['review-reviews']);
-        }
-
         unset($_SESSION['review-items']);
     }
     else {
         echoJavascript("submitEmpty();");
+        exit;
     }
 
-    foreach ($_SESSION as $key=>$val)
-    echo $key.": ".$val."<br/>";
+    // Error
+    if (isset($_SESSION['review-error'])) {
+        echoJavascript("showErrorMsg('" . $_SESSION['review-error'] . "');");
+        unset($_SESSION['review-error']);
+    }
+
+    // Success
+    if (isset($_SESSION['review-success'])) {
+        echoJavascript("showSuccessMsg();");
+        unset($_SESSION['review-success']);
+    }
+
+    //Write
+    if (  isset($_SESSION['review-search']) && isset($_SESSION['userId']) && $_SESSION['review-reviews'] != "" ) {
+        echoJavascript("showWriteReview('" . $_SESSION['userId'] . "', '" . $_SESSION['review-search'] . "');");
+        unset($_SESSION['review-search']);
+    }
+
+    // Reviews
+    if (isset($_SESSION['review-reviews'])) {
+        echoJavascript("fillReviews(`" . $_SESSION['review-reviews'] . "`)");
+        unset($_SESSION['review-reviews']);
+    }
 ?>

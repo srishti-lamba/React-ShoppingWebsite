@@ -87,6 +87,7 @@
     if(isset($_SESSION['db-error']) && $_SESSION['db-error'] <> ""){
         echoJavascript("showErrorMessage(`" . $_SESSION['db-error'] . "`);");
         unset($_SESSION['db-error']);
+        unset($_SESSION['db-columns']);
     }
 
     if(isset($_SESSION['db-tableView']) && $_SESSION['db-tableView'] <> ""){
@@ -94,6 +95,6 @@
         echoJavascript("resetQuery();");
         echoJavascript("displayColumns();");
         unset($_SESSION['db-tableView']);
+        unset($_SESSION['db-columns']);
     }
-
 ?>
