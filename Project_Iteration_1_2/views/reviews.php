@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>About Us</title>
+        <title>Reviews</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/reviews.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -84,7 +84,7 @@
                         <textarea id="reviewContent" name="reviewContent" rows="10" maxlength="1000" placeholder="Write review..."></textarea>
                     </div>
 
-                    <button class="submit" type="button" name="reviewWrite" value="reviewWrite" onclick="submitReviewWrite()">Submit</button>
+                    <button class="submit" name="reviewWrite" value="reviewWrite" onclick="submitReviewWrite()">Submit</button>
                 </div> 
             </form>
 

@@ -53,6 +53,10 @@ function submitReviewSearch(data = "") {
 }
 
 function submitReviewWrite() {
+    if (document.querySelectorAll("input[type='radio'][name='reviewRating']:checked").length === 0 ) {
+        $("input[type='radio'][name='reviewRating']").val("0");
+    }
+
     $("#writeReviewForm").submit();
 }
 

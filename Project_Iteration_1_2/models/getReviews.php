@@ -16,9 +16,18 @@
         }
 
         // Write Review
-        else if ( isset($_POST["reviewUserID"]) && isset($_POST["reviewItemID"]) && isset($_POST["reviewRating"]) && isset($_POST["reviewTitle"]) && isset($_POST["reviewContent"]) ) {
+        else if ( isset($_POST["reviewUserID"]) &&  isset($_POST["reviewItemID"]) &&
+                isset($_POST["reviewTitle"]) && $_POST["reviewTitle"] != "" &&
+                isset($_POST["reviewContent"]) && $_POST["reviewContent"] != "" ) {
             $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
             writeReview();
+            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["reviewItemName"] );
+        }
+
+        // Write Review failed
+        else if ( isset($_POST["reviewWrite"]) ) {
+            $_SESSION['review-error'] = "Please fill all fields to submit a review.";
+            $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
             header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["reviewItemName"] );
         }
 
@@ -71,9 +80,12 @@
     function writeReview() {
         $userID = $_POST["reviewUserID"];
         $itemID = $_POST["reviewItemID"];
-        $rating = $_POST["reviewRating"];
+        $rating = 0;
         $title = $_POST["reviewTitle"];
         $content = $_POST["reviewContent"];
+
+        if ( isset($_POST["reviewRating"]) )
+            { $rating = $_POST["reviewRating"]; }
 
         $userID = str_replace("'", "\'", $userID);
         $itemID = str_replace("'", "\'", $itemID);
@@ -103,6 +115,7 @@
         }
         catch(mysqli_sql_exception $exception) {
             echo("<script>console.log(`Error on getReviews.php: $conn->error`)</script>");
+            $_SESSION['review-error'] = $conn->error;
             exit;
         }
 
