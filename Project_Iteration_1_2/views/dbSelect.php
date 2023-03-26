@@ -10,24 +10,31 @@
     <head>
         <meta char="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Database: Select</title>
         <link rel="stylesheet" href="../css/dbMaintain.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body>
-        <div id="pageBox">
+        <!-- Page -->
+        <div id="main-image">
 
-            <h1>DATABASE: SELECT</h1>
+            <!-- Title -->
+            <article id="main-title">
+                <h1>DATABASE: SELECT</h1>
+            </article>
 
             <!-- Result -->
-            <div id="errorMsg"></div>
-            <div id="successMsg"></div>
-            <div id="resultTableView">
+            <div class="box">
+                <div id="errorMsg"></div>
+                <div id="successMsg"></div>
+            </div>
+            <div id="resultTableView" class="box">
                 <p></p>
                 <table></table>
             </div>
 
             <!-- Table Name -->
-            <form id="tableNameForm" action="../models/dbMaintain.php" method="POST">
+            <form id="tableNameForm" class="box" action="../models/dbMaintain.php" method="POST">
                 <label for="tableName">Table name:</label>
                 <select name="tableName" id="tableName">
                     <option value="select" disabled selected hidden>Select table name</option>
@@ -42,32 +49,31 @@
             </form>
 
             <!-- InputColumns -->
-            <div id="inputColumns">
-                <hr>
+            <div id="inputColumns" class="box" >
                 <label>Columns:</label>
                 <div id="inputColumnsBtn"></div>
             </div>
 
             <!-- Input Values -->
-            <form id="inputValuesForm" action="../models/dbMaintain.php" method="POST">
-                <hr>
+            <form id="inputValuesForm" class="box" action="../models/dbMaintain.php" method="POST">
                 <label for"inputValues">Conditions:</label>
                 <div id="inputValues"></div>
             </form>
 
-            <!-- Query Display -->
-            <p id="queryDisplay"></p>
+            <div id="queryDiv" class="box">
+                <!-- Query Display -->
+                <p id="queryDisplay"></p>
 
-            <!-- Submit Query -->
-            <form id="querySubmitForm" action="../models/dbMaintain.php" method="POST">
-                <input type="text" name="querySubmit" id="querySubmit" style="display: none">
-                <input type="text" name="querySubmit-tableName" id="querySubmit-tableName" style="display: none">
-                <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuerySelect()">Run Query</button>
-            </form>
+                <!-- Submit Query -->
+                <form id="querySubmitForm" action="../models/dbMaintain.php" method="POST">
+                    <input type="text" name="querySubmit" id="querySubmit" style="display: none">
+                    <input type="text" name="querySubmit-tableName" id="querySubmit-tableName" style="display: none">
+                    <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick="submitQuerySelect()">Run Query</button>
+                </form>
+            </div>
 
             <!-- Table View -->
-            <div id="tableView">
-                <hr>
+            <div id="tableView" class="box">
                 <p></p>
                 <table></table>
             </div>

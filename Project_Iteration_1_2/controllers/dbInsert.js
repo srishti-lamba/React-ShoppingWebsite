@@ -8,6 +8,8 @@ $(document).ready(function () {
 });
 
 function showSuccessMessage() {
+    $("#main-title + .box").css("display", "block");
+    $("#successMsg").css("display", "block");
     $("#successMsg").html("Record has been successfully inserted.");
 }
 
@@ -16,7 +18,7 @@ function showSuccessMessage() {
 /* --------------- */
 
 function displayColumns() {
-    $("#inputValuesForm").css("display", "block");
+    showInputAndQuery();
 
     if (columnArray != "") {
         $("#tableName option[value='select']").prop("selected", false);
@@ -32,10 +34,6 @@ function displayColumns() {
             resultHtml += `</div>`;
         }
         $("#inputValues").html(resultHtml);
-    }
-
-    if ($("#tableView table").width() > $('#tableView').parent().width()) {
-        $("#tableView table").css("width", "100%");
     }
 }
 

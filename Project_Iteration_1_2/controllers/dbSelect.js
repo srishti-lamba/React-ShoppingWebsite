@@ -13,6 +13,8 @@ $(document).ready(function () {
 });
 
 function showSuccessMessage() {
+    $("#main-title + .box").css("display", "block");
+    $("#successMsg").css("display", "block");
     $("#successMsg").html("Here are the query results:");
 }
 
@@ -22,6 +24,7 @@ function showSuccessMessage() {
 
 function displayColumnSelector() {
     $("#inputColumns").css("display", "block");
+    showInputAndQuery();
 
     if (columnArray != "") {
         var resultHtml = "";
@@ -37,7 +40,6 @@ function displayColumnSelector() {
 }
 
 function displayColumns() {
-    $("#inputValuesForm").css("display", "block");
 
     if (columnArray != "") {
         $("#tableName option[value='select']").prop("selected", false);
@@ -61,10 +63,6 @@ function displayColumns() {
             resultHtml += `</div>`;
         }
         $("#inputValues").html(resultHtml);
-    }
-
-    if ($("#tableView table").width() > $('#tableView').parent().width()) {
-        $("#tableView table").css("width", "100%");
     }
 }
 

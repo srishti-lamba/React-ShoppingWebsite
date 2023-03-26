@@ -1,4 +1,4 @@
-body {
+/*body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     background-color: #EDF1D6;
@@ -46,15 +46,15 @@ hr {
     color: mediumseagreen;
 }
 
-##tableNameForm > label, inputValuesForm > label, #inputColumns > label {
+#tableNameForm > label, inputValuesForm > label, #inputColumns > label {
     margin: 10px 20px;
-}
+}*/
 
 /* ------------- */
 /* --- Table --- */
 /* ------------- */
 
-table {
+/*table {
     margin: auto;
     display: block;
     width: fit-content;
@@ -120,13 +120,13 @@ table {
 
     table tbody tr td:last-of-type {
         border-right: 1.5px solid #91806E;
-    }
+    }*/
 
 /* ------------------ */
 /* --- Table Name --- */
 /* ------------------ */
 
-#tableName {
+/*#tableName {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -141,13 +141,13 @@ table {
         font-weight: 600;
         background-color: #b3a698;
         color: white;
-    }
+    }*/
 
 /* --------------------- */
 /* --- Input Columns --- */
 /* --------------------- */
 
-#inputColumns {
+/*#inputColumns {
     display: none;
 }
 
@@ -179,13 +179,13 @@ table {
 
     #inputColumnsBtn input[type="checkbox"]:checked + label {
         background-color: #91806E;
-    }
+    }*/
 
 /* -------------------- */
 /* --- Input Values --- */
 /* -------------------- */
 
-#inputValuesForm {
+/*#inputValuesForm {
     display: none;
 }
 
@@ -280,22 +280,337 @@ table {
 
     .queryColumnBtn hr {
         margin: 0px;
-    }
+    }*/
 
 /* --------------------- */
 /* --- Query Display --- */
 /* --------------------- */
-#queryDisplay {
+/*#queryDisplay {
     margin: 20px 0px 0px 0px;
     text-align: center;
-}
+}*/
 
 /* --------------------- */
 /* --- Query Submit --- */
 /* --------------------- */
 
+/*#querySubmitForm {
+    display: none;
+}
+
+#querySubmitBtn {
+    color: white;
+    background-color: #8D7B68;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 25px auto 0px auto;
+    padding: 10px;
+    display: block;
+    width: auto;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: box-shadow .3s;
+}
+
+    #querySubmitBtn:hover {
+        box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+        transition: box-shadow .3s;
+    }*/
+
+/* ------------------ */
+/* --- Table View --- */
+/* ------------------ */
+
+/*#tableView {
+    display: none;
+    margin-top: 30px;
+}
+
+    #tableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }*/
+
+/* ------------------------- */
+/* --- Result Table View --- */
+/* ------------------------- */
+
+/*#resultTableView {
+    display: none;
+    margin-top: 30px;
+}
+
+    #resultTableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }*/
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+    body .box {
+        border: none;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        margin: 0px auto 30px auto;
+        width: fit-content;
+        max-width: 90%;
+        padding: 20px;
+    }
+
+h1 {
+    margin: 30px;
+    font-size: 40px;
+}
+
+.bold {
+    color: mediumseagreen;
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+/* ------------ */
+/* --- Main --- */
+/* ------------ */
+
+#main-image {
+    margin: 0;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
+    padding-bottom: 30px;
+}
+
+#main-title {
+    background-color: rgba(255,255,255,0.9);
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+}
+
+/* -------------- */
+/* --- Result --- */
+/* -------------- */
+
+#main-title + .box {
+    display: none;
+    padding: 5px;
+    margin-top: 30px;
+}
+
+#errorMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: red;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid red;
+    border-radius: 15px;
+}
+
+#successMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: green;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid green;
+    border-radius: 15px;
+}
+
+/* ------------------ */
+/* --- Table Name --- */
+/* ------------------ */
+
+#tableNameForm {
+    margin-top: 30px;
+}
+
+    #tableNameForm #tableName {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0px;
+        background-color: #8D7B68;
+        color: white;
+    }
+
+        #tableNameForm #tableName option {
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #b3a698;
+            color: white;
+        }
+
+/* --------------------- */
+/* --- Input Columns --- */
+/* --------------------- */
+
+#inputColumns {
+    display: none;
+}
+
+#inputColumnsBtn {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 10px auto 0px auto;
+}
+
+#inputColumnsBtn label {
+    display: inline;
+    color: white;
+    background-color: #b3a698;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    width: max-content;
+    padding: 3px 5px;
+    margin: 5px;
+}
+
+    #inputColumnsBtn label:hover {
+        background-color: #A39586;
+    }
+
+#inputColumnsBtn input[type="checkbox"] {
+    display: none;
+}
+
+    #inputColumnsBtn input[type="checkbox"]:checked + label {
+        background-color: #91806E;
+    }
+
+/* -------------------- */
+/* --- Input Values --- */
+/* -------------------- */
+
+#inputValuesForm {
+    display: none;
+    width: 100%;
+}
+
+#inputValues {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto 0px 30px;
+}
+
+#conditionValues {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin: 0px auto 0px 30px;
+}
+
+.queryColumn {
+    margin: 5px;
+    color: white;
+}
+
+    .queryColumn > label:first-of-type {
+        text-align: center;
+        display: block;
+        font-weight: 600;
+        width: 100%;
+
+        border: none;
+        background-color: #91806E;
+        padding: 10px;
+        
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .queryColumn input {
+        display: block;
+        width: 100%;
+
+        border: none;
+        border-top: 1.5px solid #91806E;
+        background-color: #b3a698;
+        padding: 10px;
+
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+        .queryColumn input:hover {
+            background-color: #A39586;
+        }
+
+        .queryColumn input[type = "text"] {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+.queryColumnBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    background-color: #b3a698;
+}
+
+    .queryColumnBtn label {
+        display: inline;
+        background-color: #b3a698;
+        border: 1.5px solid #b3a698;
+        border-radius: 8px;
+        text-align: center;
+        width: 16.7%;
+    }
+
+        .queryColumnBtn label:hover {
+            background-color: #A39586;
+        }
+
+    .queryColumnBtn input[type='radio'] {
+        display: none;
+    }
+
+        .queryColumnBtn input[type='radio']:checked + label {
+            background-color: #91806E;
+        }
+
+    .queryColumnBtn hr {
+        margin: 0px;
+    }
+
+/* ------------- */
+/* --- Query --- */
+/* ------------- */
+
+#queryDiv {
+    display: none;
+}
+
 #querySubmitForm {
     display: none;
+}
+
+#queryDisplay {
+    /*margin: 20px 0px 0px 0px;*/
+    text-align: center;
 }
 
 #querySubmitBtn {
@@ -325,7 +640,7 @@ table {
 
 #tableView {
     display: none;
-    margin-top: 30px;
+    margin: 0px auto;
 }
 
     #tableView p {
@@ -341,7 +656,7 @@ table {
 
 #resultTableView {
     display: none;
-    margin-top: 30px;
+    margin: 0px auto;
 }
 
     #resultTableView p {
@@ -349,4 +664,72 @@ table {
         text-decoration: underline;
         text-underline-offset: 0.25em;
         margin-bottom: 10px;
+    }
+
+/* ------------- */
+/* --- Table --- */
+/* ------------- */
+
+table {
+    margin: auto;
+    display: block;
+    width: fit-content;
+    color: white;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px;
+    overflow: auto;
+}
+
+    table th {
+        border: 1px solid #91806E;
+        background-color: #91806E;
+        padding: 10px;
+    }
+
+    table td {
+        border: 1px solid #91806E;
+        background-color: #b3a698;
+        padding: 10px;
+        font-weight: 500;
+    }
+
+        table td:hover {
+            background-color: #A39586;
+        }
+
+    table thead tr:first-of-type th:first-child {
+        border-top-left-radius: 10px;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th:last-child {
+        border-top-right-radius: 10px;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:first-child {
+        border-bottom-left-radius: 10px;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:last-child {
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th {
+        border-top: 1.5px solid #91806E;
+    }
+
+    table tbody tr:last-of-type td {
+        border-bottom: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:first-of-type {
+        border-left: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:last-of-type {
+        border-right: 1.5px solid #91806E;
     }

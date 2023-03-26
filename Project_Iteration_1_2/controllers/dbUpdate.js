@@ -11,6 +11,8 @@ $(document).ready(function () {
 });
 
 function showSuccessMessage() {
+    $("#main-title + .box").css("display", "block");
+    $("#successMsg").css("display", "block");
     $("#successMsg").html("Record(s) have been successfully updated.");
 }
 
@@ -19,7 +21,7 @@ function showSuccessMessage() {
 /* --------------- */
 
 function displayInputs() {
-    $("#inputValuesForm").css("display", "block");
+    showInputAndQuery();
 
     if (columnArray != "") {
         $("#tableName option[value='select']").prop("selected", false);
@@ -36,16 +38,11 @@ function displayInputs() {
         }
         $("#inputValues").html(resultHtml);
 
-        if ($("#tableView table").width() > $('#tableView').parent().width()) {
-            $("#tableView table").css("width", "100%");
-        }
-
         displayConditions();
     }
 }
 
 function displayConditions() {
-    $("#inputValuesForm").css("display", "block");
 
     if (columnArray != "") {
         $("#tableName option[value='select']").prop("selected", false);
