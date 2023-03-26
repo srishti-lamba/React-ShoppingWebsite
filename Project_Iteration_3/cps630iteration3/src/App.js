@@ -6,6 +6,8 @@ import AboutUs from './pages/aboutUs';
 import ContactUs from './pages/contactUs';
 import Services from './pages/services';
 import Reviews from './pages/reviews';
+import UserCheckoutPage from './pages/userCheckout';
+import SignUp from './pages/signUp';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -19,6 +21,8 @@ function App() {
         <Route path='/contactus' element={<ContactUs toggleLogin={setShowLogin} showLogin={showLogin}/>} />
         <Route path='/services' element={<Services toggleLogin={setShowLogin} showLogin={showLogin} />}/>
         <Route path='/reviews' element={<Reviews toggleLogin={setShowLogin} showLogin={showLogin}/>} />
+        <Route path='/checkout' element={<UserCheckoutPage toggleLogin={setShowLogin} showLogin={showLogin}/>} />
+        <Route path='/signup' element={<SignUp toggleLogin={setShowLogin} showLogin={showLogin}/>} />
       </Routes>
     </div>
   );

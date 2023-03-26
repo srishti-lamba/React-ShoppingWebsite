@@ -1,0 +1,78 @@
+.reg-container{
+    width: 70%;
+    margin: auto;
+    background-color: white;
+    border-radius: 25px;
+    padding: 40px;
+    margin-top: 30px;
+    max-width: 800px;
+    margin-bottom: 30px;
+}
+
+.registration-h1{
+    text-align: center;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+.register-form{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-err{
+    color: red;
+    display: none;
+}
+
+.register-success{
+    color: green;
+    display: none;
+}
+
+.register-form label{
+    margin-top: 5px;
+}
+
+input{
+    padding: 7px;
+}
+
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form input[type="email"]{
+    height: 33px;
+    border: 1px black solid;
+}
+
+.register-form input:focus{
+    outline: none;
+}
+
+.reg-button{
+    width: 150px;
+    height: 40px;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.userTypeSection p{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.userTypeSection input[type="radio"]{
+    margin-left: 10px;
+}
+
+.userTypeSection div{
+    margin-top: 10px;
+}
+
+.userTypeSection input[type="password"]{
+    width: 100%;
+}

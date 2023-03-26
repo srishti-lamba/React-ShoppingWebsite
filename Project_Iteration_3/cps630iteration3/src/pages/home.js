@@ -1,23 +1,81 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import ProductCard from "../components/productCard";
+import { useNavigate } from "react-router-dom";
 import './home.css';
 
 const Home = ({showLogin, toggleLogin}) => {
-    const [productCategory, setProductCategory] = useState('living room')
-    const [categoryDisplay, setCategoryDisplay] = useState('Living Room')
-    const [products, setProducts] = useState([])
+    const [productCategory, setProductCategory] = useState('living room');
+    const [categoryDisplay, setCategoryDisplay] = useState('Living Room');
+    const [shoppingCart, setShoppingCart] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [products, setProducts] = useState([]);
+    const [errorMsg, setErrorMsg] = useState("");
     const user = useSelector(selectUser);
+    const navigate = useNavigate();
     {user !== null && toggleLogin(false)}
 
     const setDisplayAndCategory = (display, category) => {
         setProductCategory(category)
         setCategoryDisplay(display)
     }
+
+    const dragOver = (e) => {
+        e.preventDefault()
+    }
+
+    const drop = (e) => {
+        e.preventDefault()
+        let itemAlreadyInShoppingCart = false
+        let newItem = {
+        item_id: e.dataTransfer.getData("id"),
+        productName: e.dataTransfer.getData("productName"),
+        quantity: Number(e.dataTransfer.getData("quantity")),
+        price: Number(e.dataTransfer.getData("price"))
+        }
+                
+        for(let i=0; i<shoppingCart.length; i++) {
+            let item = shoppingCart[i]
+            if(item.item_id === newItem.item_id) {
+                itemAlreadyInShoppingCart = true
+                newItem.quantity = item.quantity + 1
+                break;
+            }
+        }
+        if(itemAlreadyInShoppingCart) {
+            let newShoppingCart = shoppingCart.map(item => item.item_id !== newItem.item_id ? item : newItem)
+            setShoppingCart(newShoppingCart)
+        } else {
+            setShoppingCart([...shoppingCart, newItem])
+
+        }
+
+    }
+
+    useEffect(() => {
+        let newTotal = 0;
+        for(let i=0; i<shoppingCart.length; i++) {
+            let item = shoppingCart[i]
+            newTotal += item.price*item.quantity;
+        }
+
+        if(shoppingCart.length > 0 && errorMsg.length > 0) {
+            setErrorMsg("")
+        }
+
+        setTotal(newTotal.toFixed(2))
+
+        if(shoppingCart.length > 0) {
+            localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart))
+            localStorage.setItem("shoppingCartTotal", newTotal)
+        }
+    }, [shoppingCart])
+
+
 
     useEffect(() => {
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getProducts.php";
@@ -26,6 +84,31 @@ const Home = ({showLogin, toggleLogin}) => {
             setProducts(response.data)
         }).catch(err => console.log(err))
     }, [productCategory])
+
+    useEffect(() => {
+        if(localStorage.getItem('shoppingCart') && localStorage.getItem('shoppingCartTotal')) {
+            let shoppingCart = localStorage.getItem("shoppingCart")
+            let total = localStorage.getItem("shoppingCartTotal")
+            setShoppingCart(JSON.parse(shoppingCart))
+            setTotal(Number(total))
+        }
+    }, [])
+
+
+
+    const checkOutOrder = () => {
+        if(shoppingCart.length === 0) {
+            setErrorMsg("Your shopping cart is empty")
+        } else {
+            navigate("/checkout")
+        }
+    }
+
+    const resetShoppingCart = () => {
+        setShoppingCart([])
+        localStorage.removeItem("shoppingCart")
+        localStorage.removeItem("shoppingCartTotal")
+    }
     
     return (
         <>
@@ -62,18 +145,18 @@ const Home = ({showLogin, toggleLogin}) => {
                             return( 
                             <ProductCard 
                                 key={obj['item_id']}
+                                product_id={Number(obj['item_id'])}
                                 productName={obj['productName']}
                                 price={obj['price']}
                                 category={obj['category']}
                                 image_url={obj['image_url']}
-                                draggable
                             />)
                         })}
 
 
                     </div>
                     <form type="post" action="./processUserOrder.php" >
-                        <div className="shopping-cart" onDragOver="dragOver(event)" onDrop="drop(event)">
+                        <div className="shopping-cart" onDragOver={(e) => dragOver(e)} onDrop={e => drop(e)}>
                             <h2 className="center" id="shoppingCartH2">SHOPPING CART</h2>
                             <table>
                                 <thead>
@@ -84,18 +167,28 @@ const Home = ({showLogin, toggleLogin}) => {
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
+                                    {shoppingCart.map(item => {
+                                        return (
+                                            <tr key={item.item_id}>
+                                                <td>{item.productName}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>{item.price}</td>
+                                            </tr>
+                                        )
+                                    })}
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colSpan="2">Total</td>
-                                        <td id="total" name="total">0.00</td>
+                                        <td id="total" name="total">{total}</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
+                        {errorMsg.length > 0 ? <p className="" style={{color: 'red', textAlign:'center'}}>{errorMsg}</p> : <></>}
                         <div className="checkOutBtnContainer"> 
-                            <input className="checkOutBtn" type="button" onClick="submitForm()" value="Checkout" />
-                            <input type="button" className="clearShoppingCartBtn" value="Clear Shopping Cart" onClick="clearShoppingCart()" />
+                            <input className="checkOutBtn" type="button"  value="Checkout" onClick={checkOutOrder} />
+                            <input type="button" className="clearShoppingCartBtn" value="Clear Shopping Cart" onClick={resetShoppingCart} />
                         </div>
                     </form>
                 </div>
