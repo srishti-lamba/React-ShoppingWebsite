@@ -1,0 +1,352 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    background-color: #EDF1D6;
+}
+
+#pageBox {
+    width: 68%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 25px;
+    min-width: 1100px;
+    background-color: #fff;
+    min-height: 100vh;
+    margin-bottom: 50px;
+}
+
+h1 {
+    display: block;
+    text-align: center;
+    width: fit-content;
+    margin: 0px auto 10px auto;
+    padding: 3px 5px;
+    border: 3px solid #91806E;
+    border-radius: 15px;
+}
+
+hr {
+    margin: 20px 0px;
+}
+
+.bold {
+    color: mediumseagreen;
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+}
+
+#errorMsg {
+    color: red;
+}
+
+#successMsg {
+    color: mediumseagreen;
+}
+
+#tableNameForm > label, inputValuesForm > label, #inputColumns > label {
+    margin: 10px 20px;
+}
+
+/* ------------- */
+/* --- Table --- */
+/* ------------- */
+
+table {
+    margin: auto;
+    display: block;
+    width: fit-content;
+    color: white;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px;
+    overflow: auto;
+}
+
+    table th {
+        border: 1px solid #91806E;
+        background-color: #91806E;
+        padding: 10px;
+    }
+
+    table td {
+        border: 1px solid #91806E;
+        background-color: #b3a698;
+        padding: 10px;
+        font-weight: 500;
+    }
+
+        table td:hover {
+            background-color: #A39586;
+        }
+
+    table thead tr:first-of-type th:first-child {
+        border-top-left-radius: 10px;
+        border-left: 1.5px solid #91806E;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th:last-child {
+        border-top-right-radius: 10px;
+        border-right: 1.5px solid #91806E;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:first-child {
+        border-bottom-left-radius: 10px;
+        border-left: 1.5px solid #91806E;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:last-child {
+        border-bottom-right-radius: 10px;
+        border-right: 1.5px solid #91806E;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th {
+        border-top: 1.5px solid #91806E;
+    }
+
+    table tbody tr:last-of-type td {
+        border-bottom: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:first-of-type {
+        border-left: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:last-of-type {
+        border-right: 1.5px solid #91806E;
+    }
+
+/* ------------------ */
+/* --- Table Name --- */
+/* ------------------ */
+
+#tableName {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px 10px 0px 0px;
+    background-color: #8D7B68;
+    color: white;
+}
+
+    #tableName option {
+        font-size: 16px;
+        font-weight: 600;
+        background-color: #b3a698;
+        color: white;
+    }
+
+/* --------------------- */
+/* --- Input Columns --- */
+/* --------------------- */
+
+#inputColumns {
+    display: none;
+}
+
+#inputColumnsBtn {
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0px 0px 1%;
+}
+
+#inputColumnsBtn label {
+    display: inline;
+    color: white;
+    background-color: #b3a698;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    width: auto;
+    padding: 3px 5px;
+    margin: 5px;
+}
+
+    #inputColumnsBtn label:hover {
+        background-color: #A39586;
+    }
+
+#inputColumnsBtn input[type="checkbox"] {
+    display: none;
+}
+
+    #inputColumnsBtn input[type="checkbox"]:checked + label {
+        background-color: #91806E;
+    }
+
+/* -------------------- */
+/* --- Input Values --- */
+/* -------------------- */
+
+#inputValuesForm {
+    display: none;
+}
+
+#inputValues {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 1%;
+}
+
+#conditionValues {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 1%;
+}
+
+.queryColumn {
+    margin: 5px;
+    color: white;
+    width: 18%;
+}
+
+    .queryColumn > label:first-of-type {
+        text-align: center;
+        display: block;
+        font-weight: 600;
+        width: 100%;
+
+        border: none;
+        background-color: #91806E;
+        padding: 10px;
+        
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .queryColumn input {
+        display: block;
+        width: 100%;
+
+        border: none;
+        border-top: 1.5px solid #91806E;
+        background-color: #b3a698;
+        padding: 10px;
+
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+        .queryColumn input:hover {
+            background-color: #A39586;
+        }
+
+        .queryColumn input[type = "text"] {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+.queryColumnBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    background-color: #b3a698;
+}
+
+    .queryColumnBtn label {
+        display: inline;
+        background-color: #b3a698;
+        border: 1.5px solid #b3a698;
+        border-radius: 8px;
+        text-align: center;
+        width: 16.7%;
+    }
+
+        .queryColumnBtn label:hover {
+            background-color: #A39586;
+        }
+
+    .queryColumnBtn input[type='radio'] {
+        display: none;
+    }
+
+        .queryColumnBtn input[type='radio']:checked + label {
+            background-color: #91806E;
+        }
+
+    .queryColumnBtn hr {
+        margin: 0px;
+    }
+
+/* --------------------- */
+/* --- Query Display --- */
+/* --------------------- */
+#queryDisplay {
+    margin: 20px 0px 0px 0px;
+    text-align: center;
+}
+
+/* --------------------- */
+/* --- Query Submit --- */
+/* --------------------- */
+
+#querySubmitForm {
+    display: none;
+}
+
+#querySubmitBtn {
+    color: white;
+    background-color: #8D7B68;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 25px auto 0px auto;
+    padding: 10px;
+    display: block;
+    width: auto;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: box-shadow .3s;
+}
+
+    #querySubmitBtn:hover {
+        box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+        transition: box-shadow .3s;
+    }
+
+/* ------------------ */
+/* --- Table View --- */
+/* ------------------ */
+
+#tableView {
+    display: none;
+    margin-top: 30px;
+}
+
+    #tableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }
+
+/* ------------------------- */
+/* --- Result Table View --- */
+/* ------------------------- */
+
+#resultTableView {
+    display: none;
+    margin-top: 30px;
+}
+
+    #resultTableView p {
+        text-align: center;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        margin-bottom: 10px;
+    }

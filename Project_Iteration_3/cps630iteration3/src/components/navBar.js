@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './navBar.css';
 import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ const NavBar = ({toggleLogin}) => {
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [display, toggleDisplay] = useState("none");
 
     const loginBtnOnClick = () => {
         if(user === null) {
@@ -20,6 +21,13 @@ const NavBar = ({toggleLogin}) => {
             navigate('/')
         }
     }
+
+    const showDropdown = () => {
+        toggleDisplay("block");
+    };
+    const hideDropdown = () => {
+        toggleDisplay("none");
+    };
 
     return(
         <>  
@@ -47,8 +55,19 @@ const NavBar = ({toggleLogin}) => {
                     <Link to='/reviews'>
                         <li>REVIEWS</li>
                     </Link>
-                    {user !== null ? <li className="searchLbl" onClick={() => console.log('hello')}><i className="fa-solid fa-magnifying-glass"></i> SEARCH</li> : <></>}
-                    {(user !== null && user.user.isAdmin === "1") ? <li className='dbMaintain'>DB MAINTAIN</li> : <></>}
+                    {user !== null ? <li className="searchLbl" onClick={() => console.log('hello')}>SEARCH</li> : <></>}
+                    {(user !== null && user.user.isAdmin === "1") ? 
+                        <li className='dbMaintain' onMouseLeave={hideDropdown}>
+                            <div className="dbMaintain-btn" onMouseEnter={showDropdown}>DB MAINTAIN</div>
+                            <div className="dbMaintain-options" style={{display: display}}>
+                                <Link to='/insert'>Insert</Link>
+                                <Link to='/'>Delete</Link>
+                                <Link to='/'>Select</Link>
+                                <Link to='/'>Update</Link>
+                            </div>
+                        </li> 
+                        : <></>
+                    }
                 </ul>
             </nav>
 
