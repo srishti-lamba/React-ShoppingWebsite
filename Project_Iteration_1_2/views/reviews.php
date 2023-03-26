@@ -1,8 +1,6 @@
 <?php 
     require("./NavBar.php");
     unset($_SESSION['orderConfirmationMessage']);
-
-    $reviewArray = $_SESSION['review-reviews'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -39,20 +37,23 @@
                 <div class="box">
                     <h4>WRITE A REVIEW</h4>
 
+                    <input id="reviewUserID" type="text" name="reviewUserID" style="display: none">
+                    <input id="reviewItemID" type="text" name="reviewItemID" style="display: none">
+
                     <div id="reviewStars">
-                        <input type="radio" id="star1" name="rate" value="1" />
+                        <input type="radio" id="star1" name="reviewRating" value="1" />
                         <label for="star1" title="text" class="star"> <span class="visuallyHidden">1</span> <i class="fa fa-star fa-lg"></i> </label>
 
-                        <input type="radio" id="star2" name="rate" value="2" />
+                        <input type="radio" id="star2" name="reviewRating" value="2" />
                         <label for="star2" title="text" class="star"> <span class="visuallyHidden">2</span> <i class="fa fa-star fa-lg"></i> </label>
 
-                        <input type="radio" id="star3" name="rate" value="3" />
+                        <input type="radio" id="star3" name="reviewRating" value="3" />
                         <label for="star3" title="text" class="star"> <span class="visuallyHidden">3</span> <i class="fa fa-star fa-lg"></i> </label>
 
-                        <input type="radio" id="star4" name="rate" value="4" />
+                        <input type="radio" id="star4" name="reviewRating" value="4" />
                         <label for="star4" title="text" class="star"> <span class="visuallyHidden">4</span> <i class="fa fa-star fa-lg"></i> </label>
 
-                        <input type="radio" id="star5" name="rate" value="5" />
+                        <input type="radio" id="star5" name="reviewRating" value="5" />
                         <label for="star5" title="text" class="star"> <span class="visuallyHidden">5</span> <i class="fa fa-star fa-lg"></i> </label>
 
                         <span id="reviewStarsText" class="visuallyHidden"></span>
@@ -60,12 +61,12 @@
 
                     <div>
                         <label for="reviewTitle">Title:</label>
-                        <input type="text" name="reviewTitle" placeholder="Enter title...">
+                        <input id="reviewTitle" type="text" name="reviewTitle" placeholder="Enter title...">
                     </div>
 
                     <div>
                         <label for="reviewContent">Review:</label>
-                        <textarea name="reviewContent" rows="10" maxlength="1000" placeholder="Write review..."></textarea>
+                        <textarea id="reviewContent" name="reviewContent" rows="10" maxlength="1000" placeholder="Write review..."></textarea>
                     </div>
 
                     <button class="submit" type="button" name="reviewWrite" value="reviewWrite" onclick="submitReviewWrite()">Submit</button>
@@ -76,7 +77,7 @@
     </body>
 </html>
 
-<script> var reviewArray = <?php echo json_encode($reviewArray); ?>; </script>
+
 <script src="../controllers/reviews.js"></script>
 
 <?php
@@ -89,18 +90,24 @@
         echoJavascript("console.log('$script');");
     }
 
-    # Items
+    // Items
     if (isset($_SESSION['review-items'])) {
-        echoJavascript("fillDatalist(\"" . $_SESSION['review-items'] . "\")");
+        echoJavascript("fillDatalist(`" . $_SESSION['review-items'] . "`)");
+
+        // Reviews
+        if (isset($_SESSION['review-reviews'])) {
+            echoJavascript("fillReviews(`" . $_SESSION['review-reviews'] . "`)");
+            unset($_SESSION['review-reviews']);
+        }
+
         unset($_SESSION['review-items']);
+        consoleLog("fillDatalist");
     }
     else {
+        consoleLog("fetchDatalist");
         echoJavascript("submitEmpty();");
     }
 
-    # Reviews
-    if ( isset($_SESSION['review-reviews']) ) {
-        echoJavascript("fillReviews();");
-    }
-
+    foreach ($_SESSION as $key=>$val)
+    echo $key.": ".$val."<br/>";
 ?>

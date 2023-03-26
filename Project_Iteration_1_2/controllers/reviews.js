@@ -18,7 +18,7 @@ $(document).ready(function() {
     // Star rating
     $("#reviewStars label").css("color", "lightgray");
 
-    $("input[type='radio'][name='rate']").change(function () {
+    $("input[type='radio'][name='reviewRating']").change(function () {
         let value = $(this).val();
         $("#reviewStarsText").html(`${value} stars`);
 
@@ -29,13 +29,25 @@ $(document).ready(function() {
 
 });
 
-function submitReviewSearch() {
-    $("#reviewSearchForm").submit();
-}
+// -------------------
+// --- Submit Form ---
+// -------------------
 
 function submitEmpty() {
     $("#emptyForm").submit();
 }
+
+function submitReviewSearch() {
+    $("#reviewSearchForm").submit();
+}
+
+function submitReviewWrite() {
+    $("#writeReviewForm").submit();
+}
+
+// --------------------
+// --- Search Check ---
+// --------------------
 
 function checkSearchInput() {
     var searchVal = $('#reviewSearchForm input').val();
@@ -55,44 +67,17 @@ function checkSearchInput() {
     }
 }
 
+// ------------------------
+// --- Fill Information ---
+// ------------------------
+
 function fillDatalist(data) {
     $("#searchItemList").html(data);
 }
 
-function fillReviews() {
-    var resultHtml = "";
+function fillReviews(data) {        
+    $("#reviewCards").html(data);
 
-    for (let i = 0; i < reviewArray.length; i++) {
-
-        let starNum = reviewArray[i][4];
-
-        resultHtml += `<div class="card box">`;
-        resultHtml +=       `<div class="user-container">`;
-        resultHtml +=           `<img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>`;
-        resultHtml +=           `<div class="reviewInfo">`;
-        resultHtml +=               `<h3>${reviewArray[i][1]}</h3>`;            //Name
-
-        for (let star = 0; star < parseInt(starNum); star++) {
-            resultHtml +=           `<i class="fa fa-star star-checked"></i>`;      //Rating
-        }
-
-        for (let star = parseInt(starNum); star < 5; star++) {
-            resultHtml +=           `<i class="fa fa-star star-unchecked"></i>`;        //Rating
-        }
-
-        // For screen readers
-        resultHtml +=               `<span class="visuallyHidden">${starNum} stars</span>`
-            
-        resultHtml +=           `</div>`;
-        resultHtml +=       `</div>`;
-        resultHtml +=       `<h4>${reviewArray[i][5]}</h4>`;                    //Title
-        resultHtml +=       `<p class="review">${reviewArray[i][6]}</p>`;       //Content
-        resultHtml += `</div>`;
-
-    }
-        
-    $("#reviewCards").html(resultHtml);
-
-    if (resultHtml != "")
+    if (data != "")
         { $("#writeReviewForm").css("display", "block"); }
 }
