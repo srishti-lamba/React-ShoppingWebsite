@@ -10,11 +10,16 @@ $(document).ready(function() {
         setMinHeight();
     });
 
-    // Search enter
+    // Form input enter
     $('#reviewSearchForm input').bind('keypress keydown keyup', function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
             submitReviewSearch();
+        }
+    });
+    $('#writeReviewForm input').bind('keypress keydown keyup', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
         }
     });
 

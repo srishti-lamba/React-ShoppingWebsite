@@ -248,6 +248,10 @@ h2 {
                 width: calc( 100% - 65px );
             }
 
+            #writeReviewForm .box div textarea {
+                padding: 1.5px;
+            }
+
         /* Star Box */
 
         #writeReviewForm .box #reviewStars {
