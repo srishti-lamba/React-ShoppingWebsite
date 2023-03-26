@@ -144,8 +144,10 @@
                 
                 if (($colDisplay == "Price") || ($colDisplay == "Balance"))
                     { $resultHtml .= "<td>$" . $row[$colSql] . "</td>"; }
-                else if ($colDisplay == "Image URL") 
+                else if (($colDisplay == "Image URL") || ($colDisplay == "Email") || ($colDisplay == "Content")) 
                     { $resultHtml .= "<td style='font-size: 0.75em'>" . $row[$colSql] . "</td>"; }
+                else if ($colDisplay == "Phone Number")
+                    { $resultHtml .= "<td style='font-size: 0.75em'>" . formatPhone($row[$colSql]) . "</td>"; }
                 else 
                     { $resultHtml .= "<td>" . $row[$colSql] . "</td>"; }
             }
@@ -153,6 +155,19 @@
         }
         $resultHtml .= "</tbody>";
         return $resultHtml;
+    }
+
+    function formatPhone($number) {
+        if ( strlen(strval($number)) >= 10 ) {
+            return preg_replace(
+                "/.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4})/",
+                '($1) $2-$3',
+                $number
+            );
+        }
+        else {
+            return $number;
+        }
     }
 
     // ---------------
