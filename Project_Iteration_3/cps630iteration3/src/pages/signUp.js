@@ -4,11 +4,13 @@ import Login from "../components/login";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import axios from "axios";
 import './signUp.css';
 
 const SignUp = ({toggleLogin, showLogin}) => {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+    const [errorMsg, setErrorMsg] = useState("");
     const [signUpRole, setSignUpRole] = useState('customer');
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -18,22 +20,45 @@ const SignUp = ({toggleLogin, showLogin}) => {
     const [pass2, setPass2] = useState("");
     const [address, setAddress] = useState("");
     const [postalCode, setPostalCode] = useState("");
+    const [adminCode, setAdminCode] = useState("");
+
+    const onFormSubmmission = () => {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/validateRegistration.php";
+        let fdata = new FormData();
+        fdata.append('name', name)
+        fdata.append('email', email)
+        fdata.append('reg-username', userName)
+        fdata.append('telephone', phoneNum)
+        fdata.append('reg-password', pass1)
+        fdata.append('reg-password2', pass2)
+        fdata.append('address', address)
+        fdata.append('postal-code', postalCode)
+        fdata.append('adminCode', adminCode)
+
+        axios.post(url, fdata)
+        .then((res) => {
+            //if user successfully registers then redirect to homepage
+            navigate("/")
+        })
+        .catch((err) => {
+            setErrorMsg(err.response.statusText)
+        })
+    }
 
     
-
     const showAdminCodeInput = () => {
-        return (
+        if(signUpRole === 'admin') {
+            return (
                 <div>
                     <label htmlFor="adminCode">Enter Admin Access Code:</label>
-                    <input type="password" id="adminCode" name="adminCode" placeholder="1234"/>
+                    <input type="password" name="adminCode" placeholder="1234" value={adminCode} onChange={(e) => setAdminCode(e.target.value)}/>
                 </div>
-        )
+            )
+        } else {
+            return <></>
+        }
+        
     }
-
-    const submitSignUpForm = () => {
-        console.log('hello')
-    }
-
 
     return (
         <>
@@ -41,6 +66,7 @@ const SignUp = ({toggleLogin, showLogin}) => {
             {showLogin ? <Login setShowLogin={toggleLogin}/> : <></>}
             {showLogin ? <div onClick={() => toggleLogin(false)} className='overlay'></div> : <></>}
             <main className="reg-container">
+                {errorMsg.length > 0  && <p style={{color:'red', textAlign: 'center'}}>{errorMsg}</p> }
                 <h1 className="registration-h1">Registration</h1>
                 <form className="register-form" action="../models/validateRegistration.php" method="post">
                     
@@ -71,16 +97,16 @@ const SignUp = ({toggleLogin, showLogin}) => {
                     
                     <section className="userTypeSection">
                         <p>I am registering as a:</p>
-                        <input type="radio" id="customer" name="userType" checked onChange={() => setSignUpRole('customer')}/>
+                        <input type="radio" id="customer" name="userType" checked={signUpRole === 'customer'} onChange={() => setSignUpRole('customer')}/>
                         <label htmlFor="customer">Customer</label>
-                        <input type="radio" id="admin" name="userType" onChange={() => setSignUpRole('admin')}/>
+                        <input type="radio" id="admin" name="userType" checked={signUpRole === 'admin'} onChange={() => setSignUpRole('admin')}/>
                         <label htmlFor="admin">Admin</label>
                         <br/>
-                        {signUpRole === 'admin' && showAdminCodeInput()}
+                        {(signUpRole === 'admin') ? showAdminCodeInput() : <></>}
                        
                     </section>
                     
-                    <button type="button" className="reg-button" onClick={submitSignUpForm}>Submit</button>
+                    <button type="button" className="reg-button" onClick={onFormSubmmission}>Submit</button>
                 </form>
             </main>
         </>

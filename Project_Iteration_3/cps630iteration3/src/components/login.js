@@ -40,7 +40,7 @@ const Login = () => {
                 dispatch(setUser(user));
                 navigate('/')
             })
-            .catch(err => console.log(err))
+            .catch(err => setErrorMsg("Wrong Username or Password"))
         }
     }
     return (
