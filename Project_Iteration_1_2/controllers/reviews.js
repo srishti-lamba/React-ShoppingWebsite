@@ -10,6 +10,14 @@ $(document).ready(function() {
         setMinHeight();
     });
 
+    // Search enter
+    $('#reviewSearchForm input').bind('keypress keydown keyup', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            submitReviewSearch();
+        }
+    });
+
     // Search check
     $("#reviewSearchForm input").blur(function(){
         checkSearchInput();
@@ -37,7 +45,10 @@ function submitEmpty() {
     $("#emptyForm").submit();
 }
 
-function submitReviewSearch() {
+function submitReviewSearch(data = "") {
+    if (data != "") {
+        $('#reviewSearchForm input').val(data);
+    }
     $("#reviewSearchForm").submit();
 }
 
@@ -75,14 +86,22 @@ function fillDatalist(data) {
     $("#searchItemList").html(data);
 }
 
+function fillItemInfo(itemName, itemURL) {
+    $("#reviewItem").css("display", "block");
+    $("#reviewItem h4").html(itemName);
+    $("#reviewItem img").attr("src", itemURL);
+}
+
 function fillReviews(data) {        
     $("#reviewCards").html(data);
 }
 
-function showWriteReview(userID, itemID) {
+function showWriteReview(userID, itemID, itemName, itemURL) {
 
     $("#reviewUserID").val(userID);
     $("#reviewItemID").val(itemID);
+    $("#reviewItemName").val(itemName);
+    $("#reviewItemURL").val(itemURL);
 
     $("#writeReviewForm").css("display", "block");
 }

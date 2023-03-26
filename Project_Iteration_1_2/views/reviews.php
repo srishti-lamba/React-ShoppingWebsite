@@ -36,6 +36,12 @@
                 <div id="errorMsg"></div>
             </div>
 
+            <!-- Item -->
+            <div id="reviewItem" class="box">
+                <h4></h4>
+                <img>
+            </div>
+
             <!-- Review Cards -->
             <div id="reviewCards"></div>  
 
@@ -46,6 +52,8 @@
 
                     <input id="reviewUserID" type="text" name="reviewUserID" style="display: none">
                     <input id="reviewItemID" type="text" name="reviewItemID" style="display: none">
+                    <input id="reviewItemName" type="text" name="reviewItemName" style="display: none">
+                    <input id="reviewItemURL" type="text" name="reviewItemURL" style="display: none">
 
                     <div id="reviewStars">
                         <input type="radio" id="star1" name="reviewRating" value="1" />
@@ -94,6 +102,12 @@
         echoJavascript("console.log(`$script`);");
     }
 
+    // Search already set
+    if( isset($_GET['search']) && !isset($_SESSION['review-reviews']) ) {
+        echoJavascript("submitReviewSearch(`" . $_GET['search'] . "`);");
+        exit;
+    }
+
     // Items
     if (isset($_SESSION['review-items'])) {
         echoJavascript("fillDatalist(`" . $_SESSION['review-items'] . "`)");
@@ -116,10 +130,20 @@
         unset($_SESSION['review-success']);
     }
 
-    //Write
-    if (  isset($_SESSION['review-search']) && isset($_SESSION['userId']) && $_SESSION['review-reviews'] != "" ) {
-        echoJavascript("showWriteReview('" . $_SESSION['userId'] . "', '" . $_SESSION['review-search'] . "');");
-        unset($_SESSION['review-search']);
+    // Write
+    if (  isset($_SESSION['review-searchInfo']) && isset($_SESSION['userId']) && $_SESSION['review-reviews'] != "" ) {
+        echoJavascript("showWriteReview('" . $_SESSION['userId'] . "', '" . 
+            $_SESSION['review-searchInfo'][0] . "', '" . 
+            $_SESSION['review-searchInfo'][1] . "', '" . 
+            $_SESSION['review-searchInfo'][2] . "');");
+    }
+
+    // Search Info
+    if (isset($_SESSION['review-searchInfo'])) {
+        echoJavascript("fillItemInfo(`" .  
+            $_SESSION['review-searchInfo'][1] . "`, `" . 
+            $_SESSION['review-searchInfo'][2] . "`)");
+        unset($_SESSION['review-searchInfo']);
     }
 
     // Reviews

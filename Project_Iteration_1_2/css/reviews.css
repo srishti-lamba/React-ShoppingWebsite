@@ -47,30 +47,6 @@ h2 {
     white-space: nowrap;
 }
 
-#successMsg {
-    display: none;
-    padding: 3px 5px;
-    width: fit-content;
-    color: green;
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-    border: 1.5px solid green;
-    border-radius: 15px;
-}
-
-#errorMsg {
-    display: none;
-    padding: 3px 5px;
-    width: fit-content;
-    color: red;
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-    border: 1.5px solid red;
-    border-radius: 15px;
-}
-
 /* ------------ */
 /* --- Main --- */
 /* ------------ */
@@ -115,10 +91,61 @@ h2 {
         padding: 0px 5px;
     }
 
+/* --------------- */
+/* --- Results --- */
+/* --------------- */
+
+#successMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: green;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid green;
+    border-radius: 15px;
+}
+
+#errorMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: red;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid red;
+    border-radius: 15px;
+}
+
+/* ------------------- */
+/* --- Review Item --- */
+/* ------------------- */
+
+#reviewItem {
+    display: none;
+    width: fit-content;
+    padding: 20px;
+}
+
+    #reviewItem h4 {
+        font-size: 16px;
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+        text-align: center;
+    }
+
+    #reviewItem img {
+        display: block;
+        max-width: 15vw;
+        max-height: 15vw;
+        margin: 20px auto 0px auto;
+    }
+
 /* -------------------- */
 /* --- Review Cards --- */
 /* -------------------- */
-
 #reviewCards {
     display: flex;
     justify-content: flex-start;

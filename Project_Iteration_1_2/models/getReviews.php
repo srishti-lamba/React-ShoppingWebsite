@@ -12,19 +12,22 @@
         // Get Reviews
 	    if ( isset($_POST["searchItem"]) ) {
             getReviews();
+            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["searchItem"] );
         }
 
         // Write Review
         else if ( isset($_POST["reviewUserID"]) && isset($_POST["reviewItemID"]) && isset($_POST["reviewRating"]) && isset($_POST["reviewTitle"]) && isset($_POST["reviewContent"]) ) {
+            $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
             writeReview();
+            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["reviewItemName"] );
         }
 
         // Get Items
         else {
             getItems();
+            header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
         }
-        
-        header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
+
         exit;
     }
 
@@ -47,7 +50,7 @@
 
     function getReviews() {
         $query = 
-            "SELECT Reviews.reviewID, Users.userName, Items.item_id, Items.productName, Reviews.dateTime, Reviews.rating, Reviews.title, Reviews.content 
+            "SELECT Reviews.reviewID, Users.userName, Items.item_id, Items.productName, Items.image_url, Reviews.dateTime, Reviews.rating, Reviews.title, Reviews.content 
                 FROM Reviews 
                 INNER JOIN Items
                     ON Reviews.itemID = Items.item_id
@@ -78,8 +81,6 @@
         $content = str_replace("'", "\'", $content);
 
         $query = "INSERT INTO Reviews(userID, itemID, rating, title, content) VALUES ('$userID', '$itemID', '$rating', '$title', '$content');";
-        
-        echo("<script>console.log(\"Query: $query\")</script>");
         
         $resultSql = writeQuery($query);
     }
@@ -149,8 +150,8 @@
         while ( $row = $resultSql->fetch_array() ) {
 
             // Review-Search ItemID
-            if ( !isset($_SESSION['review-search']) ) {
-                $_SESSION['review-search'] = $row['item_id'];
+            if ( !isset($_SESSION['review-searchInfo']) ) {
+                $_SESSION['review-searchInfo'] = array($row['item_id'], $row['productName'], $row['image_url']);
             }
 
             $userName = $row['userName'];
