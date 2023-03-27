@@ -56,6 +56,10 @@
     display: none;
 }
 
+.paymentContainer div{
+    padding-left: 50px;
+}
+
 .paymentContainer h1{
     font-weight: 600;
     border-bottom: 2px solid #EDF1D6;
@@ -146,4 +150,29 @@
 
 .shoppinglist td {
     padding: 10px;
+}
+
+.couponSection h1{
+    font-weight: 600;
+    border-bottom: 2px solid #EDF1D6;
+    width: 95%;
+    margin: auto;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+.couponSection div{
+    padding-left: 50px;
+}
+
+.couponSection input[type="text"]{
+    height: 25px;
+}
+
+.couponSection button{
+    margin-left: 10px;
+    height: 25px;
+    width: 60px;
 }

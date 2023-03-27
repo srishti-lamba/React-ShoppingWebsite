@@ -28,6 +28,12 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
     const [destination, setDestination] = useState("");
     const [distance, setDistance] = useState("");
 
+    //Coupons Variables
+    const [coupon, setCoupon] = useState("");
+    const [discountedTotal, setDiscountedTotal] = useState(null);
+    const [initalTotal, setInitialTotal] = useState(null);
+
+    //Google Map Variables
     const [displayDirections, setDisplayDirections] = useState(null);
     const [map, setMap] = useState(/** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -52,6 +58,7 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         let total = localStorage.getItem("shoppingCartTotal")
         setShoppingCart(JSON.parse(shoppingCart))
         setTotalPrice(Number(total))
+        setInitialTotal(Number(total))
     }, [])
 
     const {isLoaded} = useJsApiLoader({
@@ -90,6 +97,27 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
             })
         }
         
+    }
+
+    const processCoupon = () => {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/processCoupon.php";
+        let fdata = new FormData();
+        fdata.append('coupon', coupon);
+        axios.post(url, fdata)
+        .then(res => {
+            let response = (JSON.parse(res.data[0]));
+            let discount = response.discount;
+            let newPrice = (initalTotal*((100-discount)/100));
+            //Round to nearest 2 decimals
+            let newTotal = (Math.round(newPrice * 100) / 100)
+            setDiscountedTotal(newTotal);
+            //Update total price
+            setTotalPrice(newTotal);
+        })
+        .catch(err => {
+            setDiscountedTotal(null);
+            setTotalPrice(initalTotal);
+        })
     }
 
     async function calculateRoute() {
@@ -160,24 +188,32 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
 
                             <div className="googleMap">
                                 <GoogleMap center={{lat: 43.690060, lng: -79.294570}} mapContainerStyle={{width: '100%',height: '100%'}} zoom={10}  onLoad={map => setMap(map)}>
-                                {directionsResponse && (
-                                        <DirectionsRenderer directions={directionsResponse} />
-                                    )}
+                                {directionsResponse && (<DirectionsRenderer directions={directionsResponse} />)}
                                 </GoogleMap>
                             </div>
                         </section>
                         <section className="paymentContainer">
                             <h1>2. Payment</h1>
-                            <p>Payment Options</p>
-                            <select className="selectPaymentOption">
-                                <option value="debit">Debit</option>
-                                <option value="credit">Credit</option>
-                            </select>
-                            <label htmlFor="ccn">Card Number:</label>
-                            <input className="cardNumber" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="19" placeholder="xxxxxxxxxxxxxxxx" 
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}         
-                            />
+                            <div>
+                                <p>Payment Options</p>
+                                <select className="selectPaymentOption">
+                                    <option value="debit">Debit</option>
+                                    <option value="credit">Credit</option>
+                                </select>
+                                <label htmlFor="ccn">Card Number:</label>
+                                <input className="cardNumber" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="19" placeholder="xxxxxxxxxxxxxxxx" 
+                                    value={cardNumber}
+                                    onChange={(e) => setCardNumber(e.target.value)}         
+                                />
+                            </div>
+                        </section>
+                        <section className="couponSection">
+                            <h1>3. Apply Discounts</h1>
+                            <div>
+                                <p>Add a promotion code</p>
+                                <input type="text" value={coupon} onChange={(e) => setCoupon(e.target.value)}></input>
+                                <button onClick={(processCoupon)}>Apply</button>
+                            </div>
                         </section>
                     </main>
                     <aside className="aside-container">
@@ -203,11 +239,18 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                     })}
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    {discountedTotal ? (
+                                        <tr>
+                                            <td colSpan="2" style={{'textDecoration':'line-through', color:'red'}}>Total</td>
+                                            <td id="total" style={{'textDecoration':'line-through', color:'red'}}>{initalTotal}</td>
+                                        </tr>) 
+                                    :<tr>
                                         <td colSpan="2">Total</td>
                                         <td id="total">{totalPrice}</td>
-                                </tr>
-                            </tfoot>
+                                    </tr>  
+                                    }
+                                    {discountedTotal ? (<tr><td colSpan="2" style={{color:'green'}}>Total</td><td id="total" style={{color:'green'}}>{discountedTotal}</td></tr>): null}
+                                </tfoot>
                             </table>
                             <div className="submitContainer">
                                 <input type="button" value="Make Payment & Place Order" onClick={submitOrder} />
