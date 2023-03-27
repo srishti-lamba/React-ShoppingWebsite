@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, {useState, useEffect} from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import './dbMaintain.css';
 import axios from "axios";
 
-const Insert = ({showLogin, toggleLogin}) => {
+const Delete = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
     const [userMessage, setUserMessage] = useState("");
     const [table, setTable] = useState(null);
     const [colNames, setColNames] = useState([]);
     const [inputFieldValues, setInputFieldValues] = useState([])
+    const [operations, setOperations] = useState([])
     const [tableRows, setTableRows] = useState([]);
 
     //get table col names
@@ -21,12 +21,15 @@ const Insert = ({showLogin, toggleLogin}) => {
         .then(res => {
             let cols = []
             let inputs = []
+            let initialOperations = []
             res.data.forEach(element => {
                 cols.push(element)
                 inputs.push("")
+                initialOperations.push("=")
             });
             setColNames(cols);
             setInputFieldValues(inputs)
+            setOperations(initialOperations)
         }).catch(err => {
             console.log(err)
         })
@@ -49,6 +52,12 @@ const Insert = ({showLogin, toggleLogin}) => {
         setInputFieldValues(newInputFieldValues)
     }
 
+    const updateOperations = (i, operator) => {
+        let newOperations = [...operations]
+        newOperations[i] = operator;
+        setOperations(newOperations)
+    }
+
     const submitQuery = () => {
         let allempty = true;
         inputFieldValues.forEach(item => {
@@ -61,28 +70,25 @@ const Insert = ({showLogin, toggleLogin}) => {
             setUserMessage("Fields cannot all be empty");
             return;
         }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";
-        let queryPart1 = `INSERT INTO ${table} (`;
-        let queryPart2 = ` VALUES(`;
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";;
+        let query = `DELETE FROM ${table} WHERE `;
         let fdata = new FormData();
 
         colNames.forEach((name, i) => {
             let processedName = processUserInput(name, inputFieldValues[i])
             if(inputFieldValues[i] !== "") {
-                if(queryPart1 === `INSERT INTO ${table} (`){
-                    queryPart1 += `${name}`;
-                    queryPart2 += `${processedName}`
+                if(query === `DELETE FROM ${table} WHERE `){
+                    query+= `${name} ${operations[i]} ${processedName}`; 
                 }
                 else {
-                    queryPart1 += ", " + `${name}`;
-                    queryPart2 += ", " + `${processedName}`
+                    query += ` AND ${name} ${operations[i]} ${processedName}`;
                 }
             }  
         })
 
-        let query = queryPart1 + ")" + queryPart2 + ");";
+        query += ";";
 
-        console.log(query)
+        console.log(query);
 
         fdata.append('query', query);
         axios.post(url, fdata)
@@ -146,7 +152,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             <div className='pageBox'>
 
                 <article>
-                    <h1 className="title">DATABASE: INSERT</h1>
+                    <h1 className="title">DATABASE: Delete</h1>
                 </article>
 
                 {userMessage.length > 0 ? <p style={{color:'green', textAlign:'center'}}>{userMessage}</p> : <></>}
@@ -172,12 +178,21 @@ const Insert = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Values to insert:</label>
+                        <label for="inputValues">Values to delete:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
                                     <>
                                         <label>{field}</label>
+                                        <div style={{display:'flex', flexDirection:'row'}}>
+                                        <input id="queryColumnBtn" type='radio' style={{display:'none'}} />
+                                        <label value="<" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<")}>{"<"}</label>
+                                        <label value="<=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<=")}>{"<="}</label>
+                                        <label value="=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "=")}>{"="}</label>
+                                        <label value="!=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "!=")}>{"!="}</label>
+                                        <label value=">=" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">=")}>{">="}</label>
+                                        <label value=">" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">")}>{">"}</label>
+                                        </div>
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
@@ -234,6 +249,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             </div>
         </>
     )
+
 }
 
-export default Insert;
+export default Delete;

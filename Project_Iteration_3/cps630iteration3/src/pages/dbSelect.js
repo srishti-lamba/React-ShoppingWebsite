@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {useState, useEffect} from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import './dbMaintain.css';
-import axios from "axios";
+import axios, { all } from "axios";
 
-const Insert = ({showLogin, toggleLogin}) => {
+const Select = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
     const [userMessage, setUserMessage] = useState("");
     const [table, setTable] = useState(null);
     const [colNames, setColNames] = useState([]);
-    const [inputFieldValues, setInputFieldValues] = useState([])
+    const [inputFieldValues, setInputFieldValues] = useState([]);
+    const [colsSelected, setColsSelected] = useState([]);
+    const [operations, setOperations] = useState([])
     const [tableRows, setTableRows] = useState([]);
+    const [queryOutput, setQueryOutput] = useState([]);
+
+    useEffect(() => {
+        setQueryOutput([])
+    }, [])
 
     //get table col names
     useEffect(() => {
@@ -21,12 +27,18 @@ const Insert = ({showLogin, toggleLogin}) => {
         .then(res => {
             let cols = []
             let inputs = []
+            let initialOperations = []
+            let initialColsSelected = []
             res.data.forEach(element => {
                 cols.push(element)
                 inputs.push("")
+                initialOperations.push("=")
+                initialColsSelected.push("")
             });
             setColNames(cols);
             setInputFieldValues(inputs)
+            setOperations(initialOperations)
+            setColsSelected(initialColsSelected)
         }).catch(err => {
             console.log(err)
         })
@@ -49,46 +61,83 @@ const Insert = ({showLogin, toggleLogin}) => {
         setInputFieldValues(newInputFieldValues)
     }
 
+    const updateOperations = (i, operator) => {
+        let newOperations = [...operations]
+        newOperations[i] = operator;
+        setOperations(newOperations)
+    }
+
+    const updateColsSelected = (field, i) => {
+        let newColsSelected = [...colsSelected]
+        newColsSelected[i] = field
+        setColsSelected(newColsSelected)
+    }
+
     const submitQuery = () => {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbInsert.php";
         let allempty = true;
-        inputFieldValues.forEach(item => {
+        let query = "";
+        let fdata = new FormData()
+        colsSelected.forEach(item => {
             if(item !== ""){
                 allempty = false;
             }
         })
 
-        if(allempty) {
-            setUserMessage("Fields cannot all be empty");
-            return;
-        }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";
-        let queryPart1 = `INSERT INTO ${table} (`;
-        let queryPart2 = ` VALUES(`;
-        let fdata = new FormData();
+        let queryPart1 ="SELECT *";
+        let queryPart2 = `FROM ${table}`;
+        let queryPart3 = ` WHERE `;
 
-        colNames.forEach((name, i) => {
-            let processedName = processUserInput(name, inputFieldValues[i])
-            if(inputFieldValues[i] !== "") {
-                if(queryPart1 === `INSERT INTO ${table} (`){
-                    queryPart1 += `${name}`;
-                    queryPart2 += `${processedName}`
-                }
-                else {
-                    queryPart1 += ", " + `${name}`;
-                    queryPart2 += ", " + `${processedName}`
+        if(allempty) {
+            queryPart1 = `SELECT * `;
+        } else {
+            queryPart1 = `SELECT `;
+        }
+
+        colsSelected.forEach((name, i) => {
+            if(name !== "") {
+                if(queryPart1 === "SELECT ") {
+                    queryPart1 += `${name} `; 
+                } else {
+                    queryPart1 += `, ${name} `;
                 }
             }  
         })
 
-        let query = queryPart1 + ")" + queryPart2 + ");";
+        allempty = true;
 
-        console.log(query)
+        inputFieldValues.forEach(item => {
+            if(item !== "") {
+                allempty = false;
+            }
+        })
+
+        if(allempty) {
+            query = queryPart1 + queryPart2;
+        } else {
+            colNames.forEach((name, i) => {
+                let processedName = processUserInput(name, inputFieldValues[i]);
+                if(inputFieldValues[i] !== "") {
+                    if(queryPart3 === " WHERE ") {
+                        queryPart3 += `${name} ${operations[i]} ${processedName}`
+                    } else {
+                        queryPart3 += ` AND ${name} ${operations[i]} ${processedName}`
+                    }
+                }
+    
+            })
+
+            query = queryPart1 + queryPart2 + queryPart3 + ";";
+        }
+
+        
+        console.log(query);
 
         fdata.append('query', query);
         axios.post(url, fdata)
         .then(res=> {
-            //console.log(res.data)
-            setUserMessage(res.data);
+            console.log(res)
+            setQueryOutput(res.data);
         })
     }
 
@@ -136,6 +185,44 @@ const Insert = ({showLogin, toggleLogin}) => {
     }
 
     {user !== null && toggleLogin(false)}
+
+    const showQueryOutput = () => {
+
+        let allempty = true
+        colsSelected.forEach(item => {
+            if(item.length > 0) {
+                allempty = false;
+            }
+        })
+
+        return (
+            <div>
+                <p>Query Output:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            {!allempty ? colsSelected.map((col, i) => {
+                                return <th key={i}>{col}</th>
+                            }) : colNames.map((name, i) => {
+                                return <th key={i}>{name}</th>
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {queryOutput.map((elem, i) => {
+                            return(
+                                <tr>
+                                    {Object.keys(elem).map((item, i) => {
+                                        return <td key={i}>{elem[item]}</td>
+                                    })}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
     
     return (
         <>
@@ -146,7 +233,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             <div className='pageBox'>
 
                 <article>
-                    <h1 className="title">DATABASE: INSERT</h1>
+                    <h1 className="title">DATABASE: Select</h1>
                 </article>
 
                 {userMessage.length > 0 ? <p style={{color:'green', textAlign:'center'}}>{userMessage}</p> : <></>}
@@ -170,14 +257,39 @@ const Insert = ({showLogin, toggleLogin}) => {
                     </select>
                 </form>
 
+                <div id="inputColumnsBtn">
+                    <label>
+                        Columns:
+                    </label>
+                    {colNames.length > 0 && colNames.map((field, i) => {
+                        return (
+                            <>
+                                <input type='checkbox' />
+                                <label onClick={(e) => updateColsSelected(field, i)} className="" key={i}>
+                                    {field}
+                                </label>
+                            </>
+                        )
+                    })}
+                </div>
+
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Values to insert:</label>
+                        <label for="inputValues">Conditions:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
                                     <>
                                         <label>{field}</label>
+                                        <div style={{display:'flex', flexDirection:'row'}}>
+                                        <input id="queryColumnBtn" type='radio' style={{display:'none'}} />
+                                        <label value="<" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<")}>{"<"}</label>
+                                        <label value="<=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<=")}>{"<="}</label>
+                                        <label value="=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "=")}>{"="}</label>
+                                        <label value="!=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "!=")}>{"!="}</label>
+                                        <label value=">=" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">=")}>{">="}</label>
+                                        <label value=">" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">")}>{">"}</label>
+                                        </div>
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
@@ -199,7 +311,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 </div> : <></>}
 
                 <div className="tableView" class="box">
-                    <p></p>
+                    {queryOutput.length > 0 && showQueryOutput()}
                     <table>
                         <thead>
                             <tr>
@@ -236,4 +348,5 @@ const Insert = ({showLogin, toggleLogin}) => {
     )
 }
 
-export default Insert;
+
+export default Select;

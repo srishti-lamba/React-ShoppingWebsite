@@ -9,6 +9,9 @@ import Reviews from './pages/reviews';
 import UserCheckoutPage from './pages/userCheckout';
 import SignUp from './pages/signUp';
 import Insert from './pages/dbInsert';
+import Delete from './pages/dbDelete';
+import Select from './pages/dbSelect';
+import Update from './pages/dbUpdate';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -25,7 +28,10 @@ function App() {
         <Route path='/checkout' element={<UserCheckoutPage toggleLogin={setShowLogin} showLogin={showLogin}/>} />
         <Route path='/signup' element={<SignUp toggleLogin={setShowLogin} showLogin={showLogin}/>} />
         <Route path='/insert' element={<Insert toggleLogin={setShowLogin} showLogin={showLogin}/>} />
-      </Routes>
+        <Route path='/delete' element={<Delete toggleLogin={setShowLogin} showLogin={showLogin} />} />
+        <Route path='/select' element={ <Select toggleLogin={setShowLogin} showLogin={showLogin} />} />
+        <Route path='/update' element={<Update toggleLogin={setShowLogin} showLogin={showLogin} />} />
+      </Routes> 
     </div>
   );
 }

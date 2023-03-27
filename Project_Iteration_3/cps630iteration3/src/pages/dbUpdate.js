@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useState, useEffect} from "react";
+import axios, { all } from "axios";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import './dbMaintain.css';
-import axios from "axios";
 
-const Insert = ({showLogin, toggleLogin}) => {
+const Update = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
     const [userMessage, setUserMessage] = useState("");
     const [table, setTable] = useState(null);
     const [colNames, setColNames] = useState([]);
+    const [valuesToUpdate, setValuesToUpdate] = useState([])
+    //inputFieldValues used for values in where clause of updata
     const [inputFieldValues, setInputFieldValues] = useState([])
+    const [operations, setOperations] = useState([])
     const [tableRows, setTableRows] = useState([]);
 
     //get table col names
@@ -21,12 +23,18 @@ const Insert = ({showLogin, toggleLogin}) => {
         .then(res => {
             let cols = []
             let inputs = []
+            let initialOperations = []
+            let initialValsToUpdate = []
             res.data.forEach(element => {
                 cols.push(element)
                 inputs.push("")
+                initialOperations.push("=")
+                initialValsToUpdate.push("")
             });
             setColNames(cols);
             setInputFieldValues(inputs)
+            setOperations(initialOperations)
+            setValuesToUpdate(initialValsToUpdate)
         }).catch(err => {
             console.log(err)
         })
@@ -49,45 +57,74 @@ const Insert = ({showLogin, toggleLogin}) => {
         setInputFieldValues(newInputFieldValues)
     }
 
+    const updateOperations = (i, operator) => {
+        let newOperations = [...operations]
+        newOperations[i] = operator;
+        setOperations(newOperations)
+    } 
+
+    const updateValsToUpdate = (e, i) => {
+        let newValsToUpdate = [...valuesToUpdate]
+        newValsToUpdate[i] = e.target.value
+        setValuesToUpdate(newValsToUpdate)
+    }
+
     const submitQuery = () => {
         let allempty = true;
-        inputFieldValues.forEach(item => {
+        valuesToUpdate.forEach(item => {
             if(item !== ""){
                 allempty = false;
             }
         })
 
         if(allempty) {
-            setUserMessage("Fields cannot all be empty");
+            setUserMessage("You have not input any values to update");
             return;
         }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";
-        let queryPart1 = `INSERT INTO ${table} (`;
-        let queryPart2 = ` VALUES(`;
+
+        allempty = true;
+
+        inputFieldValues.forEach(item => {
+            if(item !==  "") {
+                allempty = false;
+            }
+        })
+
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";;
+        let query = `UPDATE ${table} SET `;
+        let queryPart2 = " WHERE"
         let fdata = new FormData();
 
         colNames.forEach((name, i) => {
-            let processedName = processUserInput(name, inputFieldValues[i])
-            if(inputFieldValues[i] !== "") {
-                if(queryPart1 === `INSERT INTO ${table} (`){
-                    queryPart1 += `${name}`;
-                    queryPart2 += `${processedName}`
+            let processedName = processUserInput(name, valuesToUpdate[i])
+            if(valuesToUpdate[i] !== "") {
+                if(query === `UPDATE ${table} SET `){
+                    query+= `${name} = ${processedName}`; 
                 }
                 else {
-                    queryPart1 += ", " + `${name}`;
-                    queryPart2 += ", " + `${processedName}`
+                    query += `, ${name} = ${processedName}`;
                 }
             }  
         })
 
-        let query = queryPart1 + ")" + queryPart2 + ");";
+        colNames.forEach((name, i) => {
+            let processedName = processUserInput(name, inputFieldValues[i])
+            if(inputFieldValues[i] !== "") {
+                if(queryPart2 === " WHERE") {
+                    queryPart2 += ` ${name} ${operations[i]} ${processedName}`
+                } else {
+                    queryPart2 += ` AND ${name} ${operations[i]} ${processedName}`
+                }
+            }
+        })
 
-        console.log(query)
+        if(!allempty) {
+            query += queryPart2 + ";";
+        } 
 
         fdata.append('query', query);
         axios.post(url, fdata)
         .then(res=> {
-            //console.log(res.data)
             setUserMessage(res.data);
         })
     }
@@ -146,7 +183,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             <div className='pageBox'>
 
                 <article>
-                    <h1 className="title">DATABASE: INSERT</h1>
+                    <h1 className="title">DATABASE: Update</h1>
                 </article>
 
                 {userMessage.length > 0 ? <p style={{color:'green', textAlign:'center'}}>{userMessage}</p> : <></>}
@@ -172,12 +209,43 @@ const Insert = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Values to insert:</label>
+                        <label for="inputValues">Values to Update:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
                                     <>
                                         <label>{field}</label>
+                                        <input 
+                                            placeholder="Enter Value" 
+                                            type="text" 
+                                            key={i} 
+                                            value={valuesToUpdate[i]}
+                                            onChange={(e) => updateValsToUpdate(e, i)}
+                                            />
+                                    </>
+                                )
+                            })}
+                        </div>
+                    </div>  
+                </div>      
+
+                <div className="inputValuesForForm">
+                    <div className="inputValues">
+                        <label for="inputValues">Conditions:</label>
+                        <div className="queryColumn">
+                            {colNames.length > 0 && colNames.map((field, i) => {
+                                return (
+                                    <>
+                                        <label>{field}</label>
+                                        <div style={{display:'flex', flexDirection:'row'}}>
+                                        <input id="queryColumnBtn" type='radio' style={{display:'none'}} />
+                                        <label value="<" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<")}>{"<"}</label>
+                                        <label value="<=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "<=")}>{"<="}</label>
+                                        <label value="=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "=")}>{"="}</label>
+                                        <label value="!=" id="queryColumnBtn" onClick={(e) => updateOperations(i, "!=")}>{"!="}</label>
+                                        <label value=">=" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">=")}>{">="}</label>
+                                        <label value=">" id="queryColumnBtn" onClick={(e) => updateOperations(i, ">")}>{">"}</label>
+                                        </div>
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
@@ -191,7 +259,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                         </div>
                     </div>  
                 </div>      
-
+                
                 {table !== null ? 
                 <div id="queryDiv" className="box">
                     <p id="queryDisplay"></p>
@@ -234,6 +302,8 @@ const Insert = ({showLogin, toggleLogin}) => {
             </div>
         </>
     )
+
 }
 
-export default Insert;
+
+export default Update;

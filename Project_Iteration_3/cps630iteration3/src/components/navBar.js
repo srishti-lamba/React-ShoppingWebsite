@@ -63,9 +63,9 @@ const NavBar = ({toggleLogin}) => {
                             <div className="dbMaintain-btn" onMouseEnter={showDropdown}>DB MAINTAIN</div>
                             <div className="dbMaintain-options" style={{display: display}}>
                                 <Link to='/insert'>Insert</Link>
-                                <Link to='/'>Delete</Link>
-                                <Link to='/'>Select</Link>
-                                <Link to='/'>Update</Link>
+                                <Link to='/delete'>Delete</Link>
+                                <Link to='/select'>Select</Link>
+                                <Link to='/update'>Update</Link>
                             </div>
                         </li> 
                         : <></>

@@ -1,10 +1,9 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
     background-color: #EDF1D6;
 }
 
-#pageBox {
+.pageBox {
     width: 68%;
     margin: auto;
     margin-top: 50px;
@@ -17,7 +16,7 @@ body {
     margin-bottom: 50px;
 }
 
-h1 {
+.title {
     display: block;
     text-align: center;
     width: fit-content;
@@ -38,15 +37,15 @@ hr {
     text-underline-offset: 0.25em;
 }
 
-#errorMsg {
+.errorMsg {
     color: red;
 }
 
-#successMsg {
+.successMsg {
     color: mediumseagreen;
 }
 
-#tableNameForm > label, inputValuesForm > label, #inputColumns > label {
+.tableNameForm > label, .inputValuesForm > label, #inputColumns > label {
     margin: 10px 20px;
 }
 
@@ -54,7 +53,7 @@ hr {
 /* --- Table --- */
 /* ------------- */
 
-table {
+/* table {
     margin: auto;
     display: block;
     width: fit-content;
@@ -120,13 +119,13 @@ table {
 
     table tbody tr td:last-of-type {
         border-right: 1.5px solid #91806E;
-    }
+    } */
 
 /* ------------------ */
 /* --- Table Name --- */
 /* ------------------ */
 
-#tableName {
+.tableName {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -136,7 +135,7 @@ table {
     color: white;
 }
 
-    #tableName option {
+    .tableName option {
         font-size: 16px;
         font-weight: 600;
         background-color: #b3a698;
@@ -185,11 +184,11 @@ table {
 /* --- Input Values --- */
 /* -------------------- */
 
-#inputValuesForm {
-    display: none;
+.inputValuesForm {
+    display: block;
 }
 
-#inputValues {
+.inputValues {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -206,12 +205,14 @@ table {
 }
 
 .queryColumn {
+    display: flex;
+    flex-wrap: wrap;
     margin: 5px;
     color: white;
     width: 18%;
 }
 
-    .queryColumn > label:first-of-type {
+    .queryColumn > label{
         text-align: center;
         display: block;
         font-weight: 600;
@@ -250,14 +251,23 @@ table {
             text-align: center;
         }
 
-.queryColumnBtn {
+#queryColumnBtn {
     display: flex;
     flex-direction: row;
     justify-content: stretch;
     background-color: #b3a698;
+    padding: 7.7px;
 }
 
-    .queryColumnBtn label {
+#queryColumnBtn:hover {
+    background-color: #8D7B68;
+}
+
+#queryColumnBtn:focus {
+    background-color: #8D7B68;
+}
+
+    #queryColumnBtn label {
         display: inline;
         background-color: #b3a698;
         border: 1.5px solid #b3a698;
@@ -266,15 +276,15 @@ table {
         width: 16.7%;
     }
 
-        .queryColumnBtn label:hover {
+        #queryColumnBtn label:hover {
             background-color: #A39586;
         }
 
-    .queryColumnBtn input[type='radio'] {
+    #queryColumnBtn input[type='radio'] {
         display: none;
     }
 
-        .queryColumnBtn input[type='radio']:checked + label {
+        #queryColumnBtn input[type='radio']:checked + label {
             background-color: #91806E;
         }
 
@@ -323,12 +333,11 @@ table {
 /* --- Table View --- */
 /* ------------------ */
 
-#tableView {
-    display: none;
+.tableView {
     margin-top: 30px;
 }
 
-    #tableView p {
+    .tableView p {
         text-align: center;
         text-decoration: underline;
         text-underline-offset: 0.25em;
