@@ -109,13 +109,13 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         catch{
             setDirectionsResponse(null);
             setDistance("");
+            setMapErr(true);
         }
     }
     
     if(displayDirections == true){
         setDisplayDirections(null);
         calculateRoute();
-        setMapErr(true);
     }
 
     return (
