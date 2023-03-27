@@ -8,6 +8,9 @@ import { selectUser } from "../features/userSlice";
 import { useDispatch } from "react-redux";
 import { setOrderId } from "../features/orderIdSlice";
 import { useNavigate } from "react-router-dom";
+import { Autocomplete, useJsApiLoader, GoogleMap, DirectionsRenderer} from "@react-google-maps/api";
+
+
 
 const UserCheckoutPage = ({toggleLogin, showLogin}) => {
     const navigate = useNavigate();
@@ -17,14 +20,26 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
     const [shoppingCart, setShoppingCart] = useState([])
     const [totalPrice, setTotalPrice] = useState([])
     const [locations, setLocations] = useState([])
-    const [source, setSource] = useState("");
-    const [destination, setDestination] = useState("");
     const [deliveryDate, setDeliveryDate] = useState("");
     const [deliveryTime, setDeliveryTime] = useState("");
     const [cardNumber, setCardNumber] = useState("");
-    const [distance, setDistance] = useState(0);
     const [errorMsg, setErrorMsg] = useState("");
-    
+    const [source, setSource] = useState("");
+    const [destination, setDestination] = useState("");
+    const [distance, setDistance] = useState("");
+
+    //Coupons Variables
+    const [coupon, setCoupon] = useState("");
+    const [discountedTotal, setDiscountedTotal] = useState(null);
+    const [initalTotal, setInitialTotal] = useState(null);
+
+    //Google Map Variables
+    const [displayDirections, setDisplayDirections] = useState(null);
+    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+    const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [mapErr, setMapErr] = useState(null);
+    const google = window.google;
+
     useEffect(() => {
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/fetchLocations.php"
         axios.get(url)
@@ -43,7 +58,16 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         let total = localStorage.getItem("shoppingCartTotal")
         setShoppingCart(JSON.parse(shoppingCart))
         setTotalPrice(Number(total))
+        setInitialTotal(Number(total))
     }, [])
+
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: "AIzaSyDqs21kU6-FIEIWa7bnDbepY2k0G6e7uvg",
+        libraries: ['places'],
+    })
+    if(!isLoaded){
+        return (<></>)
+    }
 
     const submitOrder = () => {
         if(user === null) {
@@ -75,6 +99,53 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         
     }
 
+    const processCoupon = () => {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/processCoupon.php";
+        let fdata = new FormData();
+        fdata.append('coupon', coupon);
+        axios.post(url, fdata)
+        .then(res => {
+            let response = (JSON.parse(res.data[0]));
+            let discount = response.discount;
+            let newPrice = (initalTotal*((100-discount)/100));
+            //Round to nearest 2 decimals
+            let newTotal = (Math.round(newPrice * 100) / 100)
+            setDiscountedTotal(newTotal);
+            //Update total price
+            setTotalPrice(newTotal);
+        })
+        .catch(err => {
+            setDiscountedTotal(null);
+            setTotalPrice(initalTotal);
+        })
+    }
+
+    async function calculateRoute() {
+        if (source === '') {return}
+        const directionsService = new google.maps.DirectionsService()
+        try{
+            const results = await directionsService.route({
+            origin: source,
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING,
+            })
+            setDirectionsResponse(results)
+            setDistance(results.routes[0].legs[0].distance.text)
+            setMapErr(null);
+            return;
+        }
+        catch{
+            setDirectionsResponse(null);
+            setDistance("");
+            setMapErr(true);
+        }
+    }
+    
+    if(displayDirections == true){
+        setDisplayDirections(null);
+        calculateRoute();
+    }
+
     return (
         <>
             <NavBar toggleLogin={toggleLogin}/>
@@ -88,7 +159,7 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                         <section className="selectBranchContainer">
                             <p className="errorMessage">ErrorMessage</p>
                             <label className="selectBranchHeader" htmlFor="selectLocation" >1. Select Branch Location</label>
-                                <select className="locationSelector" value={source} onChange={e => setSource(e.target.value)}>
+                                <select className="locationSelector" value={source} onChange={e => {setSource(e.target.value); setDisplayDirections(true)}}>
                                     {locations.map((loc, i) => {
                                         return(
                                             <option key={i}>
@@ -97,10 +168,13 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                         )
                                     })}
                                 </select>
-                            <input className="destination" placeholder="Enter a location" type="text" value={destination} onChange={(e) => setDestination(e.target.value)}/>
-                            <div className="mapErrMsg"><p>Error: there is currently no known route for this address!</p></div>
+                                <Autocomplete>
+                                    <input className="destination" placeholder="Enter a location" type="text" value={destination} onChange={(e) => {setDestination(e.target.value); setDisplayDirections(true);}}
+                                    onKeyPress={(e) => {setDestination(e.target.value)}}/>
+                                </Autocomplete>
+                            {mapErr ? (<div className="mapErrMsg"><p>Error: there is currently no known route for this address!</p></div>) : null}
 
-                            <div className="distanceMsg"><p>Estimated Distance: </p><p id="distanceVal">23</p></div>
+                            {distance ? (<div className="distanceMsg"><p>Estimated Distance: </p><p id="distanceVal">{distance}</p></div>) :null}
                             <input id="distanceValForForm" style={{display: 'none'}} value="0" type="text" onChange={(e) => console.log(e)} />
                             <div>
                                 <label htmlFor="deliveryDate">Delivery Date</label>
@@ -112,20 +186,34 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                 <input id="deliveryTime" type="time" min="09:00" max="18:00" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)}/>
                             </div>
 
-                            <div className="googleMap"></div>
+                            <div className="googleMap">
+                                <GoogleMap center={{lat: 43.690060, lng: -79.294570}} mapContainerStyle={{width: '100%',height: '100%'}} zoom={10}  onLoad={map => setMap(map)}>
+                                {directionsResponse && (<DirectionsRenderer directions={directionsResponse} />)}
+                                </GoogleMap>
+                            </div>
                         </section>
                         <section className="paymentContainer">
                             <h1>2. Payment</h1>
-                            <p>Payment Options</p>
-                            <select className="selectPaymentOption">
-                                <option value="debit">Debit</option>
-                                <option value="credit">Credit</option>
-                            </select>
-                            <label htmlFor="ccn">Card Number:</label>
-                            <input className="cardNumber" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="19" placeholder="xxxxxxxxxxxxxxxx" 
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}         
-                            />
+                            <div>
+                                <p>Payment Options</p>
+                                <select className="selectPaymentOption">
+                                    <option value="debit">Debit</option>
+                                    <option value="credit">Credit</option>
+                                </select>
+                                <label htmlFor="ccn">Card Number:</label>
+                                <input className="cardNumber" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="19" placeholder="xxxxxxxxxxxxxxxx" 
+                                    value={cardNumber}
+                                    onChange={(e) => setCardNumber(e.target.value)}         
+                                />
+                            </div>
+                        </section>
+                        <section className="couponSection">
+                            <h1>3. Apply Discounts</h1>
+                            <div>
+                                <p>Add a promotion code</p>
+                                <input type="text" value={coupon} onChange={(e) => setCoupon(e.target.value)}></input>
+                                <button onClick={(processCoupon)}>Apply</button>
+                            </div>
                         </section>
                     </main>
                     <aside className="aside-container">
@@ -151,11 +239,18 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                     })}
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    {discountedTotal ? (
+                                        <tr>
+                                            <td colSpan="2" style={{'textDecoration':'line-through', color:'red'}}>Total</td>
+                                            <td id="total" style={{'textDecoration':'line-through', color:'red'}}>{initalTotal}</td>
+                                        </tr>) 
+                                    :<tr>
                                         <td colSpan="2">Total</td>
                                         <td id="total">{totalPrice}</td>
-                                </tr>
-                            </tfoot>
+                                    </tr>  
+                                    }
+                                    {discountedTotal ? (<tr><td colSpan="2" style={{color:'green'}}>Total</td><td id="total" style={{color:'green'}}>{discountedTotal}</td></tr>): null}
+                                </tfoot>
                             </table>
                             <div className="submitContainer">
                                 <input type="button" value="Make Payment & Place Order" onClick={submitOrder} />
