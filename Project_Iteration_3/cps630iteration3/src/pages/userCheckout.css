@@ -94,7 +94,7 @@
 
 .destination, .cardNumber {
     height: 36px;
-    width: 449px;
+    width: 455px;
     border-radius: 4px;
     margin-bottom: -5px;
     margin-top: 5px;
@@ -104,12 +104,8 @@
 .mapErrMsg{
     color: red;
     margin-top: 8px;
-    display: none;
 }
 
-.distanceMsg{
-    display: none;
-}
 
 .distanceMsg p{
     margin-top: 9px;

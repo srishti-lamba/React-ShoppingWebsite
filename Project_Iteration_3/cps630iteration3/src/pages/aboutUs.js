@@ -17,6 +17,7 @@ const AboutUs = ({showLogin, toggleLogin}) => {
     const [info5, setInfo5] = useState(null);
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: "AIzaSyDqs21kU6-FIEIWa7bnDbepY2k0G6e7uvg",
+        libraries: ['places'],
     })
 
     const containerStyle = {
