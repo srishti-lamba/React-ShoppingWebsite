@@ -214,7 +214,7 @@ h1 {
 .queryColumnBtn {
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
+    /* justify-content: stretch; */
     background-color: #b3a698;
 }
 

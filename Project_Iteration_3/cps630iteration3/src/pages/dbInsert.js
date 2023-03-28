@@ -279,9 +279,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                             <tr>
                                 {columnArray.length > 0 && columnArray.map((field, i) => {
                                     if (i > 0) {
-                                            return(
-                                            <th key={`tHead-${i}`}>{field[0]}</th>
-                                        )
+                                        return <th key={`tHead-${i}`}>{field[0]}</th>
                                     }
                                 })}
                             </tr>
