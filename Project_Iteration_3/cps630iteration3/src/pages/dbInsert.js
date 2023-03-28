@@ -8,19 +8,18 @@ import axios from "axios";
 import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Insert = ({showLogin, toggleLogin}) => {
-    const user = useSelector(selectUser);
-    const [userMessage, setUserMessage] = useState("");
-    const [table, setTable] = useState(null);
+    const user = useSelector(selectUser)
+    const [table, setTable] = useState(null)
     const [columnArray, setColumnArray] = useState([])
-    const [colNames, setColNames] = useState([]);
-    const [inputFieldValues, setInputFieldValues] = useState([])
-    const [tableRows, setTableRows] = useState([]);
-    const [queryDisplay, setQueryDisplay] = useState("");
-    const [querySQL, setQuerySQL] = useState("");
+    const [tableRows, setTableRows] = useState([])
+    const [queryDisplay, setQueryDisplay] = useState("")
+    const [querySQL, setQuerySQL] = useState("")
+    const [successMsg, setSuccessMsg] = useState("")
+    const [errorMsg, setErrorMsg] = useState("")
 
     // Page height
     function setMinHeight() {
-        var navHeight = document.getElementsByTagName("header")[0].offsetHeight
+        let navHeight = document.getElementsByTagName("header")[0].offsetHeight
         document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
         document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
     };
@@ -38,21 +37,33 @@ const Insert = ({showLogin, toggleLogin}) => {
     useEffect(() => {
         if (table != null) {
 
+            resetResults()
+
             // Columns
             let newColumnArray = getDbColumns(table)
             setColumnArray(newColumnArray)
-            setInputFieldValues(Array(newColumnArray.length - 1).fill(""))
 
-            // Rows
-            let tableName = newColumnArray[0][1]
-            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
-            axios.get(url)
-            .then(res  => {
-                setTableRows(res.data)
-            })
+            // Assure table exists
+            let fileName = newColumnArray[0][3]
+            const urlFile = `http://localhost/CPS630-Project-Iteration3-PHPScripts/${fileName}`;
+            axios.post(urlFile).then(resFile  => {
+
+                    // Rows
+                    let tableName = newColumnArray[0][1].toLowerCase()
+                    const urlRow = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
+                    axios.get(urlRow)
+                    .then(res  => {
+                        setTableRows(res.data)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+                })
             .catch(err => {
                 console.log(err)
             })
+
         }
     }, [table])
 
@@ -62,115 +73,145 @@ const Insert = ({showLogin, toggleLogin}) => {
             ["inputValuesForm", "queryDiv", "tableView"].map(
                 (formName) => document.getElementById(formName).style.display = "block"
             )
+            setQueryDisplay(`INSERT INTO <div class="bold">${columnArray[0][0]}</div>`)
+            setQuerySQL(`INSERT INTO ${columnArray[0][1]}`)
         }
-        resetQuery()
     }, [columnArray])
 
     // -------------
     // --- Query ---
     // -------------
 
-    function resetQuery() {
-        if (columnArray != "") {
-            setQueryDisplay(`INSERT INTO <div class="bold">${columnArray[0][0]}</div>`)
-            setQuerySQL(`INSERT INTO ${columnArray[0][1]}`)
+    // Update display when query changes
+    useEffect (() => {
+        if (queryDisplay.length > 1) {
+            document.getElementById("queryDisplay").innerHTML = queryDisplay
+            if (queryDisplay != `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`) {
+                document.getElementById("querySubmitForm").style.display = "block"
+            }
         }
-    }
+    }, [queryDisplay])
 
-    const updateInputFields = (e, i) => {
-        let newInputFieldValues = [...inputFieldValues]
-        newInputFieldValues[i] = e.target.value
-        setInputFieldValues(newInputFieldValues)
+    // Update query
+    function updateQuery() {
+        if (columnArray != "") {
+
+            let newDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`
+            let newSQL = `INSERT INTO ${columnArray[0][1]}`
+
+            let disColArr = []
+            let sqlColArr = []
+            let valArr = []
+        
+            let queryColArr = document.getElementsByClassName("queryColumn")
+            for (var i = 0; i < queryColArr.length; i++) {
+                let value = queryColArr[i].querySelector(":scope > input").value
+        
+                // Getting used columns
+                if (value != "") {
+                    disColArr.push(columnArray[i + 1][0])
+                    sqlColArr.push(columnArray[i + 1][1])
+                    valArr.push(value)
+                }
+            }
+        
+            if (disColArr.length > 0) {
+                // Part 1 of query
+                newDisplay += "("
+                newSQL += "("
+        
+                for (let i = 0; i < disColArr.length; i++) {
+                    if (i != 0) {
+                        newDisplay += ", "
+                        newSQL += ", "
+                    }
+                    newDisplay += disColArr[i]
+                    newSQL += sqlColArr[i]
+                }
+        
+                // Part 2 of Query
+                newDisplay += ") VALUES ("
+                newSQL += ") VALUES ("
+        
+                for (let i = 0; i < valArr.length; i++) {
+                    if (i != 0) {
+                        newDisplay += ", ";
+                        newSQL += ", ";
+                    }
+                    newDisplay += `'<div class="bold">${valArr[i]}</div>'`
+                    newSQL += `'${valArr[i]}'`
+                }
+        
+                newDisplay += ");"
+                newSQL += ");"
+            }
+
+            setQueryDisplay(newDisplay)
+            setQuerySQL(newSQL)
+        }
     }
 
     const submitQuery = () => {
-        let allempty = true;
-        inputFieldValues.forEach(item => {
-            if(item !== ""){
-                allempty = false;
-            }
-        })
-
-        if(allempty) {
-            setUserMessage("Fields cannot all be empty");
-            return;
+        if(querySQL == `INSERT INTO ${columnArray[0][1]}`) {
+            setErrorMsg("Fields cannot all be empty")
+            return
         }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";
-        let queryPart1 = `INSERT INTO ${table} (`;
-        let queryPart2 = ` VALUES(`;
-        let fdata = new FormData();
-
-        colNames.forEach((name, i) => {
-            let processedName = processUserInput(name, inputFieldValues[i])
-            if(inputFieldValues[i] !== "") {
-                if(queryPart1 === `INSERT INTO ${table} (`){
-                    queryPart1 += `${name}`;
-                    queryPart2 += `${processedName}`
-                }
-                else {
-                    queryPart1 += ", " + `${name}`;
-                    queryPart2 += ", " + `${processedName}`
-                }
-            }  
-        })
-
-        let query = queryPart1 + ")" + queryPart2 + ");";
-
-        console.log(query)
-
-        fdata.append('query', query);
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php"
+        let fdata = new FormData()
+        fdata.append('query', querySQL);
         axios.post(url, fdata)
         .then(res=> {
-            //console.log(res.data)
-            setUserMessage(res.data);
+            setSuccessMsg(res.data);
+            resetPage()
         })
     }
 
-    const processUserInput = (colName, field) => {
-        if(table === 'branchLocations') {
-            if(colName === 'latitude' || colName === 'longitude' || colName === 'location_id') {
-                return Number(field)
-            } 
+    function resetPage() {
+        document.getElementById("tableName").value = "select"
+        setTable(null)
+        setColumnArray([])
+        setTableRows([])
+        setQueryDisplay("")
+        setQuerySQL("");
 
-            return `'${field}'`;
-        }
-
-        else if(table === 'items') {
-            if(colName === 'price' || colName === 'department_code' || colName === 'item_id') {
-                return Number(field)
-            } 
-            return `'${field}'`;
-        } 
-
-        else if (table === 'orders') {
-            if(colName === 'userId' || colName === 'tripId' || colName === 'receiptId' || colName === 'orderId' || colName === 'totalPrice') {
-                return Number(field);
-            }
-
-            return `'${field}'`;
-        } else if (table === 'trips') {
-            if(colName === 'tripId' || colName === 'truckId') {
-                return Number(field)
-            } 
-            return `'${field}'`;
-        } else if (table === 'users') {
-            if(colName === 'balance' || colName === 'isAdmin' || colName === 'user_id') {
-                return Number(field)
-            } 
-            return `'${field}'`;
-        } else if (table === 'trucks') {
-            if(colName === 'truckId') {
-                return Number(field)
-            }
-            return `'${field}'`;
-        }
-         else {
-            return `'${field}'`;
-        }
+        ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm"].map(
+            (formName) => document.getElementById(formName).style.display = "none"
+        )
     }
+
+    function resetResults() {
+        if (successMsg.length > 0 || errorMsg.length > 0) {
+            setSuccessMsg("")
+            setErrorMsg("")
+        }
+
+        ["#main-title + .box", "#successMsg", "#errorMsg"].map(
+            (formName) => document.querySelector(formName).style.display = "none"
+        )
+    }
+
+    // Success Message
+    useEffect (() => {
+        if (successMsg.length > 0) {
+            document.querySelector("#main-title + .box").style.display = "block"
+            document.getElementById("successMsg").style.display = "block"
+        }
+    }, [successMsg])
+
+    // Error
+    useEffect (() => {
+        if (successMsg.length > 0) {
+            document.querySelector("#main-title + .box").style.display = "block"
+            document.getElementById("errorMsg").style.display = "block"
+        }
+    }, [errorMsg])
 
     {user !== null && toggleLogin(false)}
     
+    // ------------
+    // --- HTML ---
+    // ------------
+
     return (
         <>
             <NavBar toggleLogin={toggleLogin}/>
@@ -183,11 +224,9 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <h1 className="title">DATABASE: Insert</h1>
                 </article>
 
-                {userMessage.length > 0 ? <p style={{color:'green', textAlign:'center'}}>{userMessage}</p> : <></>}
-
                 <div className="box">
-                    <div className="errorMsg"></div>
-                    <div className="successMsg"></div>
+                    <div id="errorMsg" key={"errorMsg"}>{errorMsg}</div>
+                    <div id="successMsg" key={"successMsg"}>{successMsg}</div>
                 </div>
 
                 <form id="tableNameForm" className="box">
@@ -215,9 +254,8 @@ const Insert = ({showLogin, toggleLogin}) => {
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text"
-                                            key={`queryColumnInput-${i}`} 
-                                            value={inputFieldValues[i]}
-                                            onChange={(e) => updateInputFields(e, i)}
+                                            key={`queryColumnInput-${i}`}
+                                            onChange={() => updateQuery()}
                                             />
                                     </div>
                                 )
@@ -226,13 +264,11 @@ const Insert = ({showLogin, toggleLogin}) => {
                     </div>
                 </div>
 
-
                 <div id="queryDiv" className="box">
-                    <p id="queryDisplay" key={"queryDisplay"}>{queryDisplay}</p>
+                    <p id="queryDisplay"></p>
                     
                     <div id="querySubmitForm">
-                        <input type="text" name="querySubmit" id="querySubmit"/>
-                        <button id="querySubmitBtn" type="button" name="querySubmitBtn" onClick={submitQuery}>Run Query</button>
+                        <button id="querySubmitBtn" onClick={submitQuery}>Run Query</button>
                     </div>
                 </div>
 

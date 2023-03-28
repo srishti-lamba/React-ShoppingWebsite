@@ -177,9 +177,9 @@ const NavBar = ({toggleLogin}) => {
                 <div id="searchForm">
                     <h1>Search</h1>
                     <p>Search user orders</p>
-                    <label for="userid">User ID:</label>
+                    <label htmlFor="userid">User ID:</label>
                     <input type="text" name="userid" id="userid" onChange={(e) => setSearchIdInput(e.target.value)}></input>
-                    <label for="orderid">Order ID:</label>
+                    <label htmlFor="orderid">Order ID:</label>
                     <input type="text" name="orderid" id="orderid" onChange={(e) => setOrderIdInput(e.target.value)}></input>
                     <p id="errMsg" style={{display: searchErr}}>No such order has been placed.</p>
                     <button className="searchBtn" onClick={fetchOrders}>Search</button>
