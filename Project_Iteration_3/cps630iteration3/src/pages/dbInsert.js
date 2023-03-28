@@ -158,8 +158,8 @@ const Insert = ({showLogin, toggleLogin}) => {
 
                 <form className="tableNameForm box">
                     <label>Table name:</label>
-                    <select className="tableName">
-                        <option value="select" disabled selected hidden>Select table name</option>
+                    <select className="tableName" defaultValue={"select"}>
+                        <option value="select" disabled hidden>Select table name</option>
                         <option onClick={() => setTable('users')} value="users">Users</option>
                         <option onClick={() => setTable('items')} value="items">Items</option>
                         <option onClick={() => setTable('orders')} value="orders">Orders</option>
@@ -172,7 +172,7 @@ const Insert = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Values to insert:</label>
+                        <label htmlFor="inputValues">Values to insert:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
@@ -198,7 +198,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <button type="button" onClick={submitQuery}>Run Query</button>
                 </div> : <></>}
 
-                <div className="tableView" class="box">
+                <div className="tableView box">
                     <p></p>
                     <table>
                         <thead>
