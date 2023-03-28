@@ -324,7 +324,7 @@ h1 {
 /* --- Table --- */
 /* ------------- */
 
-table {
+.db-table {
     margin: auto;
     display: block;
     width: fit-content;
@@ -335,55 +335,55 @@ table {
     overflow: auto;
 }
 
-    table th {
+    .db-table th {
         border: 1px solid #91806E;
         background-color: #91806E;
         padding: 10px;
     }
 
-    table td {
+    .db-table td {
         border: 1px solid #91806E;
         background-color: #b3a698;
         padding: 10px;
         font-weight: 500;
     }
 
-        table td:hover {
+        .db-table td:hover {
             background-color: #A39586;
         }
 
-    table thead tr:first-of-type th:first-child {
+    .db-table thead tr:first-of-type th:first-child {
         border-top-left-radius: 10px;
         overflow: hidden;
     }
 
-    table thead tr:first-of-type th:last-child {
+    .db-table thead tr:first-of-type th:last-child {
         border-top-right-radius: 10px;
         overflow: hidden;
     }
 
-    table tbody tr:last-of-type td:first-child {
+    .db-table tbody tr:last-of-type td:first-child {
         border-bottom-left-radius: 10px;
         overflow: hidden;
     }
 
-    table tbody tr:last-of-type td:last-child {
+    .db-table tbody tr:last-of-type td:last-child {
         border-bottom-right-radius: 10px;
         overflow: hidden;
     }
 
-    table thead tr:first-of-type th {
+    .db-table thead tr:first-of-type th {
         border-top: 1.5px solid #91806E;
     }
 
-    table tbody tr:last-of-type td {
+    .db-table tbody tr:last-of-type td {
         border-bottom: 1.5px solid #91806E;
     }
 
-    table tbody tr td:first-of-type {
+    .db-table tbody tr td:first-of-type {
         border-left: 1.5px solid #91806E;
     }
 
-    table tbody tr td:last-of-type {
+    .db-table tbody tr td:last-of-type {
         border-right: 1.5px solid #91806E;
     }

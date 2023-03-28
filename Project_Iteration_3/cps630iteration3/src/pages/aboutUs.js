@@ -45,22 +45,22 @@ const AboutUs = ({showLogin, toggleLogin}) => {
                     <h1>MEET THE TEAM</h1>
                 </article>
                 <main className="flex">
-                    <div className="card">
+                    <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Raymond Floro</h2>
                         <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
                     </div>
-                    <div className="card">
+                    <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Roberto Mariani</h2>
                         <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
                     </div>
-                    <div className="card">
+                    <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Srishti Lamba</h2>
                         <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
                     </div>
-                    <div className="card">
+                    <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Vanessa Landayan</h2>
                         <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>

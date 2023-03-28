@@ -16,12 +16,12 @@ h1 {
     font-size: 40px;
 }
 
-.flex {
+.flex{
     display: flex;
     justify-content: center;
 }
 
-.card {
+.aboutUsCard {
     width: 22%;
     background-color: white;
     height: auto;

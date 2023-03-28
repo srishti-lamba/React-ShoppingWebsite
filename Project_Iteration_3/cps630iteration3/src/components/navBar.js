@@ -148,9 +148,8 @@ const NavBar = ({toggleLogin}) => {
                     <Link to='/reviews'>
                         <li>REVIEWS</li>
                     </Link>
-
-                    {user !== null ? <li className="searchLbl" onClick={showSearch}>SEARCH</li> : <></>}
                     
+                    {user !== null ? <li className="searchLbl" onClick={showSearch}>SEARCH</li> : <></>}
                     {(user !== null && user.user.isAdmin === "1") ? 
                         <li className='dbMaintain' onMouseLeave={hideDropdown}>
                             <div className="dbMaintain-btn" onMouseEnter={showDropdown}>DB MAINTAIN</div>

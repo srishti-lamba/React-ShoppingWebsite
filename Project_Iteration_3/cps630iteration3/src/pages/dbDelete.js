@@ -281,7 +281,7 @@ const Delete = ({showLogin, toggleLogin}) => {
 
                 <div id="tableView" className="box">
                     {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
-                    <table>
+                    <table className="db-table">
                         <thead>
                             <tr>
                                 {columnArray.length > 0 && columnArray.map((field, i) => {

@@ -272,7 +272,7 @@ const Update = ({showLogin, toggleLogin}) => {
 
                 <div className="tableView box">
                     <p></p>
-                    <table>
+                    <table className="db-table">
                         <thead>
                             <tr>
                                 {colNames.length > 0 && colNames.map((field, i) => {
