@@ -172,6 +172,7 @@ a {
     color: inherit;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
 }
 
     .searchLbl::after {
@@ -210,9 +211,10 @@ a {
         text-align: left;
         padding: 14px 10px;
         max-width: 990px;
-        width: 70%;
+        width: 80%;
         outline: none;
         border-bottom: #2b2d30 3px solid;
+        margin-left: 9px;
     }
 
     #searchWindow h1 {
@@ -327,6 +329,7 @@ a {
     color: inherit;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
 }
 
     .dbMaintain-btn::after {

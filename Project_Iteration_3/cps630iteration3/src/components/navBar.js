@@ -7,13 +7,23 @@ import { resetUser } from '../features/userSlice';
 import { resetOrderId } from '../features/orderIdSlice';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const NavBar = ({toggleLogin}) => {
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [display, toggleDisplay] = useState("none");
-    const [broswer, setBrowser] = useState(null)
+    const [broswer, setBrowser] = useState(null);
+
+    //Search
+    const [search, setSearch] = useState("none");
+    const [searchIdInput, setSearchIdInput] = useState("");
+    const [searchOrderInput, setOrderIdInput] = useState("");
+    const [searchErr, setSearchErr] = useState("none");
+    const [showTable, setShowTable] = useState("none");
+    const [table, setTbody] = useState("");
+
 
     const detectBrowser = () => {
         let res = navigator.userAgent;
@@ -64,12 +74,52 @@ const NavBar = ({toggleLogin}) => {
         }
     }
 
-    const showDropdown = () => {
-        toggleDisplay("block");
-    };
-    const hideDropdown = () => {
-        toggleDisplay("none");
-    };
+    const fetchOrders = () => {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/fetchSearchOrders.php";
+        let fdata = new FormData();
+        fdata.append('searchIdInput', searchIdInput);
+        fdata.append('searchOrderInput', searchOrderInput);
+        axios.post(url,fdata)
+        .then(res => {
+            //If no results
+            if((res.data.includes("<")) || (res.data.length == 0)){
+                setSearchErr("block");
+                setShowTable("none");
+                setTbody("");
+                return
+            }
+            //If there are orders
+            console.log(res.data);
+            //Update Display CSS
+            setSearchErr("none");
+            setShowTable("block");
+            constructTable(res.data);
+        })
+        .catch(err => {
+            console.log("failed");
+        })
+    }
+
+    const constructTable = (data) => {
+        let result = "";
+        for(let row of data){
+            let json = JSON.parse(row);
+            //Build Each Row
+            result += "<tr>";
+            result += "<td>" + json.userId + "</td>" +
+                      "<td>" + json.orderId + "</td>" +
+                      "<td>" + json.dateIssued + "</td>" +
+                      "<td>" + json.totalPrice + "</td>" +
+                      "<td>" + json.orderStatus + "</td>";
+            result += "</tr>";
+        }
+        setTbody(result);
+    }
+
+    const hideSearch = () => {setSearch("none");};
+    const showSearch = () => {setSearch("block");};
+    const showDropdown = () => {toggleDisplay("block");};
+    const hideDropdown = () => {toggleDisplay("none");};
 
     return(
         <>  
@@ -98,7 +148,9 @@ const NavBar = ({toggleLogin}) => {
                     <Link to='/reviews'>
                         <li>REVIEWS</li>
                     </Link>
-                    {user !== null ? <li className="searchLbl" onClick={() => console.log('hello')}>SEARCH</li> : <></>}
+
+                    {user !== null ? <li className="searchLbl" onClick={showSearch}>SEARCH</li> : <></>}
+                    
                     {(user !== null && user.user.isAdmin === "1") ? 
                         <li className='dbMaintain' onMouseLeave={hideDropdown}>
                             <div className="dbMaintain-btn" onMouseEnter={showDropdown}>DB MAINTAIN</div>
@@ -113,17 +165,40 @@ const NavBar = ({toggleLogin}) => {
                     }
                 </ul>
             </nav>
-
             <ul className="right">
                 {user === null ? <li><button onClick={() => navigate('/signup')} className='sign-up'>Sign-Up</button></li> : <li>Hello, {user.user.userName}</li>}
-                
-
                 <li>
                     <button className='login' onClick={loginBtnOnClick} >{user === null ? "Login" : "Logout"}</button>
                 </li>
             </ul>
             </header>
-
+            <div id="overlay" style={{display: search}} onClick={hideSearch}></div>
+            <div id="searchWindow" style={{display: search}}>
+                <div id="searchForm">
+                    <h1>Search</h1>
+                    <p>Search user orders</p>
+                    <label for="userid">User ID:</label>
+                    <input type="text" name="userid" id="userid" onChange={(e) => setSearchIdInput(e.target.value)}></input>
+                    <label for="orderid">Order ID:</label>
+                    <input type="text" name="orderid" id="orderid" onChange={(e) => setOrderIdInput(e.target.value)}></input>
+                    <p id="errMsg" style={{display: searchErr}}>No such order has been placed.</p>
+                    <button className="searchBtn" onClick={fetchOrders}>Search</button>
+                </div>
+                <div id="searchTable">
+                    <table style={{display: showTable}}>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody dangerouslySetInnerHTML={{ __html: table }} />
+                    </table>
+                </div>
+            </div>
         </>
     )
 }
