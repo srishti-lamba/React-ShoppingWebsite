@@ -227,7 +227,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             <div id='main-image'>
 
                 <article id="main-title">
-                    <h1 className="title">DATABASE: Insert</h1>
+                    <h1>DATABASE: Insert</h1>
                 </article>
 
                 <div className="box">
@@ -279,7 +279,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 </div>
 
                 <div id="tableView" className="box">
-                {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
+                    {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
                     <table>
                         <thead>
                             <tr>

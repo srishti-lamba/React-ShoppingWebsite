@@ -204,58 +204,6 @@ const Delete = ({showLogin, toggleLogin}) => {
         }
     }, [errorMsg])
 
-    // const updateInputFields = (e, i) => {
-    //     let newInputFieldValues = [...inputFieldValues]
-    //     newInputFieldValues[i] = e.target.value
-    //     setInputFieldValues(newInputFieldValues)
-    // }
-
-    // const updateOperations = (i, operator) => {
-    //     let newOperations = [...operations]
-    //     newOperations[i] = operator;
-    //     setOperations(newOperations)
-    // }
-
-    //const submitQuery = () => {
-        // let allempty = true;
-        // inputFieldValues.forEach(item => {
-        //     if(item !== ""){
-        //         allempty = false;
-        //     }
-        // })
-
-        // if(allempty) {
-        //     setUserMessage("Fields cannot all be empty");
-        //     return;
-        // }
-        // const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php";;
-        // let query = `DELETE FROM ${table} WHERE `;
-        // let fdata = new FormData();
-
-        // colNames.forEach((name, i) => {
-        //     let processedName = processUserInput(name, inputFieldValues[i])
-        //     if(inputFieldValues[i] !== "") {
-        //         if(query === `DELETE FROM ${table} WHERE `){
-        //             query+= `${name} ${operations[i]} ${processedName}`; 
-        //         }
-        //         else {
-        //             query += ` AND ${name} ${operations[i]} ${processedName}`;
-        //         }
-        //     }  
-        // })
-
-        // query += ";";
-
-        // console.log(query);
-
-        // fdata.append('query', query);
-        // axios.post(url, fdata)
-        // .then(res=> {
-        //     //console.log(res.data)
-        //     setUserMessage(res.data);
-        // })
-    //}
-
     {user !== null && toggleLogin(false)}
     
     // ------------
@@ -271,7 +219,7 @@ const Delete = ({showLogin, toggleLogin}) => {
             <div id='main-image'>
 
                 <article id="main-title">
-                    <h1 className="title">DATABASE: Delete</h1>
+                    <h1>DATABASE: Delete</h1>
                 </article>
 
                 <div className="box">
@@ -332,7 +280,7 @@ const Delete = ({showLogin, toggleLogin}) => {
                 </div>
 
                 <div id="tableView" className="box">
-                    <p></p>
+                    {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
                     <table>
                         <thead>
                             <tr>
