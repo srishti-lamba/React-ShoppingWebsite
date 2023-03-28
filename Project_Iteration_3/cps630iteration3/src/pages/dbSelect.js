@@ -249,8 +249,8 @@ const Select = ({showLogin, toggleLogin}) => {
 
                 <form className="tableNameForm box">
                     <label>Table name:</label>
-                    <select className="tableName">
-                        <option value="select" disabled selected hidden>Select table name</option>
+                    <select className="tableName" defaultValue={"select"}>
+                        <option value="select" disabled hidden>Select table name</option>
                         <option onClick={() => setTable('users')} value="users">Users</option>
                         <option onClick={() => setTable('items')} value="items">Items</option>
                         <option onClick={() => setTable('orders')} value="orders">Orders</option>
