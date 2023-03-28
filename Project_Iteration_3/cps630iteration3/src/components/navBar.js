@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import './navBar.css';
 import { selectUser, setUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';

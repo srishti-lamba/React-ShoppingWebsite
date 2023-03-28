@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
@@ -13,6 +13,22 @@ const Insert = ({showLogin, toggleLogin}) => {
     const [colNames, setColNames] = useState([]);
     const [inputFieldValues, setInputFieldValues] = useState([])
     const [tableRows, setTableRows] = useState([]);
+
+    // Run at start
+    const mainImage = useRef(null)
+    useEffect(() => {
+        // // Page height
+        // function setMinHeight() {
+        //     var navHeight = $("header").outerHeight(true);
+        //     mainImage.css("min-height", $(window).height() - navHeight);
+        // };
+
+        // $(window).resize(function () {
+        //     setMinHeight();
+        // });
+
+        // setMinHeight();
+    })
 
     //get table col names
     useEffect(() => {
@@ -147,10 +163,10 @@ const Insert = ({showLogin, toggleLogin}) => {
             {showLogin ? <Login setShowLogin={toggleLogin}/> : <></>}
             {showLogin ? <div onClick={() => toggleLogin(false)} className='overlay'></div> : <></>}
 
-            <div className='pageBox'>
+            <div id='main-image' ref={mainImage}>
 
-                <article>
-                    <h1 className="title">DATABASE: INSERT</h1>
+                <article id="main-title">
+                    <h1 className="title">DATABASE: Insert</h1>
                 </article>
 
                 {userMessage.length > 0 ? <p style={{color:'green', textAlign:'center'}}>{userMessage}</p> : <></>}
@@ -160,9 +176,9 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <div className="successMsg"></div>
                 </div>
 
-                <form className="tableNameForm box">
-                    <label>Table name:</label>
-                    <select className="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
+                <form id="tableNameForm" className="box">
+                    <label>Table name: </label>
+                    <select className="tableName" id="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
                         <option value="select" disabled hidden>Select table name</option>
                         <option onClick={() => setTable('users')} value="users">Users</option>
                         <option onClick={() => setTable('items')} value="items">Items</option>
@@ -174,35 +190,39 @@ const Insert = ({showLogin, toggleLogin}) => {
                     </select>
                 </form>
 
-                <div className="inputValuesForForm">
-                    <div className="inputValues">
-                        <label htmlFor="inputValues">Values to insert:</label>
+                <div id="inputValuesForForm" className="box">
+                    <label htmlFor="inputValues">Values to insert:</label>
+                    <div id="inputValues">
                         <div className="queryColumn">
-                            {colNames.length > 0 && colNames.map((field, i) => {
-                                return (
-                                    <>
-                                        <label>{field}</label>
-                                        <input 
-                                            placeholder="Enter Value" 
-                                            type="text"
-                                            key={i} 
-                                            value={inputFieldValues[i]}
-                                            onChange={(e) => updateInputFields(e, i)}
-                                            />
-                                    </>
-                                )
-                            })}
-                        </div>
-                    </div>  
-                </div>      
+                                {colNames.length > 0 && colNames.map((field, i) => {
+                                    return (
+                                        <>
+                                            <label>{field}</label>
+                                            <input 
+                                                placeholder="Enter Value" 
+                                                type="text"
+                                                key={i} 
+                                                value={inputFieldValues[i]}
+                                                onChange={(e) => updateInputFields(e, i)}
+                                                />
+                                        </>
+                                    )
+                                })}
+                            </div>
+                    </div>
+                </div>
 
-                {table !== null ? 
-                <div id="queryDiv" className="box">
+
+                <div id="queryDiv" class="box">
                     <p id="queryDisplay"></p>
-                    <button type="button" onClick={submitQuery}>Run Query</button>
-                </div> : <></>}
+                    
+                    <div id="querySubmitForm">
+                        <input type="text" name="querySubmit" id="querySubmit"/>
+                        <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick={submitQuery}>Run Query</button>
+                    </div>
+                </div>
 
-                <div className="tableView box">
+                <div id="tableView" className="box">
                     <p></p>
                     <table>
                         <thead>
