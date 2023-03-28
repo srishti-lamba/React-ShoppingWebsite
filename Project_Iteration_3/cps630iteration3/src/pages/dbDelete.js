@@ -221,7 +221,7 @@ const Delete = ({showLogin, toggleLogin}) => {
                                 {colNames.length > 0 && colNames.map((field, i) => {
                                     return(
                                         <>
-                                            <td key={i}>{field}</td>
+                                            <td key={i*2}>{field}</td>
                                         </>
                                     )
                                 })}
@@ -231,7 +231,7 @@ const Delete = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i}>
+                                    <tr key={i*3}>
                                         {Object.keys(row).map((key, i) => {
                                             return(
                                             <td key={i}>

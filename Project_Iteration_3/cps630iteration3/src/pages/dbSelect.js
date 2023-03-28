@@ -213,7 +213,7 @@ const Select = ({showLogin, toggleLogin}) => {
                             return(
                                 <tr>
                                     {Object.keys(elem).map((item, i) => {
-                                        return <td key={i}>{elem[item]}</td>
+                                        return <td key={i*2}>{elem[item]}</td>
                                     })}
                                 </tr>
                             )
@@ -265,7 +265,7 @@ const Select = ({showLogin, toggleLogin}) => {
                         return (
                             <>
                                 <input type='checkbox' />
-                                <label onClick={(e) => updateColsSelected(field, i)} className="" key={i}>
+                                <label onClick={(e) => updateColsSelected(field, i)} className="" key={i*3}>
                                     {field}
                                 </label>
                             </>
@@ -293,7 +293,7 @@ const Select = ({showLogin, toggleLogin}) => {
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
-                                            key={i} 
+                                            key={i*4} 
                                             value={inputFieldValues[i]}
                                             onChange={(e) => updateInputFields(e, i)}
                                             />
@@ -318,7 +318,7 @@ const Select = ({showLogin, toggleLogin}) => {
                                 {colNames.length > 0 && colNames.map((field, i) => {
                                     return(
                                         <>
-                                            <td key={i}>{field}</td>
+                                            <td key={i*5}>{field}</td>
                                         </>
                                     )
                                 })}
@@ -328,7 +328,7 @@ const Select = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i}>
+                                    <tr key={i*6}>
                                         {Object.keys(row).map((key, i) => {
                                             return(
                                             <td key={i}>

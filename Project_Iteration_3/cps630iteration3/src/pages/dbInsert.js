@@ -14,6 +14,8 @@ const Insert = ({showLogin, toggleLogin}) => {
     const [inputFieldValues, setInputFieldValues] = useState([])
     const [tableRows, setTableRows] = useState([]);
 
+    console.log(tableRows)
+
     //get table col names
     useEffect(() => {
         if (table != null) {
@@ -185,7 +187,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text"
-                                            key={field} 
+                                            key={i} 
                                             value={inputFieldValues[i]}
                                             onChange={(e) => updateInputFields(e, i)}
                                             />
@@ -210,7 +212,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                                 {colNames.length > 0 && colNames.map((field, i) => {
                                     return(
                                         <>
-                                            <td key={i}>{field}</td>
+                                            <td key={i*2}>{field}</td>
                                         </>
                                     )
                                 })}
@@ -220,11 +222,11 @@ const Insert = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i}>
-                                        {Object.keys(row).map((key, i) => {
+                                    <tr key={i*3}>
+                                        {Object.keys(row).map((item, i) => {
                                             return(
                                             <td key={i}>
-                                                {row[i]}
+                                                {row[item]}
                                             </td>)
                                         })}
 
