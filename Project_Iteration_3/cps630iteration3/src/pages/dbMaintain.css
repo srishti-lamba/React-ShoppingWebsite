@@ -301,6 +301,10 @@ h1 {
         margin-bottom: 10px;
     }
 
+    #tableView table {
+        width: 100%;
+    }
+
 /* ------------------------- */
 /* --- Result Table View --- */
 /* ------------------------- */

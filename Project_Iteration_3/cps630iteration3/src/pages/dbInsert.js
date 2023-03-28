@@ -1,58 +1,51 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import './dbMaintain.css';
 import axios from "axios";
+import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Insert = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
     const [userMessage, setUserMessage] = useState("");
     const [table, setTable] = useState(null);
+    const [columnArray, setColumnArray] = useState([])
     const [colNames, setColNames] = useState([]);
     const [inputFieldValues, setInputFieldValues] = useState([])
     const [tableRows, setTableRows] = useState([]);
+    const [queryDisplay, setQueryDisplay] = useState("");
+    const [querySQL, setQuerySQL] = useState("");
 
-    // Run at start
-    const mainImage = useRef(null)
+    // Page height
+    function setMinHeight() {
+        var navHeight = document.getElementsByTagName("header")[0].offsetHeight
+        document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
+        document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
+    };
     useEffect(() => {
-        // // Page height
-        // function setMinHeight() {
-        //     var navHeight = $("header").outerHeight(true);
-        //     mainImage.css("min-height", $(window).height() - navHeight);
-        // };
+        window.addEventListener('resize', setMinHeight)
+        if (document.readyState === 'complete') {
+            setMinHeight();
+          } else {
+            window.addEventListener('load', setMinHeight);
+            return () => window.removeEventListener('load', setMinHeight);
+          }
+    }, [])
 
-        // $(window).resize(function () {
-        //     setMinHeight();
-        // });
-
-        // setMinHeight();
-    })
-
-    //get table col names
-    useEffect(() => {
-        if (table != null) {
-            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
-            axios.get(url)
-            .then(res => {
-                let cols = []
-                let inputs = []
-                res.data.forEach(element => {
-                    cols.push(element)
-                    inputs.push("")
-                });
-                setColNames(cols);
-                setInputFieldValues(inputs)
-            }).catch(err => {
-                console.log(err)
-            })
-        }
-    }, [table])
-
+    // Get Columns and Rows
     useEffect(() => {
         if (table != null) {
-            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
+
+            // Columns
+            let newColumnArray = getDbColumns(table)
+            setColumnArray(newColumnArray)
+            setInputFieldValues(Array(newColumnArray.length - 1).fill(""))
+
+            // Rows
+            let tableName = newColumnArray[0][1]
+            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
             axios.get(url)
             .then(res  => {
                 setTableRows(res.data)
@@ -62,6 +55,27 @@ const Insert = ({showLogin, toggleLogin}) => {
             })
         }
     }, [table])
+
+    // Display Elements
+    useEffect (() => {
+        if (columnArray.length > 0) {
+            ["inputValuesForm", "queryDiv", "tableView"].map(
+                (formName) => document.getElementById(formName).style.display = "block"
+            )
+        }
+        resetQuery()
+    }, [columnArray])
+
+    // -------------
+    // --- Query ---
+    // -------------
+
+    function resetQuery() {
+        if (columnArray != "") {
+            setQueryDisplay(`INSERT INTO <div class="bold">${columnArray[0][0]}</div>`)
+            setQuerySQL(`INSERT INTO ${columnArray[0][1]}`)
+        }
+    }
 
     const updateInputFields = (e, i) => {
         let newInputFieldValues = [...inputFieldValues]
@@ -163,7 +177,7 @@ const Insert = ({showLogin, toggleLogin}) => {
             {showLogin ? <Login setShowLogin={toggleLogin}/> : <></>}
             {showLogin ? <div onClick={() => toggleLogin(false)} className='overlay'></div> : <></>}
 
-            <div id='main-image' ref={mainImage}>
+            <div id='main-image'>
 
                 <article id="main-title">
                     <h1 className="title">DATABASE: Insert</h1>
@@ -183,56 +197,56 @@ const Insert = ({showLogin, toggleLogin}) => {
                         <option onClick={() => setTable('users')} value="users">Users</option>
                         <option onClick={() => setTable('items')} value="items">Items</option>
                         <option onClick={() => setTable('orders')} value="orders">Orders</option>
-                        <option onClick={() => setTable('branchLocations')} value="locations">Locations</option>
+                        <option onClick={() => setTable('locations')} value="locations">Locations</option>
                         <option onClick={() => setTable('trucks')} value="trucks">Trucks</option>
                         <option onClick={() => setTable('trips')} value="trips">Trips</option>
                         <option onClick={() => setTable('reviews')} value="reviews">Reviews</option>
                     </select>
                 </form>
 
-                <div id="inputValuesForForm" className="box">
+                <div id="inputValuesForm" className="box">
                     <label htmlFor="inputValues">Values to insert:</label>
                     <div id="inputValues">
-                        <div className="queryColumn">
-                                {colNames.length > 0 && colNames.map((field, i) => {
-                                    return (
-                                        <>
-                                            <label>{field}</label>
-                                            <input 
-                                                placeholder="Enter Value" 
-                                                type="text"
-                                                key={i} 
-                                                value={inputFieldValues[i]}
-                                                onChange={(e) => updateInputFields(e, i)}
-                                                />
-                                        </>
-                                    )
-                                })}
-                            </div>
+                        {columnArray.length > 0 && columnArray.map((field, i) => {
+                            if (i > 0) {
+                                return (
+                                    <div className="queryColumn" key={`queryColumn-${i}`}>
+                                        <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
+                                        <input 
+                                            placeholder="Enter Value" 
+                                            type="text"
+                                            key={`queryColumnInput-${i}`} 
+                                            value={inputFieldValues[i]}
+                                            onChange={(e) => updateInputFields(e, i)}
+                                            />
+                                    </div>
+                                )
+                            }
+                        })}
                     </div>
                 </div>
 
 
-                <div id="queryDiv" class="box">
-                    <p id="queryDisplay"></p>
+                <div id="queryDiv" className="box">
+                    <p id="queryDisplay" key={"queryDisplay"}>{queryDisplay}</p>
                     
                     <div id="querySubmitForm">
                         <input type="text" name="querySubmit" id="querySubmit"/>
-                        <button id="querySubmitBtn" type="button" name="querySubmitBtn" onclick={submitQuery}>Run Query</button>
+                        <button id="querySubmitBtn" type="button" name="querySubmitBtn" onClick={submitQuery}>Run Query</button>
                     </div>
                 </div>
 
                 <div id="tableView" className="box">
-                    <p></p>
+                {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
                     <table>
                         <thead>
                             <tr>
-                                {colNames.length > 0 && colNames.map((field, i) => {
-                                    return(
-                                        <>
-                                            <td key={i*10}>{field}</td>
-                                        </>
-                                    )
+                                {columnArray.length > 0 && columnArray.map((field, i) => {
+                                    if (i > 0) {
+                                            return(
+                                            <th key={`tHead-${i}`}>{field[0]}</th>
+                                        )
+                                    }
                                 })}
                             </tr>
                         </thead>
@@ -240,10 +254,10 @@ const Insert = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i*100}>
-                                        {Object.keys(row).map((item, i) => {
+                                    <tr key={`tRow-${i}`}>
+                                        {Object.keys(row).map((item, x) => {
                                             return(
-                                            <td key={i*1000}>
+                                            <td key={`tCell-${i}-${x}`}>
                                                 {row[item]}
                                             </td>)
                                         })}
