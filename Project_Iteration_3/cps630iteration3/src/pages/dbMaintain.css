@@ -120,7 +120,7 @@ h1 {
     margin: 10px auto 0px auto;
 }
 
-#inputColumnsBtn label {
+#inputColumnsBtn div {
     display: inline;
     color: white;
     background-color: #b3a698;
@@ -132,15 +132,15 @@ h1 {
     margin: 5px;
 }
 
-    #inputColumnsBtn label:hover {
+    #inputColumnsBtn div label:hover {
         background-color: #A39586;
     }
 
-#inputColumnsBtn input[type="checkbox"] {
+#inputColumnsBtn div input[type="checkbox"] {
     display: none;
 }
 
-    #inputColumnsBtn input[type="checkbox"]:checked + label {
+    #inputColumnsBtn div input[type="checkbox"]:checked + label {
         background-color: #91806E;
     }
 
