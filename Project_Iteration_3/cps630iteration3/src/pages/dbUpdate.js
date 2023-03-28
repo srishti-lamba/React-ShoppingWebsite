@@ -253,7 +253,7 @@ const Update = ({showLogin, toggleLogin}) => {
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
-                                            key={i*2} 
+                                            key={i*10} 
                                             value={inputFieldValues[i]}
                                             onChange={(e) => updateInputFields(e, i)}
                                             />
@@ -278,7 +278,7 @@ const Update = ({showLogin, toggleLogin}) => {
                                 {colNames.length > 0 && colNames.map((field, i) => {
                                     return(
                                         <>
-                                            <td key={i*3}>{field}</td>
+                                            <td key={i*100}>{field}</td>
                                         </>
                                     )
                                 })}
@@ -288,10 +288,10 @@ const Update = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i*4}>
+                                    <tr key={i*1000}>
                                         {Object.keys(row).map((key, i) => {
                                             return(
-                                            <td key={i*5}>
+                                            <td key={i*10000}>
                                                 {row[key]}
                                             </td>)
                                         })}

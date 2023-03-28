@@ -212,7 +212,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                                 {colNames.length > 0 && colNames.map((field, i) => {
                                     return(
                                         <>
-                                            <td key={i*2}>{field}</td>
+                                            <td key={i*10}>{field}</td>
                                         </>
                                     )
                                 })}
@@ -222,10 +222,10 @@ const Insert = ({showLogin, toggleLogin}) => {
                             {typeof(tableRows) === "object" && tableRows.map((row, i) => {
                                 row = JSON.parse(row)
                                 return(
-                                    <tr key={i*3}>
+                                    <tr key={i*100}>
                                         {Object.keys(row).map((item, i) => {
                                             return(
-                                            <td key={i}>
+                                            <td key={i*1000}>
                                                 {row[item]}
                                             </td>)
                                         })}
