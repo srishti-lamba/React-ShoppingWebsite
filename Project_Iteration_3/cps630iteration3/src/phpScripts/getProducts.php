@@ -9,7 +9,7 @@
             $dbname = "cps630";
         
             $conn = new mysqli($servername, $username, $password, $dbname);
-            $query = "SELECT item_id, productName, price, category, image_url FROM Items WHERE category = " . "'". $category . "'";
+            $query = "SELECT item_id, productName, price, category, image_url FROM Items WHERE category LIKE " . "'". $category . "'";
 
 
             try{
