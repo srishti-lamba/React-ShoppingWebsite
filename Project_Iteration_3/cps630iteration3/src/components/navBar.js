@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './navBar.css';
-import { selectUser } from '../features/userSlice';
+import { selectUser, setUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { resetUser } from '../features/userSlice';
@@ -46,8 +46,10 @@ const NavBar = ({toggleLogin}) => {
 
     useEffect(() => {
         let browser = detectBrowser();
-        console.log(broswer)
         setBrowser(browser)
+        //Set user
+        let currUser = JSON.parse(localStorage.getItem("CURRENT_USER"))
+        if (currUser) dispatch(setUser(currUser))
     }, [])
 
     const loginBtnOnClick = () => {
@@ -56,6 +58,8 @@ const NavBar = ({toggleLogin}) => {
         } else {
             dispatch(resetUser())
             dispatch(resetOrderId())
+            //Store user
+            localStorage.removeItem("CURRENT_USER")
             navigate('/')
         }
     }

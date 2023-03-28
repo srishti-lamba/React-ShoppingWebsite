@@ -38,6 +38,9 @@ const Login = () => {
                     isAdmin: data.isAdmin
                 }
                 dispatch(setUser(user));
+                //Store user
+                localStorage.setItem("CURRENT_USER", JSON.stringify(user))
+                
                 navigate('/')
             })
             .catch(err => setErrorMsg("Wrong Username or Password"))

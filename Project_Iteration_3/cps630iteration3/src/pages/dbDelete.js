@@ -16,34 +16,38 @@ const Delete = ({showLogin, toggleLogin}) => {
 
     //get table col names
     useEffect(() => {
-        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
-        axios.get(url)
-        .then(res => {
-            let cols = []
-            let inputs = []
-            let initialOperations = []
-            res.data.forEach(element => {
-                cols.push(element)
-                inputs.push("")
-                initialOperations.push("=")
-            });
-            setColNames(cols);
-            setInputFieldValues(inputs)
-            setOperations(initialOperations)
-        }).catch(err => {
-            console.log(err)
-        })
+        if (table != null) {
+            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
+            axios.get(url)
+            .then(res => {
+                let cols = []
+                let inputs = []
+                let initialOperations = []
+                res.data.forEach(element => {
+                    cols.push(element)
+                    inputs.push("")
+                    initialOperations.push("=")
+                });
+                setColNames(cols);
+                setInputFieldValues(inputs)
+                setOperations(initialOperations)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     }, [table])
 
     useEffect(() => {
-        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
-        axios.get(url)
-        .then(res  => {
-            setTableRows(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        if (table != null) {
+            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
+            axios.get(url)
+            .then(res  => {
+                setTableRows(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     }, [table])
 
     const updateInputFields = (e, i) => {
@@ -178,7 +182,7 @@ const Delete = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Values to delete:</label>
+                        <label htmlFor="inputValues">Values to delete:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
@@ -213,7 +217,7 @@ const Delete = ({showLogin, toggleLogin}) => {
                     <button type="button" onClick={submitQuery}>Run Query</button>
                 </div> : <></>}
 
-                <div className="tableView" class="box">
+                <div className="tableView box">
                     <p></p>
                     <table>
                         <thead>

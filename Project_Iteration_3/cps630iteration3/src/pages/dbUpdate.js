@@ -18,37 +18,41 @@ const Update = ({showLogin, toggleLogin}) => {
 
     //get table col names
     useEffect(() => {
-        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
-        axios.get(url)
-        .then(res => {
-            let cols = []
-            let inputs = []
-            let initialOperations = []
-            let initialValsToUpdate = []
-            res.data.forEach(element => {
-                cols.push(element)
-                inputs.push("")
-                initialOperations.push("=")
-                initialValsToUpdate.push("")
-            });
-            setColNames(cols);
-            setInputFieldValues(inputs)
-            setOperations(initialOperations)
-            setValuesToUpdate(initialValsToUpdate)
-        }).catch(err => {
-            console.log(err)
-        })
+        if (table != null) {
+            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
+            axios.get(url)
+            .then(res => {
+                let cols = []
+                let inputs = []
+                let initialOperations = []
+                let initialValsToUpdate = []
+                res.data.forEach(element => {
+                    cols.push(element)
+                    inputs.push("")
+                    initialOperations.push("=")
+                    initialValsToUpdate.push("")
+                });
+                setColNames(cols);
+                setInputFieldValues(inputs)
+                setOperations(initialOperations)
+                setValuesToUpdate(initialValsToUpdate)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     }, [table])
 
     useEffect(() => {
-        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
-        axios.get(url)
-        .then(res  => {
-            setTableRows(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        if (table != null) {
+            const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
+            axios.get(url)
+            .then(res  => {
+                setTableRows(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     }, [table])
 
     const updateInputFields = (e, i) => {
