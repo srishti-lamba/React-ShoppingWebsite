@@ -1,33 +1,22 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #EDF1D6;
+    font-weight: 600;
 }
 
-.pageBox {
-    width: 68%;
-    margin: auto;
-    margin-top: 50px;
-    padding: 20px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius: 25px;
-    min-width: 1100px;
-    background-color: #fff;
-    min-height: 100vh;
-    margin-bottom: 50px;
-}
+    body .box {
+        border: none;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        margin: 0px auto 30px auto;
+        width: fit-content;
+        max-width: 90%;
+        padding: 20px;
+    }
 
-.title {
-    display: block;
-    text-align: center;
-    width: fit-content;
-    margin: 0px auto 10px auto;
-    padding: 3px 5px;
-    border: 3px solid #91806E;
-    border-radius: 15px;
-}
-
-hr {
-    margin: 20px 0px;
+h1 {
+    margin: 30px;
+    font-size: 40px;
 }
 
 .bold {
@@ -37,110 +26,84 @@ hr {
     text-underline-offset: 0.25em;
 }
 
-.errorMsg {
-    color: red;
+/* ------------ */
+/* --- Main --- */
+/* ------------ */
+
+#main-image {
+    margin: 0;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
+    padding-bottom: 30px;
 }
 
-.successMsg {
-    color: mediumseagreen;
-}
-
-.tableNameForm > label, .inputValuesForm > label, #inputColumns > label {
-    margin: 10px 20px;
-}
-
-/* ------------- */
-/* --- Table --- */
-/* ------------- */
-
-/* table {
-    margin: auto;
-    display: block;
-    width: fit-content;
-    color: white;
+#main-title {
+    background-color: rgba(255,255,255,0.9);
+    flex: 1;
     text-align: center;
-    border-collapse: separate;
-    border-spacing: 0px;
-    overflow: auto;
+    padding: 15px;
 }
 
-    table th {
-        border: 1px solid #91806E;
-        background-color: #91806E;
-        padding: 10px;
-    }
+/* -------------- */
+/* --- Result --- */
+/* -------------- */
 
-    table td {
-        border: 1px solid #91806E;
-        background-color: #b3a698;
-        padding: 10px;
-        font-weight: 500;
-    }
+#main-title + .box {
+    display: none;
+    padding: 5px;
+    margin-top: 30px;
+}
 
-        table td:hover {
-            background-color: #A39586;
-        }
+#errorMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: red;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid red;
+    border-radius: 15px;
+}
 
-    table thead tr:first-of-type th:first-child {
-        border-top-left-radius: 10px;
-        border-left: 1.5px solid #91806E;
-        overflow: hidden;
-    }
-
-    table thead tr:first-of-type th:last-child {
-        border-top-right-radius: 10px;
-        border-right: 1.5px solid #91806E;
-        overflow: hidden;
-    }
-
-    table tbody tr:last-of-type td:first-child {
-        border-bottom-left-radius: 10px;
-        border-left: 1.5px solid #91806E;
-        overflow: hidden;
-    }
-
-    table tbody tr:last-of-type td:last-child {
-        border-bottom-right-radius: 10px;
-        border-right: 1.5px solid #91806E;
-        overflow: hidden;
-    }
-
-    table thead tr:first-of-type th {
-        border-top: 1.5px solid #91806E;
-    }
-
-    table tbody tr:last-of-type td {
-        border-bottom: 1.5px solid #91806E;
-    }
-
-    table tbody tr td:first-of-type {
-        border-left: 1.5px solid #91806E;
-    }
-
-    table tbody tr td:last-of-type {
-        border-right: 1.5px solid #91806E;
-    } */
+#successMsg {
+    display: none;
+    padding: 3px 5px;
+    width: fit-content;
+    color: green;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    border: 1.5px solid green;
+    border-radius: 15px;
+}
 
 /* ------------------ */
 /* --- Table Name --- */
 /* ------------------ */
 
-.tableName {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 10px 10px 0px 0px;
-    background-color: #8D7B68;
-    color: white;
+#tableNameForm {
+    margin-top: 30px;
 }
 
-    .tableName option {
-        font-size: 16px;
+    #tableNameForm #tableName {
+        font-family: 'Montserrat', sans-serif;
         font-weight: 600;
-        background-color: #b3a698;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0px;
+        background-color: #8D7B68;
         color: white;
     }
+
+        #tableNameForm #tableName option {
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #b3a698;
+            color: white;
+        }
 
 /* --------------------- */
 /* --- Input Columns --- */
@@ -153,7 +116,8 @@ hr {
 #inputColumnsBtn {
     display: flex;
     justify-content: flex-start;
-    margin: 10px 0px 0px 1%;
+    flex-wrap: wrap;
+    margin: 10px auto 0px auto;
 }
 
 #inputColumnsBtn label {
@@ -163,7 +127,7 @@ hr {
     border: none;
     border-radius: 8px;
     text-align: center;
-    width: auto;
+    width: max-content;
     padding: 3px 5px;
     margin: 5px;
 }
@@ -184,35 +148,31 @@ hr {
 /* --- Input Values --- */
 /* -------------------- */
 
-.inputValuesForm {
-    display: block;
+#inputValuesForm {
+    display: none;
+    width: 100%;
 }
 
-.inputValues {
+#inputValues {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
-    width: 90%;
-    margin: 1%;
+    margin: 0px auto 0px 30px;
 }
 
 #conditionValues {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-end;
     flex-wrap: wrap;
-    width: 90%;
-    margin: 1%;
+    margin: 0px auto 0px 30px;
 }
 
 .queryColumn {
-    display: flex;
-    flex-wrap: wrap;
     margin: 5px;
     color: white;
-    width: 18%;
 }
 
-    .queryColumn > label{
+    .queryColumn > label:first-of-type {
         text-align: center;
         display: block;
         font-weight: 600;
@@ -251,23 +211,14 @@ hr {
             text-align: center;
         }
 
-#queryColumnBtn {
+.queryColumnBtn {
     display: flex;
     flex-direction: row;
     justify-content: stretch;
     background-color: #b3a698;
-    padding: 7.7px;
 }
 
-#queryColumnBtn:hover {
-    background-color: #8D7B68;
-}
-
-#queryColumnBtn:focus {
-    background-color: #8D7B68;
-}
-
-    #queryColumnBtn label {
+    .queryColumnBtn label {
         display: inline;
         background-color: #b3a698;
         border: 1.5px solid #b3a698;
@@ -276,15 +227,15 @@ hr {
         width: 16.7%;
     }
 
-        #queryColumnBtn label:hover {
+        .queryColumnBtn label:hover {
             background-color: #A39586;
         }
 
-    #queryColumnBtn input[type='radio'] {
+    .queryColumnBtn input[type='radio'] {
         display: none;
     }
 
-        #queryColumnBtn input[type='radio']:checked + label {
+        .queryColumnBtn input[type='radio']:checked + label {
             background-color: #91806E;
         }
 
@@ -292,20 +243,25 @@ hr {
         margin: 0px;
     }
 
-/* --------------------- */
-/* --- Query Display --- */
-/* --------------------- */
-#queryDisplay {
-    margin: 20px 0px 0px 0px;
-    text-align: center;
-}
+/* ------------- */
+/* --- Query --- */
+/* ------------- */
 
-/* --------------------- */
-/* --- Query Submit --- */
-/* --------------------- */
+#queryDiv {
+    display: none;
+}
 
 #querySubmitForm {
     display: none;
+}
+
+#querySubmitForm > input {
+    display: none;
+}
+
+#queryDisplay {
+    /*margin: 20px 0px 0px 0px;*/
+    text-align: center;
 }
 
 #querySubmitBtn {
@@ -333,11 +289,12 @@ hr {
 /* --- Table View --- */
 /* ------------------ */
 
-.tableView {
-    margin-top: 30px;
+#tableView {
+    display: none;
+    margin: 0px auto;
 }
 
-    .tableView p {
+    #tableView p {
         text-align: center;
         text-decoration: underline;
         text-underline-offset: 0.25em;
@@ -350,7 +307,7 @@ hr {
 
 #resultTableView {
     display: none;
-    margin-top: 30px;
+    margin: 0px auto;
 }
 
     #resultTableView p {
@@ -358,4 +315,72 @@ hr {
         text-decoration: underline;
         text-underline-offset: 0.25em;
         margin-bottom: 10px;
+    }
+
+/* ------------- */
+/* --- Table --- */
+/* ------------- */
+
+table {
+    margin: auto;
+    display: block;
+    width: fit-content;
+    color: white;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px;
+    overflow: auto;
+}
+
+    table th {
+        border: 1px solid #91806E;
+        background-color: #91806E;
+        padding: 10px;
+    }
+
+    table td {
+        border: 1px solid #91806E;
+        background-color: #b3a698;
+        padding: 10px;
+        font-weight: 500;
+    }
+
+        table td:hover {
+            background-color: #A39586;
+        }
+
+    table thead tr:first-of-type th:first-child {
+        border-top-left-radius: 10px;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th:last-child {
+        border-top-right-radius: 10px;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:first-child {
+        border-bottom-left-radius: 10px;
+        overflow: hidden;
+    }
+
+    table tbody tr:last-of-type td:last-child {
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+    }
+
+    table thead tr:first-of-type th {
+        border-top: 1.5px solid #91806E;
+    }
+
+    table tbody tr:last-of-type td {
+        border-bottom: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:first-of-type {
+        border-left: 1.5px solid #91806E;
+    }
+
+    table tbody tr td:last-of-type {
+        border-right: 1.5px solid #91806E;
     }
