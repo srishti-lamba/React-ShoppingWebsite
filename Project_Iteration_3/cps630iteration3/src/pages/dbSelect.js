@@ -77,7 +77,7 @@ const Select = ({showLogin, toggleLogin}) => {
     // Display Elements
     useEffect (() => {
         if (columnArray.length > 0) {
-            ["inputValuesForm", "queryDiv", "tableView", "inputColumns"].map(
+            ["inputValuesForm", "queryDiv", "tableView"].map(
                 (formName) => document.getElementById(formName).style.display = "block"
             )
             setQueryDisplay(getDisplayDefault())
@@ -100,94 +100,14 @@ const Select = ({showLogin, toggleLogin}) => {
     }, [queryDisplay])
 
     function getDisplayDefault() 
-        { return `SELECT * FROM <div class="bold">${columnArray[0][0]}</div>` }
+        { return `INSERT INTO <div class="bold">${columnArray[0][0]}</div>` }
 
     function getSqlDefault() 
-        { return `SELECT * FROM ${columnArray[0][1]}` }
+        { return `INSERT INTO ${columnArray[0][1]}` }
 
     // Update query
     function updateQuery() {
         if (columnArray != "") {
-
-            let newDisplay = getDisplayDefault()
-            let newSQL = getSqlDefault() 
-
-            // Getting selected columns
-            var selDisColArr = [];
-            var selSqlColArr = [];
-
-            let inputColArr = document.querySelector("#inputColumnsBtn input[type='checkbox']")
-            for (let i = 0; i < inputColArr.length; i++) {
-                let dis = columnArray[i + 1][0];
-                let sql = columnArray[i + 1][1];
-                let isChecked = inputColArr[i].checked
-
-                if (isChecked == true) {
-                    selDisColArr.push(dis);
-                    selSqlColArr.push(sql);
-                }
-            };
-
-            // Getting conditions
-            var disColArr = [];
-            var sqlColArr = [];
-            var valArr = [];
-            var cmpArr = [];
-
-            let queryColArr = document.getElementsByClassName("queryColumn")
-            for (let i = 0; i < queryColArr.length; i++) {
-                let dis = columnArray[i + 1][0]
-                let sql = columnArray[i + 1][1]
-                let value = queryColArr[i].querySelector(":scope > input").value
-                let comp = queryColArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
-
-                if (value != "") {
-                    disColArr.push(dis);
-                    sqlColArr.push(sql);
-                    valArr.push(value);
-                    cmpArr.push(comp);
-                }
-            };
-
-            // Appending selected columns
-            if (selDisColArr.length > 0) {
-                newDisplay = `SELECT `;
-                newSQL = `SELECT `;
-
-                for (let i = 0; i < selDisColArr.length; i++) {
-                    if (i != 0) {
-                        newDisplay += ", ";
-                        newSQL += ", ";
-                    }
-                    newDisplay += `<div class="bold">${selDisColArr[i]}</div>`;
-                    newSQL += `${selSqlColArr[i]}`;
-                }
-
-                newDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`;
-                newSQL += ` FROM ${columnArray[0][1]}`;
-            }
-
-
-            // Appending conditions
-            if (disColArr.length > 0) {
-                newDisplay += " WHERE ";
-                newSQL += " WHERE ";
-
-                for (let i = 0; i < disColArr.length; i++) {
-                    if (i != 0) {
-                        newDisplay += " AND ";
-                        newSQL += " AND ";
-                    }
-                    newDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`;
-                    newSQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`;
-                }
-
-                newDisplay += ";";
-                newSQL += ";";
-
-                setQueryDisplay(newDisplay)
-                setQuerySQL(newSQL)
-            }
         }
     }
 
@@ -288,7 +208,7 @@ const Select = ({showLogin, toggleLogin}) => {
         setQueryDisplay("")
         setQuerySQL("");
 
-        ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm", "inputColumns"].map(
+        ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm"].map(
             (formName) => document.getElementById(formName).style.display = "none"
         )
     }
@@ -401,12 +321,12 @@ const Select = ({showLogin, toggleLogin}) => {
                         {columnArray.length > 0 && columnArray.map((field, i) => {
                             if (i > 0) {
                                 return (
-                                    <div key={`inputColumns-${i}`}>
-                                        <input type='checkbox' id={`col-${field[1]}`} name={`${field[1]}`} value={`${field[1]}`} key={`inputColumnsBtn-${i}`}/>
-                                        <label onClick={(e) => updateQuery()} htmlFor={`col-${field[1]}`} key={`inputColumnsLabel-${i}`}>
+                                    <>
+                                        <input type='checkbox' id={`col-${field[1]}`} name={`${field[1]}`} value={`${field[1]}`}/>
+                                        <label onClick={(e) => updateQuery()} htmlFor={`col-${field[1]}`} key={`inputColumns-${i}`}>
                                             {field[0]}
                                         </label>
-                                    </div>
+                                    </>
                                 )
                             }
                         })}
@@ -415,7 +335,7 @@ const Select = ({showLogin, toggleLogin}) => {
 
                 <div id="inputValuesForm" className="box">
                     <label htmlFor="inputValues">Conditions:</label>
-                    <div id="inputValues">
+                    <div className="inputValues">
                             {columnArray.length > 0 && columnArray.map((field, i) => {
                                 if (i > 0) {
                                     return (
