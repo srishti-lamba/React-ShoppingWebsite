@@ -7,13 +7,6 @@ import axios from "axios";
 import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Delete = ({showLogin, toggleLogin}) => {
-    // const user = useSelector(selectUser);
-    // const [userMessage, setUserMessage] = useState("");
-    // const [table, setTable] = useState(null);
-    // const [colNames, setColNames] = useState([]);
-    // const [inputFieldValues, setInputFieldValues] = useState([])
-    // const [operations, setOperations] = useState([])
-    // const [tableRows, setTableRows] = useState([]);
     const user = useSelector(selectUser)
     const [table, setTable] = useState(null)
     const [columnArray, setColumnArray] = useState([])
@@ -79,8 +72,8 @@ const Delete = ({showLogin, toggleLogin}) => {
             ["inputValuesForm", "queryDiv", "tableView"].map(
                 (formName) => document.getElementById(formName).style.display = "block"
             )
-            setQueryDisplay(`INSERT INTO <div class="bold">${columnArray[0][0]}</div>`)
-            setQuerySQL(`INSERT INTO ${columnArray[0][1]}`)
+            setQueryDisplay(getDisplayDefault())
+            setQuerySQL(getSqlDefault())
         }
     }, [columnArray])
 
@@ -92,20 +85,72 @@ const Delete = ({showLogin, toggleLogin}) => {
     useEffect (() => {
         if (queryDisplay.length > 1) {
             document.getElementById("queryDisplay").innerHTML = queryDisplay
-            if (queryDisplay != `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`) {
+            if (queryDisplay != getDisplayDefault()) {
                 document.getElementById("querySubmitForm").style.display = "block"
             }
         }
     }, [queryDisplay])
 
+    function getDisplayDefault() {
+        return `DELETE FROM <div class="bold">${columnArray[0][0]}</div>`
+    }
+
+    function getSqlDefault() {
+        return `DELETE FROM ${columnArray[0][1]}`
+    }
+
     // Update query
     function updateQuery() {
         if (columnArray != "") {
+
+            let newDisplay = getDisplayDefault()
+            let newSQL = getSqlDefault() 
+
+            var disColArr = []
+            var sqlColArr = []
+            var valArr = []
+            var cmpArr = []
+
+            let queryColArr = document.getElementsByClassName("queryColumn")
+            for (let i = 0; i < queryColArr.length; i++) {
+                let dis = columnArray[i + 1][0]
+                let sql = columnArray[i + 1][1]
+                let value = queryColArr[i].querySelector(":scope > input").value
+                let comp = queryColArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
+
+                // Getting used columns
+                if (value != "") {
+                    disColArr.push(dis)
+                    sqlColArr.push(sql)
+                    valArr.push(value)
+                    cmpArr.push(comp)
+                }
+            };
+
+            if (disColArr.length > 0) {
+                newDisplay += " WHERE "
+                newSQL += " WHERE "
+
+                for (let i = 0; i < disColArr.length; i++) {
+                    if (i != 0) {
+                        newDisplay += " AND "
+                        newSQL += " AND "
+                    }
+                    newDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`
+                    newSQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`
+                }
+
+                newDisplay += ";"
+                newSQL += ";"
+
+                setQueryDisplay(newDisplay)
+                setQuerySQL(newSQL)
+            }
         }
     }
 
     const submitQuery = () => {
-        if(querySQL == `INSERT INTO ${columnArray[0][1]}`) {
+        if(querySQL == getSqlDefault()) {
             setErrorMsg("Fields cannot all be empty")
             return
         }
@@ -254,21 +299,22 @@ const Delete = ({showLogin, toggleLogin}) => {
                         {columnArray.length > 0 && columnArray.map((field, i) => {
                             if (i > 0) {
                                 return (
-                                    <div className="queryColumn" key={`queryColumn-${i}`}>
-                                        <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
+                                    <div className="queryColumn" key={`queryColumn-${i}`} onChange={updateQuery}>
+                                        <label key={`queryColumnLabel-${i}`} onChange={updateQuery}>{field[0]}</label>
                                         <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`} /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`}/> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`} /> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`}/> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`}/> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`} /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
                                         </div>
                                         <input 
                                             placeholder="Enter Value" 
                                             type="text" 
                                             key={`queryColumnInput-${i}`}
                                             onChange={(e) => updateQuery()}
+                                            defaultValue=""
                                             />
                                     </div>
                                 )

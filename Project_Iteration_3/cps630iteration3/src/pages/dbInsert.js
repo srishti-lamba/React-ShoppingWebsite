@@ -73,8 +73,8 @@ const Insert = ({showLogin, toggleLogin}) => {
             ["inputValuesForm", "queryDiv", "tableView"].map(
                 (formName) => document.getElementById(formName).style.display = "block"
             )
-            setQueryDisplay(`INSERT INTO <div class="bold">${columnArray[0][0]}</div>`)
-            setQuerySQL(`INSERT INTO ${columnArray[0][1]}`)
+            setQueryDisplay(getDisplayDefault())
+            setQuerySQL(getSqlDefault() )
         }
     }, [columnArray])
 
@@ -86,18 +86,24 @@ const Insert = ({showLogin, toggleLogin}) => {
     useEffect (() => {
         if (queryDisplay.length > 1) {
             document.getElementById("queryDisplay").innerHTML = queryDisplay
-            if (queryDisplay != `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`) {
+            if (queryDisplay != getDisplayDefault()) {
                 document.getElementById("querySubmitForm").style.display = "block"
             }
         }
     }, [queryDisplay])
 
+    function getDisplayDefault() 
+        { return `INSERT INTO <div class="bold">${columnArray[0][0]}</div>` }
+
+    function getSqlDefault() 
+        { return `INSERT INTO ${columnArray[0][1]}` }
+
     // Update query
     function updateQuery() {
         if (columnArray != "") {
 
-            let newDisplay = `INSERT INTO <div class="bold">${columnArray[0][0]}</div>`
-            let newSQL = `INSERT INTO ${columnArray[0][1]}`
+            let newDisplay = getDisplayDefault()
+            let newSQL = getSqlDefault() 
 
             let disColArr = []
             let sqlColArr = []
@@ -152,7 +158,7 @@ const Insert = ({showLogin, toggleLogin}) => {
     }
 
     const submitQuery = () => {
-        if(querySQL == `INSERT INTO ${columnArray[0][1]}`) {
+        if(querySQL == getSqlDefault() ) {
             setErrorMsg("Fields cannot all be empty")
             return
         }
