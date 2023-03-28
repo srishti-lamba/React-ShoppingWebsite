@@ -5,7 +5,6 @@ import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import './dbMaintain.css';
 import axios from "axios";
-import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Insert = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
@@ -17,31 +16,31 @@ const Insert = ({showLogin, toggleLogin}) => {
 
     //get table col names
     useEffect(() => {
-        // const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
-        // axios.get(url)
-        // .then(res => {
-        //     let cols = []
-        //     let inputs = []
-        //     res.data.forEach(element => {
-        //         cols.push(element)
-        //         inputs.push("")
-        //     });
-        //     setColNames(cols);
-        //     setInputFieldValues(inputs)
-        // }).catch(err => {
-        //     console.log(err)
-        // })
+        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableCols.php?table=${table}`;
+        axios.get(url)
+        .then(res => {
+            let cols = []
+            let inputs = []
+            res.data.forEach(element => {
+                cols.push(element)
+                inputs.push("")
+            });
+            setColNames(cols);
+            setInputFieldValues(inputs)
+        }).catch(err => {
+            console.log(err)
+        })
     }, [table])
 
     useEffect(() => {
-        // const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
-        // axios.get(url)
-        // .then(res  => {
-        //     setTableRows(res.data)
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
+        const url = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${table}`;
+        axios.get(url)
+        .then(res  => {
+            setTableRows(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }, [table])
 
     const updateInputFields = (e, i) => {
@@ -160,7 +159,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 <form className="tableNameForm box">
                     <label>Table name:</label>
                     <select className="tableName">
-                        <option value="select" disabled hidden>Select table name</option>
+                        <option value="select" disabled selected hidden>Select table name</option>
                         <option onClick={() => setTable('users')} value="users">Users</option>
                         <option onClick={() => setTable('items')} value="items">Items</option>
                         <option onClick={() => setTable('orders')} value="orders">Orders</option>
@@ -173,7 +172,7 @@ const Insert = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label htmlFor="inputValues">Values to insert:</label>
+                        <label for="inputValues">Values to insert:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
@@ -199,7 +198,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <button type="button" onClick={submitQuery}>Run Query</button>
                 </div> : <></>}
 
-                <div className="tableView box">
+                <div className="tableView" class="box">
                     <p></p>
                     <table>
                         <thead>
