@@ -325,3 +325,7 @@ h2 {
 .searchItemList {
     width: auto;
 }
+
+#productImg {
+    visibility: hidden;
+}

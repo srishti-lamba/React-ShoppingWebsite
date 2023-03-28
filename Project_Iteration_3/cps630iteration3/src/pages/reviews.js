@@ -179,6 +179,16 @@ const Reviews = ({showLogin, toggleLogin}) => {
         document.getElementById("errorMsg").css("display", "block");
         document.getElementById("errorMsg").html(msg);
     }
+
+    function handleSearch(e) {
+        setSource(e.target.value)
+        for (var i=0; i < items.length; i++) {
+            if (e.target.value == JSON.parse(items[i]).productName) {
+                setSourceImg(JSON.parse(items[i]).image_url)
+            }
+        }
+        document.getElementById("productImg").style.visibility = "visible"
+    }
     
     return (
         <>
@@ -205,7 +215,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                     {/* <input list="searchItemList" name="searchItem" placeholder="Enter item to search..." value={searchItem} onChange={e => setSearchItem(e.target.value)}/> */}
 
                     <label htmlFor="searchItemList" >Enter item to search....</label>
-                    <select className="searchItemList" value={source} onChange={e => {setSource(e.target.value);}}>
+                    <select className="searchItemList" value={source} onChange={e => {handleSearch(e);}}>
                         {items.map((item, i) => {
                             return(
                                 <option key={i}>
@@ -226,7 +236,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 {/*--- Item ---*/}
                 <div id="reviewItem" className="box">
                     <h4>{source}</h4>
-                    <img/>
+                    <img id="productImg" src={sourceImg} alt="product"/>
                 </div>
 
                 {/*--- Review Cards ---*/}
