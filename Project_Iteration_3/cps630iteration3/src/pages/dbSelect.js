@@ -279,7 +279,7 @@ const Select = ({showLogin, toggleLogin}) => {
 
                 <div className="inputValuesForForm">
                     <div className="inputValues">
-                        <label for="inputValues">Conditions:</label>
+                        <label htmlFor="inputValues">Conditions:</label>
                         <div className="queryColumn">
                             {colNames.length > 0 && colNames.map((field, i) => {
                                 return (
@@ -314,7 +314,7 @@ const Select = ({showLogin, toggleLogin}) => {
                     <button type="button" onClick={submitQuery}>Run Query</button>
                 </div> : <></>}
 
-                <div className="tableView" class="box">
+                <div className="tableView box">
                     {queryOutput.length > 0 && showQueryOutput()}
                     <table>
                         <thead>

@@ -14,8 +14,6 @@ const Insert = ({showLogin, toggleLogin}) => {
     const [inputFieldValues, setInputFieldValues] = useState([])
     const [tableRows, setTableRows] = useState([]);
 
-    console.log(tableRows)
-
     //get table col names
     useEffect(() => {
         if (table != null) {
