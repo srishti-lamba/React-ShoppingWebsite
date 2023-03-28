@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './navBar.css';
 import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,42 @@ const NavBar = ({toggleLogin}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [display, toggleDisplay] = useState("none");
+    const [broswer, setBrowser] = useState(null)
+
+    const detectBrowser = () => {
+        let res = navigator.userAgent;
+        let browsers = ["Edg", "Firefox", "Trident", "Chrome", "Safari"];	
+
+        for (let i = 0; i < browsers.length; i++) {
+            if (res.indexOf(browsers[i]) !== -1) {
+                if (browsers[i] == "Trident" || browsers[i] == "MSIE" || browsers[i] == "IE") {
+                    return "Internet Explorer"
+                    break;
+                } else if (browsers[i] == "Edg") {
+                    return "Microsoft Edge";
+                    break;
+                } else if (browsers[i] == "Chrome") {
+                    return "Google Chrome";
+                    break;
+                } else if (browsers[i] == "Firefox") {
+                    return "Firefox";
+                    break;
+                } else if (browsers[i] == "Safari") {
+                    return "Safari";
+                    break;
+                } else {
+                    return "unknown";
+                    break;
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        let browser = detectBrowser();
+        console.log(broswer)
+        setBrowser(browser)
+    }, [])
 
     const loginBtnOnClick = () => {
         if(user === null) {
@@ -42,6 +78,7 @@ const NavBar = ({toggleLogin}) => {
 
             <nav className="nav navbar">
                 <ul>
+                    <div style={{fontWeight: '600'}}>Browser: {broswer}</div>
                     <Link to="/">
                         <li>HOME</li>
                     </Link>
