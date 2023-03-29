@@ -360,10 +360,8 @@ const Update = ({showLogin, toggleLogin}) => {
                     <table className="db-table">
                         <thead>
                             <tr>
-                                {columnArray.length > 0 && columnArray.map((field, i) => {
-                                    if (i > 0) {
-                                        return <th key={`tHead-${i}`}>{field[0]}</th>
-                                    }
+                                {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                                    return <th key={`tHead-${i}`}>{field[0]}</th>
                                 })}
                             </tr>
                         </thead>

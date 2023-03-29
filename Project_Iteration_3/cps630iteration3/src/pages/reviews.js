@@ -18,13 +18,16 @@ const Reviews = ({showLogin, toggleLogin}) => {
     const [reviewContent, setReviewContent] = useState("");
     const [source, setSource] = useState("");
     const [items, setItems] = useState([])
+    const [sourceImg, setSourceImg] = useState("");
+    const [reviews, setReviews] = useState([])
 
     const [selectedItemName, setSelectedItemName] = useState("");
-    const [sourceImg, setSourceImg] = useState("");
 
     {user !== null && toggleLogin(false)}
 
     useEffect(() => {
+        setupDatabase();
+
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getProducts.php"
         axios.get(`${url}?category=%`)
         .then(res => {
@@ -79,6 +82,23 @@ const Reviews = ({showLogin, toggleLogin}) => {
         setMinHeight();
     });
 
+    // Setup Database tables
+    function setupDatabase() {
+        let fileArray = ["CreateAndPopulateUsersTable.php", 
+                          "CreateAndPopulateItemsTable.php",
+                          "CreateAndPopulateReviewsTable.php"
+                        ]
+        
+        fileArray.forEach((fileName) => {
+            let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/" + fileName
+            let fdata = new FormData();
+            axios.post(url, fdata)
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+    }
+
     // -------------------
     // --- Submit Form ---
     // -------------------
@@ -87,8 +107,12 @@ const Reviews = ({showLogin, toggleLogin}) => {
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
         let fdata = new FormData();
         fdata.append('searchItem', searchItem)
-        console.log(source)
+        console.log(searchItem)
         axios.post(url, fdata)
+        .then(res=> {
+            setReviews(res.data)
+            console.log(res.data)
+        })
         .catch((err) => {
             //setErrorMsg(err.response.statusText)
         })
@@ -113,11 +137,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
     }
 
     useEffect(() => {
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
-        axios.get(`${url}?searchItem=${searchItem}`)
-        .then(response => {
-            setSearchItem(response.data)
-        }).catch(err => console.log(err))
+        if (searchItem.length > 0) submitReviewSearch()
     }, [searchItem])
 
     // --------------------
@@ -188,6 +208,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
             }
         }
         document.getElementById("productImg").style.visibility = "visible"
+        setSearchItem(e.target.value)
     }
     
     return (
@@ -209,7 +230,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </article>
 
                 {/*--- Search ---*/}
-                <form id="emptyForm" action="./getReviews.php" method="POST"></form>
+                <form id="emptyForm" ></form>
                 <form id="reviewSearchForm" className="box" action="./getReviews.php" method="POST">
                     {/* <label htmlFor="searchItemList">Search:</label> */}
                     {/* <input list="searchItemList" name="searchItem" placeholder="Enter item to search..." value={searchItem} onChange={e => setSearchItem(e.target.value)}/> */}
@@ -240,7 +261,38 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </div>
 
                 {/*--- Review Cards ---*/}
-                <div id="reviewCards"></div>  
+                <div id="reviewCards">
+                    {reviews.length > 0 && reviews.map((field, i) => {
+                        let userName = field[1]
+                        let starNum = field[6]
+                        let title = field[7]
+                        let content = field[8]
+
+                        let starArr = []
+                        for(let i=0; i<5; i++){
+                            (i <= starNum 
+                                ? starArr.push("<i class='fa fa-star star-checked'></i>") 
+                                : starArr.push("<i class='fa fa-star star-unchecked'></i>")
+                            )
+                        }
+                        return (
+                            <div className='card box'>
+                                <div className='user-container'>
+                                    <img src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png'/>
+                                    <div className='reviewInfo'>
+                                        <h3>{userName}</h3>
+                                        {starArr.length > 0 && starArr.map((field, i) => {
+                                            return (<div dangerouslySetInnerHTML={{__html: field}}/>)
+                                        })}
+                                        <span className='visuallyHidden'>{`${starNum} stars`}</span>
+                                    </div>
+                                </div>
+                                <h4>{title}</h4>
+                                <p className='review'>{content}</p>
+                            </div>
+                        )
+                    })}
+                </div>  
 
                 {/*--- Write Cards ---*/}
                 <form id="writeReviewForm" className="box" action="../phpScripts/getReviews.php" method="POST">

@@ -2,9 +2,9 @@
     session_start();
     header('Access-Control-Allow-Origin: *');
     
-    include("../config/CreateAndPopulateUsersTable.php");
-    include("../config/CreateAndPopulateItemsTable.php");
-    include("../config/CreateAndPopulateReviewsTable.php");
+    include("./CreateAndPopulateUsersTable.php");
+    include("./CreateAndPopulateItemsTable.php");
+    include("./CreateAndPopulateReviewsTable.php");
 
 
     // Get Reviews
