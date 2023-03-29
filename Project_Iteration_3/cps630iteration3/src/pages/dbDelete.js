@@ -160,8 +160,6 @@ const Delete = ({showLogin, toggleLogin}) => {
         newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
         newSqlQuery = newSqlQuery.replace("&gt;", ">");
 
-        console.log(newSqlQuery);
-
         setQueryDisplay(newDisplayQuery)
         setQuerySQL(newSqlQuery)
     }

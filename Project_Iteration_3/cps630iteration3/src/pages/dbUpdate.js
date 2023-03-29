@@ -7,7 +7,7 @@ import axios from "axios";
 import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Update = ({showLogin, toggleLogin}) => {
-    const [newVals, setNewVals] = useState([])
+    //const [newVals, setNewVals] = useState([])
     const user = useSelector(selectUser)
     const [table, setTable] = useState(null)
     const [columnArray, setColumnArray] = useState([])
@@ -16,8 +16,6 @@ const Update = ({showLogin, toggleLogin}) => {
     const [querySQL, setQuerySQL] = useState("")
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
-
-    console.log(newVals)
 
     // Page height
     function setMinHeight() {
@@ -34,14 +32,6 @@ const Update = ({showLogin, toggleLogin}) => {
             return () => window.removeEventListener('load', setMinHeight);
           }
     }, [])
-
-    useEffect(() => {
-        let initializeNewVals = []
-        for(let i=0; i<columnArray.length; i++) {
-            initializeNewVals.push("")
-        }
-        setNewVals(initializeNewVals)
-    }, [columnArray])
 
     // Get Columns and Rows
     useEffect(() => {
@@ -117,84 +107,98 @@ const Update = ({showLogin, toggleLogin}) => {
             let newDisplay = getDisplayDefault()
             let newSQL = getSqlDefault() 
 
-            var disColArr = []
-            var sqlColArr = []
-            var valArr = []
-            var cmpArr = []
-            let valsToUpdateFields = []
-            let valsToUpdateSqlFields = []
-            let vals = []
+            // Getting input
+            var disColArr = [];
+            var sqlColArr = [];
+            var valArr = [];
 
-            let queryColArr = document.getElementsByClassName("queryColumn")
-            for (let i = 0; i < queryColArr.length; i++) {
-                let dis = columnArray[i + 1][0]
-                let sql = columnArray[i + 1][1]
-                let value = queryColArr[i].querySelector(":scope > input").value
-                let comp = queryColArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
+            let queryColInputArr = document.getElementsByClassName("queryColumnInput")
+            for (let i = 0; i < queryColInputArr.length; i++) {
+                let dis = columnArray[i + 1][0];
+                let sql = columnArray[i + 1][1];
+                let value = queryColInputArr[i].querySelector(":scope > input").value
 
                 // Getting used columns
                 if (value != "") {
-                    disColArr.push(dis)
-                    sqlColArr.push(sql)
-                    valArr.push(value)
-                    cmpArr.push(comp)
+                    disColArr.push(dis);
+                    sqlColArr.push(sql);
+                    valArr.push(value);
                 }
             };
 
-            for(let i=0; i<queryColArr.length; i++) {
-                let valToUpdate = columnArray[i+1][0]
-                let valField = columnArray[i+1][1]
-                let val = newVals[i+1]
-                console.log(val)
-                if(val != "") {
-                    valsToUpdateFields.push(valToUpdate)
-                    valsToUpdateSqlFields.push(valField)
-                    vals.push(val)
-                }
-            }
-
-
-            if(vals.length > 0){
-                newDisplay += " SET "
-                newSQL += " SET "
-
-                for(let i=0; i< vals.length; i++) {
-                    if(i != 0){
-                        newDisplay += " , "
-                        newSQL += ", "
-                    }
-                    newDisplay += `${valsToUpdateFields[i]} = '${vals[i]}'`
-                    newSQL += `${valsToUpdateSqlFields[i]} = '${vals[i]}'`
-                }
-            }
-
-        
+            // Appending input
             if (disColArr.length > 0) {
-                newDisplay += " WHERE "
-                newSQL += " WHERE "
+                newDisplay += " SET ";
+                newSQL += " SET ";
 
                 for (let i = 0; i < disColArr.length; i++) {
                     if (i != 0) {
-                        newDisplay += " AND "
-                        newSQL += " AND "
+                        newDisplay += ", ";
+                        newSQL += ", ";
                     }
-                    newDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`
-                    newSQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`
+                    newDisplay += `${disColArr[i]} = '<div class="bold">${valArr[i]}</div>'`;
+                    newSQL += `${sqlColArr[i]} = '${valArr[i]}'`;
                 }
 
-                // setQueryDisplay(newDisplay)
-                // setQuerySQL(newSQL)
-            }
+                // Getting conditions
+                var conDisColArr = [];
+                var conSqlColArr = [];
+                var conValArr = [];
+                var cmpArr = [];
 
+                let queryColCondArr = document.getElementsByClassName("queryColumnCondition")
+                for (let i = 0; i < queryColCondArr.length; i++) {
+                    let dis = columnArray[i + 1][0];
+                    let sql = columnArray[i + 1][1];
+                    let value = queryColCondArr[i].querySelector(":scope > input").value
+                    let comp = queryColCondArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
 
-            newDisplay += ";"
-            newSQL += ";"
+                    // Getting used columns
+                    if (value != "") {
+                        conDisColArr.push(dis);
+                        conSqlColArr.push(sql);
+                        conValArr.push(value);
+                        cmpArr.push(comp);
+                    }
+                };
 
-            setQueryDisplay(newDisplay)
-            setQuerySQL(newSQL)
+                // Appending conditions
+                if (conDisColArr.length > 0) {
+                    newDisplay += " WHERE ";
+                    newSQL += " WHERE ";
 
-            
+                    for (let i = 0; i < conDisColArr.length; i++) {
+                        if (i != 0) {
+                            newDisplay += " AND ";
+                            newSQL += " AND ";
+                        }
+                        newDisplay += `(${conDisColArr[i]} ${cmpArr[i]} '<div class="bold">${conValArr[i]}</div>')`;
+                        newSQL += `(${conSqlColArr[i]} ${cmpArr[i]} '${conValArr[i]}')`;
+                    }
+                }
+
+                newDisplay += ";";
+                newSQL += ";";
+                    
+                setQuery(newDisplay, newSQL)
+            }            
         }
+    }
+
+    function setQuery(oldDisplayQuery, oldSqlQuery) {
+        let newDisplayQuery = oldDisplayQuery
+        let newSqlQuery = oldSqlQuery
+
+        // <
+        newDisplayQuery = newDisplayQuery.replace("&lt;", "<");
+        newSqlQuery = newSqlQuery.replace("&lt;", "<");
+
+        // >
+        newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
+        newSqlQuery = newSqlQuery.replace("&gt;", ">");
+
+        setQueryDisplay(newDisplayQuery)
+        setQuerySQL(newSqlQuery)
     }
 
     const submitQuery = () => {
@@ -279,50 +283,47 @@ const Update = ({showLogin, toggleLogin}) => {
                     <label>Table name: </label>
                     <select className="tableName" id="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
                         <option value="select" disabled hidden>Select table name</option>
-                        <option onClick={() => setTable('users')} value="users">Users</option>
-                        <option onClick={() => setTable('items')} value="items">Items</option>
-                        <option onClick={() => setTable('orders')} value="orders">Orders</option>
-                        <option onClick={() => setTable('locations')} value="locations">Locations</option>
-                        <option onClick={() => setTable('trucks')} value="trucks">Trucks</option>
-                        <option onClick={() => setTable('trips')} value="trips">Trips</option>
-                        <option onClick={() => setTable('reviews')} value="reviews">Reviews</option>
+                        <option value="users">Users</option>
+                        <option value="items">Items</option>
+                        <option value="orders">Orders</option>
+                        <option value="locations">Locations</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="trips">Trips</option>
+                        <option value="reviews">Reviews</option>
                     </select>
                 </form>
 
-                <div className="box">
-                    <div >
-                        <label>New Values:</label>
-                        {columnArray.length > 0 && newVals.length > 0 && columnArray.map((field, i) => {
-                            if (i > 0) {
+                <div id="inputValuesForm">
+
+                    <div className="box">
+                        <label htmlFor="inputValues">New Values:</label>
+                        <div id="inputValues">
+                            {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
                                 return (
-                                    <div key={`fieldToUpdate-${i}`}>
-                                        <label>{field[0]}</label>
-                                        <input 
-                                            placeholder="Enter Value" 
-                                            type="text" 
-                                            value={newVals[i]}
-                                            onChange={(e) => {
-                                                let newupdatedVals = [...newVals]
-                                                newupdatedVals[i] = e.target.value;
-                                                setNewVals(newupdatedVals)
-                                            }}
+                                    <div className="queryColumn queryColumnInput" key={`queryColumnValues-${i}`}>
+                                        <label key={`queryColumnValuesLabel-${i}`}>{field[0]}</label>
+                                        <input  
+                                            type="text"
+                                            id = {'db-${value}'}
+                                            name = {'${field}'}
+                                            placeholder="Enter Value"
+                                            key={`queryColumnValuesInput-${i}`}
+                                            onChange={() => updateQuery()}
                                             />
                                     </div>
                                 )
-                            }
-                        })}
-                    </div>  
-                </div>
+                            })}
+                        </div>
+                    </div>
 
-                <div id="inputValuesForm" className="box">
-                    <label htmlFor="inputValues">Conditions:</label>
-                    <div id="inputValues">
-                        {columnArray.length > 0 && columnArray.map((field, i) => {
-                            if (i > 0) {
+                    <div className="box">
+                        <label htmlFor="conditionValues">Conditions:</label>
+                        <div id="conditionValues">
+                            {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
                                 return (
-                                    <div className="queryColumn" key={`queryColumn-${i}`} onChange={updateQuery}>
-                                        <label key={`queryColumnLabel-${i}`} onChange={updateQuery}>{field[0]}</label>
-                                        <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
+                                    <div className="queryColumn queryColumnCondition" key={`queryColumnCondition-${i}`}>
+                                        <label key={`queryColumnConditionLabel-${i}`} htmlFor={'db-${value}'}>{field[0]}</label>
+                                        <div className="queryColumnBtn" key={`queryColumnConditionBtn-${i}`}>
                                             <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
                                             <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
                                             <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
@@ -331,18 +332,20 @@ const Update = ({showLogin, toggleLogin}) => {
                                             <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
                                         </div>
                                         <input 
-                                            placeholder="Enter Value" 
                                             type="text" 
-                                            key={`queryColumnInput-${i}`}
+                                            name={'${value}'}
+                                            id={'db-${value}'}
+                                            placeholder="Enter Value"
+                                            key={`queryColumnConditionInput-${i}`}
                                             onChange={(e) => updateQuery()}
                                             defaultValue=""
                                             />
                                     </div>
                                 )
-                            }
-                        })}
-                    </div>  
-                </div>      
+                            })}
+                        </div>  
+                    </div>
+                </div>
 
                 <div id="queryDiv" className="box">
                     <p id="queryDisplay"></p>
