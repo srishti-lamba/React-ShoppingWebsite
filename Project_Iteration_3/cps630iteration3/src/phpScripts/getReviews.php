@@ -2,18 +2,12 @@
     session_start();
     header('Access-Control-Allow-Origin: *');
     
-    include("./CreateAndPopulateUsersTable.php");
-    include("./CreateAndPopulateItemsTable.php");
-    include("./CreateAndPopulateReviewsTable.php");
-
-
     // Get Reviews
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Get Reviews
 	    if ( isset($_POST["searchItem"]) ) {
             getReviews();
-            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["searchItem"] );
         }
 
         // Write Review
@@ -22,20 +16,17 @@
                 isset($_POST["reviewContent"]) && $_POST["reviewContent"] != "" ) {
             $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
             writeReview();
-            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["reviewItemName"] );
         }
 
         // Write Review failed
         else if ( isset($_POST["reviewWrite"]) ) {
             $_SESSION['review-error'] = "Please fill all fields to submit a review.";
             $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
-            header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?") . "?search=" . $_POST["reviewItemName"] );
         }
 
         // Get Items
         else {
             getItems();
-            header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
         }
 
         exit;
@@ -69,9 +60,19 @@
                 WHERE Items.productName = '" . $_POST["searchItem"] . "';";
         
         $resultSql = sendQuery($query);
-        $resultHtml = getReviewHTML($resultSql);
+        $colNum = $resultSql->field_count;
 
-        $_SESSION['review-reviews'] = $resultHtml;
+        $arr = [];
+        // For each row
+        while ( $data = $resultSql->fetch_array() ) {
+            // For each column
+			$row = [];
+            for ($i = 0; $i < $colNum; $i++) 
+				{ array_push($row, $data[$i]); }
+			array_push($arr, $row);
+        }
+        
+        echo json_encode($arr);
     }
 
     // --------------------
@@ -156,45 +157,4 @@
 
         return $resultHtml;
     }
-
-    function getReviewHTML($resultSql) {
-        $resultHtml = "";
-
-        // For each row
-        while ( $row = $resultSql->fetch_array() ) {
-
-            // Review-Search ItemID
-            if ( !isset($_SESSION['review-searchInfo']) ) {
-                $_SESSION['review-searchInfo'] = array($row['item_id'], $row['productName'], $row['image_url']);
-            }
-
-            $userName = $row['userName'];
-            $starNum = intval($row['rating']);
-            $reviewTitle = $row['title'];
-            $reviewContent = $row['content'];
-
-            $starHtml = "";
-            for ($i = 0; $i < $starNum; $i++) 
-                { $starHtml .= "<i class='fa fa-star star-checked'></i>"; }
-            for ($x = $starNum; $x < 5; $x++) 
-                { $starHtml .= "<i class='fa fa-star star-unchecked'></i>"; }
-
-            $resultHtml .=
-                "<div class='card box'>
-                    <div class='user-container'>
-                        <img src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png'/>
-                        <div class='reviewInfo'>
-                            <h3>$userName</h3>
-                            $starHtml
-                            <span class='visuallyHidden'>$starNum stars</span>
-                        </div>
-                    </div>
-                    <h4>$reviewTitle</h4>
-                    <p class='review'>$reviewContent</p>
-                </div>";
-        }
-
-        return $resultHtml;
-    }
-
 ?>
