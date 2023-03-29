@@ -132,7 +132,7 @@ h1 {
     margin: 5px;
 }
 
-    #inputColumnsBtn div label:hover {
+    #inputColumnsBtn div:hover {
         background-color: #A39586;
     }
 
@@ -140,7 +140,7 @@ h1 {
     display: none;
 }
 
-    #inputColumnsBtn div input[type="checkbox"]:checked + label {
+    #inputColumnsBtn div:has(input[type="checkbox"]:checked) {
         background-color: #91806E;
     }
 
@@ -310,6 +310,7 @@ h1 {
 
 #resultTableView {
     display: none;
+    padding: 20px;
     margin: 0px auto;
 }
 

@@ -8,17 +8,11 @@ import { getDbColumns } from '../functions/dbMaintain.js';
 
 const Select = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
-    // const [userMessage, setUserMessage] = useState("");
-    // const [table, setTable] = useState(null);
-    // const [colNames, setColNames] = useState([]);
-    // const [inputFieldValues, setInputFieldValues] = useState([]);
-    // const [colsSelected, setColsSelected] = useState([]);
-    // const [operations, setOperations] = useState([])
-    // const [tableRows, setTableRows] = useState([]);
-    // const [queryOutput, setQueryOutput] = useState([]);
     const [table, setTable] = useState(null)
     const [columnArray, setColumnArray] = useState([])
     const [tableRows, setTableRows] = useState([])
+    const [resultTableColumns, setResultTableColumns] = useState([])
+    const [resultTableRows, setResultTableRows] = useState([])
     const [queryDisplay, setQueryDisplay] = useState("")
     const [querySQL, setQuerySQL] = useState("")
     const [successMsg, setSuccessMsg] = useState("")
@@ -45,6 +39,8 @@ const Select = ({showLogin, toggleLogin}) => {
         if (table != null) {
 
             resetResults()
+            resetTable()
+            if ((successMsg != "") && (errorMsg != "")) resetPage()
 
             // Columns
             let newColumnArray = getDbColumns(table)
@@ -110,29 +106,29 @@ const Select = ({showLogin, toggleLogin}) => {
         if (columnArray != "") {
 
             let newDisplay = getDisplayDefault()
-            let newSQL = getSqlDefault() 
+            let newSQL = getSqlDefault()
 
             // Getting selected columns
-            var selDisColArr = [];
-            var selSqlColArr = [];
+            var selDisColArr = []
+            var selSqlColArr = []
 
-            let inputColArr = document.querySelector("#inputColumnsBtn input[type='checkbox']")
+            let inputColArr = document.querySelectorAll("#inputColumnsBtn input[type='checkbox']")
             for (let i = 0; i < inputColArr.length; i++) {
-                let dis = columnArray[i + 1][0];
-                let sql = columnArray[i + 1][1];
+                let dis = columnArray[i + 1][0]
+                let sql = columnArray[i + 1][1]
                 let isChecked = inputColArr[i].checked
 
                 if (isChecked == true) {
-                    selDisColArr.push(dis);
-                    selSqlColArr.push(sql);
+                    selDisColArr.push(dis)
+                    selSqlColArr.push(sql)
                 }
             };
 
             // Getting conditions
-            var disColArr = [];
-            var sqlColArr = [];
-            var valArr = [];
-            var cmpArr = [];
+            var disColArr = []
+            var sqlColArr = []
+            var valArr = []
+            var cmpArr = []
 
             let queryColArr = document.getElementsByClassName("queryColumn")
             for (let i = 0; i < queryColArr.length; i++) {
@@ -142,143 +138,116 @@ const Select = ({showLogin, toggleLogin}) => {
                 let comp = queryColArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
 
                 if (value != "") {
-                    disColArr.push(dis);
-                    sqlColArr.push(sql);
-                    valArr.push(value);
-                    cmpArr.push(comp);
+                    disColArr.push(dis)
+                    sqlColArr.push(sql)
+                    valArr.push(value)
+                    cmpArr.push(comp)
                 }
             };
 
             // Appending selected columns
             if (selDisColArr.length > 0) {
-                newDisplay = `SELECT `;
-                newSQL = `SELECT `;
+                newDisplay = `SELECT `
+                newSQL = `SELECT `
 
                 for (let i = 0; i < selDisColArr.length; i++) {
                     if (i != 0) {
-                        newDisplay += ", ";
-                        newSQL += ", ";
+                        newDisplay += ", "
+                        newSQL += ", "
                     }
-                    newDisplay += `<div class="bold">${selDisColArr[i]}</div>`;
-                    newSQL += `${selSqlColArr[i]}`;
+                    newDisplay += `<div class="bold">${selDisColArr[i]}</div>`
+                    newSQL += `${selSqlColArr[i]}`
                 }
 
-                newDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`;
-                newSQL += ` FROM ${columnArray[0][1]}`;
+                newDisplay += ` FROM <div class="bold">${columnArray[0][0]}</div>`
+                newSQL += ` FROM ${columnArray[0][1]}`
             }
 
 
             // Appending conditions
             if (disColArr.length > 0) {
-                newDisplay += " WHERE ";
-                newSQL += " WHERE ";
+                newDisplay += " WHERE "
+                newSQL += " WHERE "
 
                 for (let i = 0; i < disColArr.length; i++) {
                     if (i != 0) {
-                        newDisplay += " AND ";
-                        newSQL += " AND ";
+                        newDisplay += " AND "
+                        newSQL += " AND "
                     }
-                    newDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`;
-                    newSQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`;
+                    newDisplay += `(${disColArr[i]} ${cmpArr[i]} '<div class="bold">${valArr[i]}</div>')`
+                    newSQL += `(${sqlColArr[i]} ${cmpArr[i]} '${valArr[i]}')`
                 }
+            }
 
-                newDisplay += ";";
-                newSQL += ";";
+            // End
+            if ((selDisColArr.length > 0) || (disColArr.length > 0)) {
+                newDisplay += ";"
+                newSQL += ";"
 
-                setQueryDisplay(newDisplay)
-                setQuerySQL(newSQL)
+                setQuery(newDisplay, newSQL)
             }
         }
     }
-
-    // const updateColsSelected = (field, i) => {
-    //     let newColsSelected = [...colsSelected]
-    //     newColsSelected[i] = field
-    //     setColsSelected(newColsSelected)
-    // }
-
-    // const submitQuery = () => {
-    //     const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbInsert.php";
-    //     let allempty = true;
-    //     let query = "";
-    //     let fdata = new FormData()
-    //     colsSelected.forEach(item => {
-    //         if(item !== ""){
-    //             allempty = false;
-    //         }
-    //     })
-
-    //     let queryPart1 ="SELECT *";
-    //     let queryPart2 = `FROM ${table}`;
-    //     let queryPart3 = ` WHERE `;
-
-    //     if(allempty) {
-    //         queryPart1 = `SELECT * `;
-    //     } else {
-    //         queryPart1 = `SELECT `;
-    //     }
-
-    //     colsSelected.forEach((name, i) => {
-    //         if(name !== "") {
-    //             if(queryPart1 === "SELECT ") {
-    //                 queryPart1 += `${name} `; 
-    //             } else {
-    //                 queryPart1 += `, ${name} `;
-    //             }
-    //         }  
-    //     })
-
-    //     allempty = true;
-
-    //     inputFieldValues.forEach(item => {
-    //         if(item !== "") {
-    //             allempty = false;
-    //         }
-    //     })
-
-    //     if(allempty) {
-    //         query = queryPart1 + queryPart2;
-    //     } else {
-    //         colNames.forEach((name, i) => {
-    //             let processedName = processUserInput(name, inputFieldValues[i]);
-    //             if(inputFieldValues[i] !== "") {
-    //                 if(queryPart3 === " WHERE ") {
-    //                     queryPart3 += `${name} ${operations[i]} ${processedName}`
-    //                 } else {
-    //                     queryPart3 += ` AND ${name} ${operations[i]} ${processedName}`
-    //                 }
-    //             }
-    
-    //         })
-
-    //         query = queryPart1 + queryPart2 + queryPart3 + ";";
-    //     }
-
-        
-    //     console.log(query);
-
-    //     fdata.append('query', query);
-    //     axios.post(url, fdata)
-    //     .then(res=> {
-    //         console.log(res)
-    //         setQueryOutput(res.data);
-    //     })
-    // }
 
     const submitQuery = () => {
         if(querySQL == getSqlDefault()) {
             setErrorMsg("Fields cannot all be empty")
             return
         }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php"
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainSelectQuery.php"
         let fdata = new FormData()
         fdata.append('query', querySQL);
+
+        //Send Request
         axios.post(url, fdata)
         .then(res=> {
-            setSuccessMsg(res.data);
-            resetPage()
+            // Columns
+            let newResultTableColumns = []
+            res.data[0].forEach( (item) => {
+                newResultTableColumns.push(getDisplayFromSQL(item))
+            })
+            setResultTableColumns(newResultTableColumns)
+
+            // Rows
+            setResultTableRows(res.data[1]);
+
+            // Fix page
+            setSuccessMsg("Query results:")
+            hidePage()
         })
     }
+
+    function setQuery(oldDisplayQuery, oldSqlQuery) {
+        let newDisplayQuery = oldDisplayQuery
+        let newSqlQuery = oldSqlQuery
+
+        // <
+        newDisplayQuery = newDisplayQuery.replace("&lt;", "<");
+        newSqlQuery = newSqlQuery.replace("&lt;", "<");
+
+        // >
+        newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
+        newSqlQuery = newSqlQuery.replace("&gt;", ">");
+
+        setQueryDisplay(newDisplayQuery)
+        setQuerySQL(newSqlQuery)
+    }
+
+    function getDisplayFromSQL(sql) {
+        let display = "";
+
+        columnArray.slice(1).forEach( (column) => {
+            if (column[1] == sql) {
+                display = column[0];
+                return;
+            }
+        })
+        return display;
+    }
+
+    // -------------
+    // --- Reset ---
+    // -------------
 
     function resetPage() {
         document.getElementById("tableName").value = "select"
@@ -287,6 +256,10 @@ const Select = ({showLogin, toggleLogin}) => {
         setTableRows([])
         setQueryDisplay("")
         setQuerySQL("");
+    }
+
+    function hidePage() {
+        setColumnArray([]);
 
         ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm", "inputColumns"].map(
             (formName) => document.getElementById(formName).style.display = "none"
@@ -303,6 +276,21 @@ const Select = ({showLogin, toggleLogin}) => {
             (formName) => document.querySelector(formName).style.display = "none"
         )
     }
+
+    function resetTable() {
+        if (resultTableRows.length > 0 || resultTableColumns.length > 0) {
+            setResultTableColumns([])
+            setResultTableRows([])
+        }
+        document.getElementById("resultTableView").style.display = "none"
+    }
+
+    // Result Table
+    useEffect (() => {
+        if ((resultTableRows.length > 1) && (resultTableColumns.length > 1) && (columnArray.length < 1)) {
+            document.getElementById("resultTableView").style.display = "block"
+        }
+    }, [resultTableRows])
 
     // Success Message
     useEffect (() => {
@@ -321,44 +309,6 @@ const Select = ({showLogin, toggleLogin}) => {
     }, [errorMsg])
 
     {user !== null && toggleLogin(false)}
-
-    // const showQueryOutput = () => {
-
-    //     let allempty = true
-    //     colsSelected.forEach(item => {
-    //         if(item.length > 0) {
-    //             allempty = false;
-    //         }
-    //     })
-
-    //     return (
-    //         <div>
-    //             <p>Query Output:</p>
-    //             <table>
-    //                 <thead>
-    //                     <tr>
-    //                         {!allempty ? colsSelected.map((col, i) => {
-    //                             return <th key={i}>{col}</th>
-    //                         }) : colNames.map((name, i) => {
-    //                             return <th key={i}>{name}</th>
-    //                         })}
-    //                     </tr>
-    //                 </thead>
-    //                 <tbody>
-    //                     {queryOutput.map((elem, i) => {
-    //                         return(
-    //                             <tr>
-    //                                 {Object.keys(elem).map((item, i) => {
-    //                                     return <td key={i*10}>{elem[item]}</td>
-    //                                 })}
-    //                             </tr>
-    //                         )
-    //                     })}
-    //                 </tbody>
-    //             </table>
-    //         </div>
-    //     )
-    // }
     
     // ------------
     // --- HTML ---
@@ -380,18 +330,44 @@ const Select = ({showLogin, toggleLogin}) => {
                     <div id="errorMsg" key={"errorMsg"}>{errorMsg}</div>
                     <div id="successMsg" key={"successMsg"}>{successMsg}</div>
                 </div>
+                <div id="resultTableView" className="box">
+                    {resultTableRows.length > 0 ? <p key={"trName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
+                    <table className="db-table">
+                        <thead>
+                            <tr>
+                                {resultTableColumns.length > 0 && resultTableColumns.map((field, i) => {
+                                    return <th key={`trHead-${i}`}>{field}</th>
+                                })}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {resultTableRows.length > 0 && resultTableRows.map((row, i) => {
+                                return(
+                                    <tr key={`trRow-${i}`}>
+                                        {Object.keys(row).map((item, x) => {
+                                            return(
+                                            <td key={`trCell-${i}-${x}`}>
+                                                {row[item]}
+                                            </td>)
+                                        })}
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
 
                 <form id="tableNameForm" className="box">
                     <label>Table name: </label>
                     <select className="tableName" id="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
                         <option value="select" disabled hidden>Select table name</option>
-                        <option onClick={() => setTable('users')} value="users">Users</option>
-                        <option onClick={() => setTable('items')} value="items">Items</option>
-                        <option onClick={() => setTable('orders')} value="orders">Orders</option>
-                        <option onClick={() => setTable('locations')} value="locations">Locations</option>
-                        <option onClick={() => setTable('trucks')} value="trucks">Trucks</option>
-                        <option onClick={() => setTable('trips')} value="trips">Trips</option>
-                        <option onClick={() => setTable('reviews')} value="reviews">Reviews</option>
+                        <option value="users">Users</option>
+                        <option value="items">Items</option>
+                        <option value="orders">Orders</option>
+                        <option value="locations">Locations</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="trips">Trips</option>
+                        <option value="reviews">Reviews</option>
                     </select>
                 </form>
 
@@ -402,8 +378,8 @@ const Select = ({showLogin, toggleLogin}) => {
                             if (i > 0) {
                                 return (
                                     <div key={`inputColumns-${i}`}>
-                                        <input type='checkbox' id={`col-${field[1]}`} name={`${field[1]}`} value={`${field[1]}`} key={`inputColumnsBtn-${i}`}/>
-                                        <label onClick={(e) => updateQuery()} htmlFor={`col-${field[1]}`} key={`inputColumnsLabel-${i}`}>
+                                        <input type='checkbox' onChange={(e) => updateQuery()} id={`col-${field[1]}`} name={`${field[1]}`} value={`${field[1]}`} key={`inputColumnsBtn-${i}`}/>
+                                        <label htmlFor={`col-${field[1]}`} key={`inputColumnsLabel-${i}`}>
                                             {field[0]}
                                         </label>
                                     </div>
@@ -416,29 +392,27 @@ const Select = ({showLogin, toggleLogin}) => {
                 <div id="inputValuesForm" className="box">
                     <label htmlFor="inputValues">Conditions:</label>
                     <div id="inputValues">
-                            {columnArray.length > 0 && columnArray.map((field, i) => {
-                                if (i > 0) {
-                                    return (
-                                        <div className="queryColumn" key={`queryColumn-${i}`} onChange={updateQuery}>
-                                            <label key={`queryColumnLabel-${i}`} onChange={updateQuery}>{field[0]}</label>
-                                            <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
-                                                <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
-                                            </div>
-                                            <input 
-                                                placeholder="Enter Value" 
-                                                type="text" 
-                                                key={`queryColumnInput-${i}`}
-                                                onChange={(e) => updateQuery()}
-                                                defaultValue=""
-                                                />
+                            {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                                return (
+                                    <div className="queryColumn" key={`queryColumn-${i}`}>
+                                        <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
+                                        <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
+                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
                                         </div>
-                                    )
-                                }
+                                        <input 
+                                            placeholder="Enter Value" 
+                                            type="text" 
+                                            key={`queryColumnInput-${i}`}
+                                            onChange={(e) => updateQuery()}
+                                            defaultValue=""
+                                            />
+                                    </div>
+                                )
                             })}
                     </div>  
                 </div>      
@@ -456,10 +430,8 @@ const Select = ({showLogin, toggleLogin}) => {
                     <table className="db-table">
                         <thead>
                             <tr>
-                                {columnArray.length > 0 && columnArray.map((field, i) => {
-                                    if (i > 0) {
-                                        return <th key={`tHead-${i}`}>{field[0]}</th>
-                                    }
+                                {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                                    return <th key={`tHead-${i}`}>{field[0]}</th>
                                 })}
                             </tr>
                         </thead>

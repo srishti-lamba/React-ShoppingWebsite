@@ -143,10 +143,27 @@ const Delete = ({showLogin, toggleLogin}) => {
                 newDisplay += ";"
                 newSQL += ";"
 
-                setQueryDisplay(newDisplay)
-                setQuerySQL(newSQL)
+                setQuery(newDisplay, newSQL)
             }
         }
+    }
+
+    function setQuery(oldDisplayQuery, oldSqlQuery) {
+        let newDisplayQuery = oldDisplayQuery
+        let newSqlQuery = oldSqlQuery
+
+        // <
+        newDisplayQuery = newDisplayQuery.replace("&lt;", "<");
+        newSqlQuery = newSqlQuery.replace("&lt;", "<");
+
+        // >
+        newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
+        newSqlQuery = newSqlQuery.replace("&gt;", ">");
+
+        console.log(newSqlQuery);
+
+        setQueryDisplay(newDisplayQuery)
+        setQuerySQL(newSqlQuery)
     }
 
     const submitQuery = () => {
@@ -231,42 +248,40 @@ const Delete = ({showLogin, toggleLogin}) => {
                     <label>Table name: </label>
                     <select className="tableName" id="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
                         <option value="select" disabled hidden>Select table name</option>
-                        <option onClick={() => setTable('users')} value="users">Users</option>
-                        <option onClick={() => setTable('items')} value="items">Items</option>
-                        <option onClick={() => setTable('orders')} value="orders">Orders</option>
-                        <option onClick={() => setTable('locations')} value="locations">Locations</option>
-                        <option onClick={() => setTable('trucks')} value="trucks">Trucks</option>
-                        <option onClick={() => setTable('trips')} value="trips">Trips</option>
-                        <option onClick={() => setTable('reviews')} value="reviews">Reviews</option>
+                        <option value="users">Users</option>
+                        <option value="items">Items</option>
+                        <option value="orders">Orders</option>
+                        <option value="locations">Locations</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="trips">Trips</option>
+                        <option value="reviews">Reviews</option>
                     </select>
                 </form>
 
                 <div id="inputValuesForm" className="box">
                     <label htmlFor="inputValues">Conditions:</label>
                     <div id="inputValues">
-                        {columnArray.length > 0 && columnArray.map((field, i) => {
-                            if (i > 0) {
-                                return (
-                                    <div className="queryColumn" key={`queryColumn-${i}`} onChange={updateQuery}>
-                                        <label key={`queryColumnLabel-${i}`} onChange={updateQuery}>{field[0]}</label>
-                                        <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
-                                            <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
-                                        </div>
-                                        <input 
-                                            placeholder="Enter Value" 
-                                            type="text" 
-                                            key={`queryColumnInput-${i}`}
-                                            onChange={(e) => updateQuery()}
-                                            defaultValue=""
-                                            />
+                        {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                            return (
+                                <div className="queryColumn" key={`queryColumn-${i}`}>
+                                    <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
+                                    <div className="queryColumnBtn" key={`queryColumnBtn-${i}`}>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<`} >{"<"}</label>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-<=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-<=`}>{"<="}</label>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-=`}  onChange={updateQuery} defaultChecked/> <label htmlFor={`db-${field[1]}-=`} >{"="}</label>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}-!=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}-!=`}>{"!="}</label>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->=`} onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->=`}>{">="}</label>
+                                        <input type='radio' name={`queryColumnBtn-${field[1]}`} id={`db-${field[1]}->`}  onChange={updateQuery}               /> <label htmlFor={`db-${field[1]}->`} >{">"}</label>
                                     </div>
-                                )
-                            }
+                                    <input 
+                                        placeholder="Enter Value" 
+                                        type="text" 
+                                        key={`queryColumnInput-${i}`}
+                                        onChange={(e) => updateQuery()}
+                                        defaultValue=""
+                                        />
+                                </div>
+                            )
                         })}
                     </div>  
                 </div>      
@@ -284,10 +299,8 @@ const Delete = ({showLogin, toggleLogin}) => {
                     <table className="db-table">
                         <thead>
                             <tr>
-                                {columnArray.length > 0 && columnArray.map((field, i) => {
-                                    if (i > 0) {
-                                        return <th key={`tHead-${i}`}>{field[0]}</th>
-                                    }
+                                {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                                    return <th key={`tHead-${i}`}>{field[0]}</th>
                                 })}
                             </tr>
                         </thead>

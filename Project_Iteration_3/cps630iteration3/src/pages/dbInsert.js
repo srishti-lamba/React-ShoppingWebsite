@@ -239,33 +239,31 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <label>Table name: </label>
                     <select className="tableName" id="tableName" defaultValue={"select"} onChange={(e) => setTable(e.target.value)}>
                         <option value="select" disabled hidden>Select table name</option>
-                        <option onClick={() => setTable('users')} value="users">Users</option>
-                        <option onClick={() => setTable('items')} value="items">Items</option>
-                        <option onClick={() => setTable('orders')} value="orders">Orders</option>
-                        <option onClick={() => setTable('locations')} value="locations">Locations</option>
-                        <option onClick={() => setTable('trucks')} value="trucks">Trucks</option>
-                        <option onClick={() => setTable('trips')} value="trips">Trips</option>
-                        <option onClick={() => setTable('reviews')} value="reviews">Reviews</option>
+                        <option value="users">Users</option>
+                        <option value="items">Items</option>
+                        <option value="orders">Orders</option>
+                        <option value="locations">Locations</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="trips">Trips</option>
+                        <option value="reviews">Reviews</option>
                     </select>
                 </form>
 
                 <div id="inputValuesForm" className="box">
                     <label htmlFor="inputValues">Values to insert:</label>
                     <div id="inputValues">
-                        {columnArray.length > 0 && columnArray.map((field, i) => {
-                            if (i > 0) {
-                                return (
-                                    <div className="queryColumn" key={`queryColumn-${i}`}>
-                                        <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
-                                        <input 
-                                            placeholder="Enter Value" 
-                                            type="text"
-                                            key={`queryColumnInput-${i}`}
-                                            onChange={() => updateQuery()}
-                                            />
-                                    </div>
-                                )
-                            }
+                        {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                            return (
+                                <div className="queryColumn" key={`queryColumn-${i}`}>
+                                    <label key={`queryColumnLabel-${i}`}>{field[0]}</label>
+                                    <input 
+                                        placeholder="Enter Value" 
+                                        type="text"
+                                        key={`queryColumnInput-${i}`}
+                                        onChange={() => updateQuery()}
+                                        />
+                                </div>
+                            )
                         })}
                     </div>
                 </div>
@@ -283,10 +281,8 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <table className="db-table">
                         <thead>
                             <tr>
-                                {columnArray.length > 0 && columnArray.map((field, i) => {
-                                    if (i > 0) {
-                                        return <th key={`tHead-${i}`}>{field[0]}</th>
-                                    }
+                                {columnArray.length > 0 && columnArray.slice(1).map((field, i) => {
+                                    return <th key={`tHead-${i}`}>{field[0]}</th>
                                 })}
                             </tr>
                         </thead>
