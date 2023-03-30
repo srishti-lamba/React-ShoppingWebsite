@@ -91,17 +91,28 @@
         return false;
     }
 
-    
-    function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode, $isAdmin){
-        //include_once('../config/CreateAndPopulateUsersTable.php');
+    function randomSalt() {
+        $salt = bin2hex(random_bytes(3));
+        return $salt;
+    }
 
+    function encryptdata($data, $salt){
+        return md5($data.$salt);
+    }
+    
+    function getConnection(){
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "cps630";
+        return (new mysqli($servername, $username, $password, $dbname));
+    }
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`, isAdmin) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$password1', '$isAdmin')";
+    function appendUserToDataBase($name, $email, $username2, $telephone, $password1, $address, $postalCode, $isAdmin){
+        $conn = getConnection();
+        $salt = randomSalt();
+        $encryptedPassword = encryptdata($password1, $salt);
+        $query = "INSERT INTO Users (userName, telephoneNum, Email, `Address`, PostalCode, loginId, `Password`, salt, isAdmin) VALUES('$name', '$telephone', '$email', '$address', '$postalCode', '$username2', '$encryptedPassword', '$salt', '$isAdmin')";
         
         try 
             { $conn->query($query); }
