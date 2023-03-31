@@ -27,5 +27,9 @@
         $result =json_encode(array('user_id', 'userName', 'telephoneNum', 'email', 'address', 'postalCode', 'loginId', 'password', 'balance', 'isAdmin'));
         echo $result;
         header('HTTP/1.1 200 OK');
+    } else if($table == 'coupons') {
+        $result =json_encode(array('couponCode', 'discount'));
+        echo $result;
+        header('HTTP/1.1 200 OK');
     }
 ?>

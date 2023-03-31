@@ -246,6 +246,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                         <option value="trucks">Trucks</option>
                         <option value="trips">Trips</option>
                         <option value="reviews">Reviews</option>
+                        <option value="coupons">Coupons</option>
                     </select>
                 </form>
 

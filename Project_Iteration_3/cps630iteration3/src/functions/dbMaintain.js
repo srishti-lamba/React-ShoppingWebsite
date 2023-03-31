@@ -16,6 +16,7 @@ export function getDbColumns(tableName) {
                 ["Postal Code", "postalCode"],
                 ["Username", "loginId"],
                 ["Password", "password"],
+                ["Salt", "salt"],
                 ["Balance", "balance"],
                 ["Admin", "isAdmin"]
             ];
@@ -69,6 +70,15 @@ export function getDbColumns(tableName) {
                 ["Trucks", "Trucks", "trucks", "CreateAndPopulateTruckTable.php"],
                 ["Truck ID", "truckId"],
                 ["Availability", "availabilityCode"]
+            ];
+            break;
+
+        case "coupons":
+            resultArray = 
+            [
+                ["Coupons", "Coupons", "coupons", "createAndPopulateCoupons.php"],
+                ["Coupon Code", "couponCode"],
+                ["Discount", "discount"]
             ];
             break;
 
