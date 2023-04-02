@@ -55,10 +55,20 @@ const Reviews = ({showLogin, toggleLogin}) => {
         });
 
         // Star rating
+        makeStarsGrey()
+        makeStarsNotGreyOnChange()
+
+    }, [])
+
+    function makeStarsGrey() {
         let starLabel = document.querySelectorAll("#reviewStars label")
         starLabel.forEach( star => star.style.color = "lightgray")
+    }
 
+    function makeStarsNotGreyOnChange() {
+        let starLabel = document.querySelectorAll("#reviewStars label")
         let starBtn = document.querySelectorAll("input[type='radio'][name='reviewRating']")
+        
         starBtn.forEach( star => {
             star.addEventListener("change", () => {
                 let value = star.value;
@@ -67,8 +77,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 starLabel.forEach( star => star.style.color = "")
             })
         } )
-
-    }, [])
+    }
 
     // Setup Database tables
     function setupDatabase() {
@@ -92,14 +101,11 @@ const Reviews = ({showLogin, toggleLogin}) => {
     // -------------------
     
     function submitReviewSearch() {
-        console.log("submitReviewSearch itemName: " + searchItemName)
-        console.log("submitReviewSearch showPage: " + showPage)
         
         if (searchItemName === "") {
             showElements(showPage)
             return
         }
-
 
         // Get Reviews
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
@@ -107,7 +113,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
         fdata.append('searchItem', searchItemName)
         axios.post(url, fdata)
         .then(res=> {
-            console.log("Searched")
             setReviews(res.data)
             setShowPage(true)
             showElements(true)
@@ -117,19 +122,31 @@ const Reviews = ({showLogin, toggleLogin}) => {
         })
     }
 
-    function submitReviewWrite() {
+    function submitReviewWrite(event) {
+        event.preventDefault()
+
+        // Get form values
+        let reviewRatingDiv = document.querySelector("input[type='radio'][name='reviewRating']:checked")
+        let reviewTitleDiv = document.getElementById("reviewTitle")
+        let reviewContentDiv = document.getElementById("reviewContent")
+
         let reviewRating = 0
-        if (document.querySelector("input[type='radio'][name='reviewRating']:checked") !== null ) {
-            reviewRating = document.querySelector("input[type='radio'][name='reviewRating']:checked").value
+        if (reviewRatingDiv !== null ) reviewRating = reviewRatingDiv.value
+
+        let reviewTitle = reviewTitleDiv.value
+        let reviewContent = reviewContentDiv.value
+
+        // Assure fields are filled
+        if ((reviewTitle === "") && (reviewContent === "")) {
+            showSuccessMsg(false)
+            showErrorMsg(true)
+            window.scrollTo(0, 0)
+            return
         }
-    
+
+        // Create post request
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/writeReview.php"
         let fdata = new FormData();
-
-        let reviewTitle = document.getElementById("reviewTitle").value
-        let reviewContent = document.getElementById("reviewContent").value
-        let oldSearchItemName = searchItemName
-
         fdata.append('reviewUserID', user.user.id)
         fdata.append('reviewItemID', searchItemID)
         fdata.append('reviewTitle', reviewTitle)
@@ -137,14 +154,24 @@ const Reviews = ({showLogin, toggleLogin}) => {
         fdata.append('reviewRating', reviewContent)
         fdata.append('reviewRating', reviewRating)
 
-        console.log("Posting Request")
-
+        // Send post request
         axios.post(url, fdata)
-        .then(res => {
-            console.log("old itemName: " + oldSearchItemName)
-            console.log("current itemName: " + searchItemName)
-            //setSearchItemName(oldSearchItemName)
+        .then(() => {
+
+            // Reset field values
+            if (reviewRatingDiv !== null) reviewRatingDiv.checked = false
+            reviewTitleDiv.value = ""
+            reviewContentDiv.value = ""
+            makeStarsGrey()
+
+            // Update reviews
             submitReviewSearch()
+
+            // Show results
+            showErrorMsg(false)
+            showSuccessMsg(true)
+            window.scrollTo(0, 0)
+
         })
         .catch((err) => {
             console.log(err)
@@ -158,6 +185,8 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     useEffect(() => {
         submitReviewSearch()
+        showSuccessMsg(false)
+        showErrorMsg(false)
     }, [searchItemName])
 
     function handleSearch(e) {
@@ -177,21 +206,10 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     function showElements(show) {
         let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
+        let display = (show === true ? "block" : "none")
         
-        if (show === true) {
-            // Show elements
-            elemArr.map( elem => {
-                console.log("show")
-                document.getElementById(elem).style.display = "block"
-            })
-        }
-        else {
-            // Hide elements
-            elemArr.map( elem => {
-                console.log("hide")
-                document.getElementById(elem).style.display = "none"
-            })
-        }
+        // Show / Hide elments
+        elemArr.map( elem => document.getElementById(elem).style.display = display )
     }
 
     function fillDatalist(data) {
@@ -210,23 +228,24 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     function showWriteReview(userID, itemID, itemName, itemURL) {
 
-        document.getElementById("reviewUserID").val(userID);
-        document.getElementById("reviewItemID").val(itemID);
-        document.getElementById("reviewItemName").val(itemName);
-        document.getElementById("reviewItemURL").val(itemURL);
+        document.getElementById("reviewUserID").value(userID);
+        document.getElementById("reviewItemID").value(itemID);
+        document.getElementById("reviewItemName").value(itemName);
+        document.getElementById("reviewItemURL").value(itemURL);
 
         document.getElementById("writeReviewForm").css("display", "block");
     }
 
-    function showSuccessMsg() {
-        document.getElementById("reviewSearchForm").getElementsByClassName("box").css("display", "block");
-        document.getElementById("successMsg").css("display", "block");
+    function showSuccessMsg(show) {
+        let display = (show === true ? "block" : "none")
+        document.getElementById("resultMsg").style.display = display
+        document.getElementById("successMsg").style.display = display
     }
 
-    function showErrorMsg(msg) {
-        document.getElementById("reviewSearchForm").getElementsByClassName("box").css("display", "block");
-        document.getElementById("errorMsg").css("display", "block");
-        document.getElementById("errorMsg").html(msg);
+    function showErrorMsg(show) {
+        let display = (show === true ? "block" : "none")
+        document.getElementById("resultMsg").style.display = display
+        document.getElementById("errorMsg").style.display = display
     }
     
     return (
@@ -263,9 +282,9 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </form>
 
                 {/*--- Result ---*/}
-                <div id="postMsg" className="box">
-                <div id="successMsg">Your review has been posted.</div>
-                    <div id="errorMsg"></div>
+                <div id="resultMsg" className="box">
+                    <div id="successMsg">Your review has been posted.</div>
+                    <div id="errorMsg">Please fill all fields to submit a review.</div>
                 </div>
 
                 {/*--- Item ---*/}
@@ -310,7 +329,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </div>  
 
                 {/*--- Write Cards ---*/}
-                <form id="writeReviewForm" className="box">
+                <form id="writeReviewForm">
                     <div className="box">
                         <h4>WRITE A REVIEW</h4>
                         <input id="reviewUserID" type="text" name="reviewUserID"/>

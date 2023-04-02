@@ -116,8 +116,9 @@ h2 {
     border-radius: 15px;
 }
 
-#postMsg {
+#resultMsg {
     display: none;
+    padding: 5px;
 }
 
 /* ------------------- */

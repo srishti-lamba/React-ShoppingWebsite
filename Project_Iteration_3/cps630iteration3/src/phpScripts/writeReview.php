@@ -1,6 +1,11 @@
 <?php
 
     header('Access-Control-Allow-Origin: *');
+    header( 'Location: ' . strtok($_SERVER['HTTP_REFERER'], "?"));
+
+    $result = writeReview();
+    //echo "write review ";
+    echo $result;
 
     function writeReview() {
         $userID = $_REQUEST["reviewUserID"];
@@ -44,22 +49,5 @@
 
         return $result;
     }
-
-    $result = writeReview();
-    echo "write review ";
-    echo $result;
-
-    //$resultSql = writeReview();
-    // $resultArray = array();
-
-    // while($row = $resultSql->fetch_assoc()) {
-    //     $rowArr = array();
-    //     foreach($row as $key => $value) // each key in each row
-    //         { $rowArr[$key] = $value; }
-
-    //     array_push($resultArray, $rowArr);
-    // }
-
-    // echo json_encode($resultArray);
 
 ?>
