@@ -2,6 +2,19 @@
     session_start();
     include_once('../config/CreateAndPopulateUsersTable.php');
 
+    function encrypt($password, $salt){
+        return md5($password.$salt);
+    }
+
+    function getConnection(){
+        $servername = "localhost";
+        $usrnm = "root";
+        $pswrd = "";
+        $dbname = "cps630";
+        $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
+        return $conn;
+    }
+
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -9,16 +22,30 @@
         return $data;
     }
 
+    function fetchEncryptedPassword($username, $password){
+        $conn = getConnection();
+        $fetchSalt = "SELECT salt FROM users WHERE (loginId = '$username')";
+
+        try{
+            $result = $conn->query($fetchSalt);
+            if($result->num_rows > 0 ){
+                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                $salt = $row['salt'];
+                return encrypt($password, $salt);
+            } else {
+                header("HTTP/1.1 404 Not Found");
+            }
+        }
+        catch (mysqli_sql_exception $exception){ 
+        }
+    }
+
     $username = test_input($_POST["username"]);
     $password = test_input($_POST["password"]);
+    $encryptedPassword = fetchEncryptedPassword($username, $password);
+    $conn = getConnection();
 
-    $servername = "localhost";
-    $usrnm = "root";
-    $pswrd = "";
-    $dbname = "cps630";
-    $conn = new mysqli($servername, $usrnm, $pswrd, $dbname);
-
-    $sql = "SELECT * FROM users WHERE (loginId = '$username' AND `password` = '$password')";
+    $sql = "SELECT * FROM users WHERE (loginId = '$username' AND `password` = '$encryptedPassword')";
     $result;
 
     try 
