@@ -132,13 +132,30 @@ body {
 
 .shopping-cart table {
     margin:auto;
-    border: 1px solid #e3e9f7;
+    border: 3px solid #8D7B68;
+    border-collapse: separate;
+    border-spacing: 0px;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;;
 }
 
+.shopping-cart table tr:hover
+{
+    background-color: #EAE6E2;
+}
 
+.shopping-cart table td, .shopping-cart table th {
+    padding: 10px 10px;
+}
 
-.shopping-cart table td {
-    padding: 30px;
+.shopping-cart table thead th {
+    border-bottom: 1.5px solid #8D7B68;
+}
+
+.shopping-cart table tfoot td {
+    border-top: 1.5px solid #8D7B68;
 }
 
 .checkOutBtnContainer {

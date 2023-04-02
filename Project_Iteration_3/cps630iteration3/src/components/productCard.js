@@ -13,7 +13,7 @@ const ProductCard = ({product_id, productName, price, image_url, category}) => {
     return (
         <div className="product-card" draggable onDragStart={ondrag}>
             <img src={image_url} />
-            <p className="price">{price}</p>
+            <p className="price">${price}</p>
             <p>{category}</p>
             <p>{productName}</p>
         </div>

@@ -187,15 +187,15 @@ const Home = ({showLogin, toggleLogin}) => {
                                             <tr key={item.item_id}>
                                                 <td>{item.productName}</td>
                                                 <td>{item.quantity}</td>
-                                                <td>{item.price}</td>
+                                                <td>${item.price}</td>
                                             </tr>
                                         )
                                     })}
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colSpan="2">Total</td>
-                                        <td id="total" name="total">{total}</td>
+                                        <td colSpan="2" style={{"text-align": "left"}}>Total</td>
+                                        <td id="total" name="total">${total}</td>
                                     </tr>
                                 </tfoot>
                             </table>
