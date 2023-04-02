@@ -5,7 +5,7 @@ import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import './dbMaintain.css';
 import axios from "axios";
-import { getDbColumns } from '../functions/dbMaintain.js';
+import { getDbColumns, getDbRows, setPageHeight, setQuery, submitQuery, updateQueryDiv, resetPage, showPage, showSuccessMsg, showErrorMsg } from '../functions/dbMaintain.js';
 
 const Insert = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser)
@@ -18,19 +18,8 @@ const Insert = ({showLogin, toggleLogin}) => {
     const [errorMsg, setErrorMsg] = useState("")
 
     // Page height
-    function setMinHeight() {
-        let navHeight = document.getElementsByTagName("header")[0].offsetHeight
-        document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
-        document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
-    };
     useEffect(() => {
-        window.addEventListener('resize', setMinHeight)
-        if (document.readyState === 'complete') {
-            setMinHeight();
-          } else {
-            window.addEventListener('load', setMinHeight);
-            return () => window.removeEventListener('load', setMinHeight);
-          }
+        setPageHeight()
     }, [])
 
     // Get Columns and Rows
@@ -43,39 +32,14 @@ const Insert = ({showLogin, toggleLogin}) => {
             let newColumnArray = getDbColumns(table)
             setColumnArray(newColumnArray)
 
-            // Assure table exists
-            let fileName = newColumnArray[0][3]
-            const urlFile = `http://localhost/CPS630-Project-Iteration3-PHPScripts/${fileName}`;
-            axios.post(urlFile).then(resFile  => {
-
-                    // Rows
-                    let tableName = newColumnArray[0][1].toLowerCase()
-                    const urlRow = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
-                    axios.get(urlRow)
-                    .then(res  => {
-                        setTableRows(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-
-                })
-            .catch(err => {
-                console.log(err)
-            })
-
+            // Rows
+            getDbRows(newColumnArray, setTableRows)
         }
     }, [table])
 
     // Display Elements
     useEffect (() => {
-        if (columnArray.length > 0) {
-            ["inputValuesForm", "queryDiv", "tableView"].map(
-                (formName) => document.getElementById(formName).style.display = "block"
-            )
-            setQueryDisplay(getDisplayDefault())
-            setQuerySQL(getSqlDefault() )
-        }
+        showPage(columnArray, getDisplayDefault, getSqlDefault, setQueryDisplay, setQuerySQL)
     }, [columnArray])
 
     // -------------
@@ -84,12 +48,7 @@ const Insert = ({showLogin, toggleLogin}) => {
 
     // Update display when query changes
     useEffect (() => {
-        if (queryDisplay.length > 1) {
-            document.getElementById("queryDisplay").innerHTML = queryDisplay
-            if (queryDisplay != getDisplayDefault()) {
-                document.getElementById("querySubmitForm").style.display = "block"
-            }
-        }
+        updateQueryDiv(queryDisplay, getDisplayDefault)
     }, [queryDisplay])
 
     function getDisplayDefault() 
@@ -100,7 +59,7 @@ const Insert = ({showLogin, toggleLogin}) => {
 
     // Update query
     function updateQuery() {
-        if (columnArray != "") {
+        if (columnArray !== "") {
 
             let newDisplay = getDisplayDefault()
             let newSQL = getSqlDefault() 
@@ -114,7 +73,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 let value = queryColArr[i].querySelector(":scope > input").value
         
                 // Getting used columns
-                if (value != "") {
+                if (value !== "") {
                     disColArr.push(columnArray[i + 1][0])
                     sqlColArr.push(columnArray[i + 1][1])
                     valArr.push(value)
@@ -127,7 +86,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 newSQL += "("
         
                 for (let i = 0; i < disColArr.length; i++) {
-                    if (i != 0) {
+                    if (i !== 0) {
                         newDisplay += ", "
                         newSQL += ", "
                     }
@@ -140,7 +99,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                 newSQL += ") VALUES ("
         
                 for (let i = 0; i < valArr.length; i++) {
-                    if (i != 0) {
+                    if (i !== 0) {
                         newDisplay += ", ";
                         newSQL += ", ";
                     }
@@ -152,37 +111,12 @@ const Insert = ({showLogin, toggleLogin}) => {
                 newSQL += ");"
             }
 
-            setQueryDisplay(newDisplay)
-            setQuerySQL(newSQL)
+            setQuery(newDisplay, newSQL, setQueryDisplay, setQuerySQL)
         }
     }
 
-    const submitQuery = () => {
-        if(querySQL == getSqlDefault() ) {
-            setErrorMsg("Fields cannot all be empty")
-            return
-        }
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php"
-        let fdata = new FormData()
-        fdata.append('query', querySQL);
-        axios.post(url, fdata)
-        .then(res=> {
-            setSuccessMsg(res.data);
-            resetPage()
-        })
-    }
-
-    function resetPage() {
-        document.getElementById("tableName").value = "select"
-        setTable(null)
-        setColumnArray([])
-        setTableRows([])
-        setQueryDisplay("")
-        setQuerySQL("");
-
-        ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm"].map(
-            (formName) => document.getElementById(formName).style.display = "none"
-        )
+    function runQueryClicked () {
+        submitQuery (querySQL, setQuery, setQuerySQL, setQueryDisplay, getSqlDefault, setErrorMsg, setSuccessMsg, setTable, setColumnArray, setTableRows, resetPage)
     }
 
     function resetResults() {
@@ -198,21 +132,15 @@ const Insert = ({showLogin, toggleLogin}) => {
 
     // Success Message
     useEffect (() => {
-        if (successMsg.length > 0) {
-            document.querySelector("#main-title + .box").style.display = "block"
-            document.getElementById("successMsg").style.display = "block"
-        }
+        showSuccessMsg(successMsg)
     }, [successMsg])
 
     // Error
     useEffect (() => {
-        if (successMsg.length > 0) {
-            document.querySelector("#main-title + .box").style.display = "block"
-            document.getElementById("errorMsg").style.display = "block"
-        }
+        showErrorMsg(errorMsg)
     }, [errorMsg])
 
-    {user !== null && toggleLogin(false)}
+    user !== null && toggleLogin(false)
     
     // ------------
     // --- HTML ---
@@ -273,7 +201,7 @@ const Insert = ({showLogin, toggleLogin}) => {
                     <p id="queryDisplay"></p>
                     
                     <div id="querySubmitForm">
-                        <button id="querySubmitBtn" onClick={submitQuery}>Run Query</button>
+                        <button id="querySubmitBtn" onClick={runQueryClicked}>Run Query</button>
                     </div>
                 </div>
 

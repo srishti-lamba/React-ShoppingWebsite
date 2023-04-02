@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function getDbColumns(tableName) {
 
     var resultArray;
@@ -112,3 +114,127 @@ export function getDbColumns(tableName) {
     }
     return resultArray;
 }
+
+export function getDbRows(columnArray, setTableRows) {
+
+    // Assure table exists
+    let fileName = columnArray[0][3]
+    const urlFile = `http://localhost/CPS630-Project-Iteration3-PHPScripts/${fileName}`;
+    axios.post(urlFile)
+    .then(()  => {
+        
+        // Get Rows
+        let tableName = columnArray[0][2]
+        const urlRow = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
+        axios.get(urlRow)
+        .then(res  => {
+            setTableRows(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+export function setPageHeight() {
+    function setMinHeight() {
+        let navHeight = document.getElementsByTagName("header")[0].offsetHeight
+        document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
+        document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
+    };
+
+    window.addEventListener('resize', setMinHeight)
+    if (document.readyState === 'complete') {
+        setMinHeight()
+    } else {
+        window.addEventListener('load', setMinHeight)
+        return () => window.removeEventListener('load', setMinHeight)
+    }
+}
+
+
+export function setQuery(oldDisplayQuery, oldSqlQuery, setQueryDisplay, setQuerySQL) {
+    let newDisplayQuery = oldDisplayQuery
+    let newSqlQuery = oldSqlQuery
+
+    // <
+    newDisplayQuery = newDisplayQuery.replace("&lt;", "<");
+    newSqlQuery = newSqlQuery.replace("&lt;", "<");
+
+    // >
+    newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
+    newSqlQuery = newSqlQuery.replace("&gt;", ">");
+
+    setQueryDisplay(newDisplayQuery)
+    setQuerySQL(newSqlQuery)
+}
+
+export function submitQuery (querySQL, setQuery, setQuerySQL, setQueryDisplay, getSqlDefault, setErrorMsg, setSuccessMsg, setTable, setColumnArray, setTableRows, resetPage) {
+    if(querySQL === getSqlDefault()) {
+        setErrorMsg("Fields cannot all be empty")
+        return
+    }
+    const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/dbMaintainExecuteQuery.php"
+    let fdata = new FormData()
+    fdata.append('query', querySQL);
+    axios.post(url, fdata)
+    .then(res=> {
+        setSuccessMsg(res.data);
+        resetPage(setTable, setColumnArray, setTableRows, setQuery, setQueryDisplay, setQuerySQL)
+    })
+}
+
+export function resetPage(setTable, setColumnArray, setTableRows, setQuery, setQueryDisplay, setQuerySQL) {
+    
+    ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm"].map(
+        (formName) => document.getElementById(formName).style.display = "none"
+    )
+    
+    document.getElementById("tableName").value = "select"
+    setTable(null)
+    setColumnArray([])
+    setTableRows([])
+    setQuery("", "", setQueryDisplay, setQuerySQL)
+}
+
+export function updateQueryDiv(queryDisplay, getDisplayDefault) {
+    if (queryDisplay.length > 1) {
+        document.getElementById("queryDisplay").innerHTML = queryDisplay
+        if (queryDisplay !== getDisplayDefault()) {
+            document.getElementById("querySubmitForm").style.display = "block"
+        }
+    }
+}
+
+export function showPage(columnArray, getDisplayDefault, getSqlDefault, setQueryDisplay, setQuerySQL) {
+    if (columnArray.length > 0) {
+        ["inputValuesForm", "queryDiv", "tableView", "inputColumns"].map(
+            (formName) => {
+                let elem = document.getElementById(formName)
+                if (elem !== null) elem.style.display = "block"
+            }
+        )
+        setQuery(getDisplayDefault(), getSqlDefault(), setQueryDisplay, setQuerySQL)
+    }
+}
+
+export function showSuccessMsg(successMsg) {
+    if (successMsg.length > 0) {
+        document.querySelector("#main-title + .box").style.display = "block"
+        document.getElementById("successMsg").style.display = "block"
+    }
+}
+
+export function showErrorMsg(errorMsg) {
+    if (errorMsg.length > 0) {
+        document.querySelector("#main-title + .box").style.display = "block"
+        document.getElementById("errorMsg").style.display = "block"
+    }
+}
+
+// export function functionName(parameter) {
+//     return result;
+// }

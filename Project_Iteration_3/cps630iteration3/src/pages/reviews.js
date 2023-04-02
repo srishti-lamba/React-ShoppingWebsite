@@ -70,7 +70,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
         });
 
         // Star rating
-        document.getElementById('reviewStars').getElementsByTagName("label").css("color", "lightgray");
+        document.getElementById('reviewStars').getElementsByTagName("label").style.color = "lightgray"
 
         // $("input[type='radio'][name='reviewRating']").change(function () {
         //     let value = this.val();

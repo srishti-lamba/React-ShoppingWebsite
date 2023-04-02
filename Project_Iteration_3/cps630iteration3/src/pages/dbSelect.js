@@ -3,8 +3,8 @@ import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import axios, { all } from "axios";
-import { getDbColumns } from '../functions/dbMaintain.js';
+import axios from "axios";
+import { getDbColumns, getDbRows, setPageHeight, setQuery, updateQueryDiv, showPage, showSuccessMsg, showErrorMsg } from '../functions/dbMaintain.js';
 
 const Select = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
@@ -19,19 +19,8 @@ const Select = ({showLogin, toggleLogin}) => {
     const [errorMsg, setErrorMsg] = useState("")
 
     // Page height
-    function setMinHeight() {
-        let navHeight = document.getElementsByTagName("header")[0].offsetHeight
-        document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
-        document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
-    };
     useEffect(() => {
-        window.addEventListener('resize', setMinHeight)
-        if (document.readyState === 'complete') {
-            setMinHeight();
-          } else {
-            window.addEventListener('load', setMinHeight);
-            return () => window.removeEventListener('load', setMinHeight);
-          }
+        setPageHeight()
     }, [])
 
     // Get Columns and Rows
@@ -46,39 +35,14 @@ const Select = ({showLogin, toggleLogin}) => {
             let newColumnArray = getDbColumns(table)
             setColumnArray(newColumnArray)
 
-            // Assure table exists
-            let fileName = newColumnArray[0][3]
-            const urlFile = `http://localhost/CPS630-Project-Iteration3-PHPScripts/${fileName}`;
-            axios.post(urlFile).then(resFile  => {
-
-                    // Rows
-                    let tableName = newColumnArray[0][1].toLowerCase()
-                    const urlRow = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
-                    axios.get(urlRow)
-                    .then(res  => {
-                        setTableRows(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-
-                })
-            .catch(err => {
-                console.log(err)
-            })
-
+            // Rows
+            getDbRows(newColumnArray, setTableRows)
         }
     }, [table])
 
     // Display Elements
     useEffect (() => {
-        if (columnArray.length > 0) {
-            ["inputValuesForm", "queryDiv", "tableView", "inputColumns"].map(
-                (formName) => document.getElementById(formName).style.display = "block"
-            )
-            setQueryDisplay(getDisplayDefault())
-            setQuerySQL(getSqlDefault() )
-        }
+        showPage(columnArray, getDisplayDefault, getSqlDefault, setQueryDisplay, setQuerySQL)
     }, [columnArray])
 
     // -------------
@@ -87,12 +51,7 @@ const Select = ({showLogin, toggleLogin}) => {
 
     // Update display when query changes
     useEffect (() => {
-        if (queryDisplay.length > 1) {
-            document.getElementById("queryDisplay").innerHTML = queryDisplay
-            if (queryDisplay != getDisplayDefault()) {
-                document.getElementById("querySubmitForm").style.display = "block"
-            }
-        }
+        updateQueryDiv(queryDisplay, getDisplayDefault)
     }, [queryDisplay])
 
     function getDisplayDefault() 
@@ -184,7 +143,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 newDisplay += ";"
                 newSQL += ";"
 
-                setQuery(newDisplay, newSQL)
+                setQuery(newDisplay, newSQL, setQueryDisplay, setQuerySQL)
             }
         }
     }
@@ -217,22 +176,6 @@ const Select = ({showLogin, toggleLogin}) => {
         })
     }
 
-    function setQuery(oldDisplayQuery, oldSqlQuery) {
-        let newDisplayQuery = oldDisplayQuery
-        let newSqlQuery = oldSqlQuery
-
-        // <
-        newDisplayQuery = newDisplayQuery.replace("&lt;", "<");
-        newSqlQuery = newSqlQuery.replace("&lt;", "<");
-
-        // >
-        newDisplayQuery = newDisplayQuery.replace("&gt;", ">");
-        newSqlQuery = newSqlQuery.replace("&gt;", ">");
-
-        setQueryDisplay(newDisplayQuery)
-        setQuerySQL(newSqlQuery)
-    }
-
     function getDisplayFromSQL(sql) {
         let display = "";
 
@@ -254,8 +197,7 @@ const Select = ({showLogin, toggleLogin}) => {
         setTable(null)
         setColumnArray([])
         setTableRows([])
-        setQueryDisplay("")
-        setQuerySQL("");
+        setQuery("", "", setQueryDisplay, setQuerySQL)
     }
 
     function hidePage() {
@@ -294,21 +236,15 @@ const Select = ({showLogin, toggleLogin}) => {
 
     // Success Message
     useEffect (() => {
-        if (successMsg.length > 0) {
-            document.querySelector("#main-title + .box").style.display = "block"
-            document.getElementById("successMsg").style.display = "block"
-        }
+        showSuccessMsg(successMsg)
     }, [successMsg])
 
     // Error
     useEffect (() => {
-        if (successMsg.length > 0) {
-            document.querySelector("#main-title + .box").style.display = "block"
-            document.getElementById("errorMsg").style.display = "block"
-        }
+        showErrorMsg(errorMsg)
     }, [errorMsg])
 
-    {user !== null && toggleLogin(false)}
+    user !== null && toggleLogin(false)
     
     // ------------
     // --- HTML ---
