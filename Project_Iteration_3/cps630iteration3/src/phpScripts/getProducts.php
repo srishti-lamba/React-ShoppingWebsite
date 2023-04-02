@@ -1,7 +1,7 @@
 <?php
         
         header('Access-Control-Allow-Origin: *');
-        function getItems($category) {
+        function getItems() {
 
             $servername = "localhost";
             $username = "root";
@@ -9,8 +9,7 @@
             $dbname = "cps630";
         
             $conn = new mysqli($servername, $username, $password, $dbname);
-            $query = "SELECT item_id, productName, price, category, image_url FROM Items WHERE category LIKE " . "'". $category . "'";
-
+            $query = "SELECT item_id, productName, price, category, image_url FROM Items";
 
             try{
                 $output = array();
@@ -26,9 +25,7 @@
                 { echo("<script>console.log(`Error on getProducts.php: $conn->error`)</script>"); }
         }
 
-        $category = $_REQUEST['category'];
-
-        $result = getItems($category);
+        $result = getItems();
         // echo json_encode($result);
         echo $result;
 ?>

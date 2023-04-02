@@ -7,6 +7,7 @@ import axios from "axios";
 import ProductCard from "../components/productCard";
 import { useNavigate } from "react-router-dom";
 import './reviews.css';
+import { setPageHeight} from '../functions/dbMaintain.js';
 
 const Reviews = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
@@ -25,6 +26,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     {user !== null && toggleLogin(false)}
 
+    // Setup database
     useEffect(() => {
         setupDatabase();
 
@@ -41,46 +43,36 @@ const Reviews = ({showLogin, toggleLogin}) => {
         })
     }, [])
 
-    document.addEventListener("DOMContentLoaded", () => {
-        function setMinHeight() {
-            var navHeight = document.getElementById("header").offsetHeight;
-            document.getElementById("main-image").css("min-height", window.height() - navHeight);
-        };
-
-        window.resize(function () {
-            setMinHeight();
-        });
+    // Setup document
+    useEffect(() => {
+        // Page height
+        setPageHeight();
 
         // Form input enter
-        document.getElementById("reviewSearchForm").getElementsByTagName("input")[0].bind('keypress keydown keyup', function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                submitReviewSearch();
-            }
-        });
-        document.getElementById("writeReviewForm").getElementsByTagName("input")[0].bind('keypress keydown keyup', function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-            }
-        });
-        
-        // Search check
-        document.getElementById('reviewSearchForm').getElementsByTagName("input").blur(function(){
-            checkSearchInput();
+        ["keypress", "keydown", "keyup"].map( eventName => {
+            
+            document.querySelectorAll("#writeReviewForm input")[0].addEventListener(eventName, (e) => {
+                if (e.keyCode == 13) {
+                    e.preventDefault()
+                }
+            });
         });
 
         // Star rating
-        document.getElementById('reviewStars').getElementsByTagName("label").style.color = "lightgray"
+        let starLabel = document.querySelectorAll("#reviewStars label")
+        starLabel.forEach( star => star.style.color = "lightgray")
 
-        // $("input[type='radio'][name='reviewRating']").change(function () {
-        //     let value = this.val();
-        //     document.getElementById("reviewStarsText").html(`${value} stars`);
+        let starBtn = document.querySelectorAll("input[type='radio'][name='reviewRating']")
+        starBtn.forEach( star => {
+            star.addEventListener("change", () => {
+                let value = star.value;
+                document.getElementById("reviewStarsText").innerHTML = `${value} stars`
     
-        //     document.getElementById("reviewStars").getElementsByTagName("label").css("color", "");
-        // });
-        
-        setMinHeight();
-    });
+                starLabel.forEach( star => star.style.color = "")
+            })
+        } )
+
+    }, [])
 
     // Setup Database tables
     function setupDatabase() {
@@ -107,11 +99,9 @@ const Reviews = ({showLogin, toggleLogin}) => {
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
         let fdata = new FormData();
         fdata.append('searchItem', searchItem)
-        console.log(searchItem)
         axios.post(url, fdata)
         .then(res=> {
             setReviews(res.data)
-            console.log(res.data)
         })
         .catch((err) => {
             //setErrorMsg(err.response.statusText)
@@ -120,7 +110,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     function submitReviewWrite() {
         if (document.querySelectorAll("input[type='radio'][name='reviewRating']:checked").length === 0 ) {
-            document.getElementById("input[type='radio'][name='reviewRating']");
+            document.getElementById("input[type='radio'][name='reviewRating']").value = 0;
         }
     
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
@@ -132,34 +122,42 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
         axios.post(url, fdata)
         .catch((err) => {
+            console.log(err)
             //setErrorMsg(err.response.statusText)
         })
     }
 
+    // --------------
+    // --- Search ---
+    // --------------
+
     useEffect(() => {
-        if (searchItem.length > 0) submitReviewSearch()
+        // Show / hide other form elements depending on if item is selected
+        let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
+        
+        if (searchItem.length > 0) {
+            elemArr.map( elem => {
+                document.getElementById(elem).style.display = "block"
+            })
+            submitReviewSearch()
+        }
+        else {
+            elemArr.map( elem => {
+                document.getElementById(elem).style.display = "none"
+            })
+        }
     }, [searchItem])
 
-    // --------------------
-    // --- Search Check ---
-    // --------------------
-
-    function checkSearchInput() {
-        var searchVal = document.getElementById('reviewSearchForm').getElementsByClassName("input").val();
-        var foundMatch = false;
-        document.getElementById('searchItemList').getElementsByClassName("option").each(function(index, domEle) {
-            let optionVal = this.val().toLowerCase();
-    
-            if ( searchVal.toLowerCase() === optionVal.toLowerCase() ) {
-                foundMatch = true;
-                return false; //break
+    function handleSearch(e) {
+        setSource(e.target.value)
+        for (var i=0; i < items.length; i++) {
+            if (e.target.value == JSON.parse(items[i]).productName) {
+                setSourceImg(JSON.parse(items[i]).image_url)
             }
-        });
-    
-        if (foundMatch === false) {
-            document.getElementById('reviewSearchForm').getElementsByClassName("input").val("");
         }
-    }    
+        document.getElementById("productImg").style.visibility = "visible"
+        setSearchItem(e.target.value)
+    }
 
     // ------------------------
     // --- Fill Information ---
@@ -199,17 +197,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
         document.getElementById("errorMsg").css("display", "block");
         document.getElementById("errorMsg").html(msg);
     }
-
-    function handleSearch(e) {
-        setSource(e.target.value)
-        for (var i=0; i < items.length; i++) {
-            if (e.target.value == JSON.parse(items[i]).productName) {
-                setSourceImg(JSON.parse(items[i]).image_url)
-            }
-        }
-        document.getElementById("productImg").style.visibility = "visible"
-        setSearchItem(e.target.value)
-    }
     
     return (
         <>
@@ -231,21 +218,17 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
                 {/*--- Search ---*/}
                 <form id="emptyForm" ></form>
-                <form id="reviewSearchForm" className="box" action="./getReviews.php" method="POST">
-                    {/* <label htmlFor="searchItemList">Search:</label> */}
-                    {/* <input list="searchItemList" name="searchItem" placeholder="Enter item to search..." value={searchItem} onChange={e => setSearchItem(e.target.value)}/> */}
-
-                    <label htmlFor="searchItemList" >Enter item to search....</label>
-                    <select className="searchItemList" value={source} onChange={e => {handleSearch(e);}}>
+                <form id="reviewSearchForm" className="box">
+                    <select className="searchItemList" defaultValue={"select"} onChange={e => {handleSearch(e);}}>
+                        <option value="select" disabled hidden>Select item to search</option>
                         {items.map((item, i) => {
                             return(
-                                <option key={i}>
+                                <option key={`searchItemList-${i}`}>
                                     {JSON.parse(item).productName}
                                 </option>
                             )
                         })}
                     </select>
-                    <button type="button" className="reg-button" name="reviewSearch" value="reviewSearch" onClick={submitReviewSearch}>Go</button>
                 </form>
 
                 {/*--- Result ---*/}
@@ -276,26 +259,27 @@ const Reviews = ({showLogin, toggleLogin}) => {
                             )
                         }
                         return (
-                            <div className='card box'>
+                            <div className='card box' key={`reviewCard-${i}`}>
                                 <div className='user-container'>
                                     <img src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png'/>
-                                    <div className='reviewInfo'>
-                                        <h3>{userName}</h3>
-                                        {starArr.length > 0 && starArr.map((field, i) => {
-                                            return (<div dangerouslySetInnerHTML={{__html: field}}/>)
+                                    <div className='reviewInfo' key={`reviewInfo-${i}`}>
+                                        <h3 key={`reviewInfo-userName-${i}`}>{userName}</h3>
+                                        {['1','2','3','4','5'].map((i) => {
+                                            let starClass = "fa fa-star " + ( i <= starNum ? "star-checked" : "star-unchecked" )
+                                            return (<i className= {starClass} key={`reviewInfo-star${starNum}-${i}`}></i>)
                                         })}
-                                        <span className='visuallyHidden'>{`${starNum} stars`}</span>
+                                        <span className='visuallyHidden' key={`reviewInfo-starNum-${i}`}>{`${starNum} stars`}</span>
                                     </div>
                                 </div>
-                                <h4>{title}</h4>
-                                <p className='review'>{content}</p>
+                                <h4 key={`reviewInfo-title-${i}`}>{title}</h4>
+                                <p className='review' key={`reviewInfo-content-${i}`}>{content}</p>
                             </div>
                         )
                     })}
                 </div>  
 
                 {/*--- Write Cards ---*/}
-                <form id="writeReviewForm" className="box" action="../phpScripts/getReviews.php" method="POST">
+                <form id="writeReviewForm" className="box">
                     <div className="box">
                         <h4>WRITE A REVIEW</h4>
                         <input id="reviewUserID" type="text" name="reviewUserID"/>
@@ -305,7 +289,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
                     
                     
                     <div id="reviewStars">
-                        <p>Rating:</p>
 
                         <input type="radio" id="star1" name="reviewRating" value="1" />
                         <label htmlFor="star1" title="text" className="star"> <span className="visuallyHidden">1</span> <i className="fa fa-star fa-lg"></i> </label>
@@ -335,7 +318,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                         <textarea id="reviewContent" name="reviewContent" rows="10" maxLength="1000" placeholder="Write review..."></textarea>
                     </div>
 
-                    <button className="submit" name="reviewWrite" value="reviewWrite" onClick={submitReviewWrite()}>Submit</button> 
+                    <button className="submit" name="reviewWrite" value="reviewWrite" onClick={submitReviewWrite}>Submit</button> 
                     </div> 
                 </form>
             </div>

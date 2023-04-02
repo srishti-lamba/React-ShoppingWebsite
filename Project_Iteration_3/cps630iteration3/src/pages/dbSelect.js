@@ -33,7 +33,7 @@ const Select = ({showLogin, toggleLogin}) => {
 
             resetResults(successMsg, errorMsg, setSuccessMsg, setErrorMsg)
             resetTable()
-            if ((successMsg != "") && (errorMsg != "")) resetPage()
+            if ((successMsg !== "") && (errorMsg !== "")) resetPage()
 
             // Columns
             let newColumnArray = getDbColumns(table)
@@ -83,7 +83,7 @@ const Select = ({showLogin, toggleLogin}) => {
 
     // Update query
     function updateQuery() {
-        if (columnArray != "") {
+        if (columnArray !== "") {
 
             let newDisplay = getDisplayDefault()
             let newSQL = getSqlDefault()
@@ -98,7 +98,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 let sql = columnArray[i + 1][1]
                 let isChecked = inputColArr[i].checked
 
-                if (isChecked == true) {
+                if (isChecked === true) {
                     selDisColArr.push(dis)
                     selSqlColArr.push(sql)
                 }
@@ -117,7 +117,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 let value = queryColArr[i].querySelector(":scope > input").value
                 let comp = queryColArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
 
-                if (value != "") {
+                if (value !== "") {
                     disColArr.push(dis)
                     sqlColArr.push(sql)
                     valArr.push(value)
@@ -131,7 +131,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 newSQL = `SELECT `
 
                 for (let i = 0; i < selDisColArr.length; i++) {
-                    if (i != 0) {
+                    if (i !== 0) {
                         newDisplay += ", "
                         newSQL += ", "
                     }
@@ -150,7 +150,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 newSQL += " WHERE "
 
                 for (let i = 0; i < disColArr.length; i++) {
-                    if (i != 0) {
+                    if (i !== 0) {
                         newDisplay += " AND "
                         newSQL += " AND "
                     }
@@ -170,7 +170,7 @@ const Select = ({showLogin, toggleLogin}) => {
     }
 
     const submitQuery = () => {
-        if(querySQL == getSqlDefault()) {
+        if(querySQL === getSqlDefault()) {
             setErrorMsg("Fields cannot all be empty")
             return
         }
@@ -201,7 +201,7 @@ const Select = ({showLogin, toggleLogin}) => {
         let display = "";
 
         columnArray.slice(1).forEach( (column) => {
-            if (column[1] == sql) {
+            if (column[1] === sql) {
                 display = column[0];
                 return;
             }

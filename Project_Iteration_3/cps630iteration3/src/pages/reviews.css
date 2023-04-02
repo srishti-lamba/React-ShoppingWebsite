@@ -82,12 +82,8 @@ h2 {
     text-align: center;
 }
 
-    #reviewSearchForm label {
-        font-weight: 600;
-    }
-
-    #reviewSearchForm input {
-        width: calc(100% - 4em);
+    #reviewSearchForm select {
+        width: 100%;
         font-size: 16px;
         padding: 0px 5px;
     }
@@ -193,15 +189,11 @@ h2 {
             }
 
             /* Rating */
-            #reviewCards .card .user-container .reviewInfo div {
-                display: inline;
-            }
-
-            #reviewCards .card .user-container .reviewInfo .star-unchecked {
+            .card .user-container .reviewInfo .star-unchecked {
                 color: lightgrey;
             }
 
-            #reviewCards .card .user-container .reviewInfo .star-checked {
+            .card .user-container .reviewInfo .star-checked {
                 color: orange;
             }
 

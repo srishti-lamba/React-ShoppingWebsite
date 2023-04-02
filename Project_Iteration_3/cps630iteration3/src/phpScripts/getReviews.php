@@ -14,19 +14,12 @@
         else if ( isset($_POST["reviewUserID"]) &&  isset($_POST["reviewItemID"]) &&
                 isset($_POST["reviewTitle"]) && $_POST["reviewTitle"] != "" &&
                 isset($_POST["reviewContent"]) && $_POST["reviewContent"] != "" ) {
-            $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
             writeReview();
         }
 
         // Write Review failed
         else if ( isset($_POST["reviewWrite"]) ) {
-            $_SESSION['review-error'] = "Please fill all fields to submit a review.";
-            $_SESSION['review-searchInfo'] = array($_POST["reviewItemID"], $_POST["reviewItemName"], $_POST["reviewItemURL"]);
-        }
-
-        // Get Items
-        else {
-            getItems();
+            echo "Please fill all fields to submit a review.";
         }
 
         exit;
@@ -36,14 +29,14 @@
     // --- Get Items ---
     // -----------------
 
-    function getItems() {
-        $query = "SELECT item_id, productName FROM Items;";
+    // function getItems() {
+    //     $query = "SELECT item_id, productName FROM Items;";
 
-        $resultSql = sendQuery($query);
-        $resultHtml = getDatalistHTML($resultSql);
+    //     $resultSql = sendQuery($query);
+    //     $resultHtml = getDatalistHTML($resultSql);
 
-        $_SESSION['review-items'] = $resultHtml;
-    }
+    //     $_SESSION['review-items'] = $resultHtml;
+    // }
 
     // -------------------
     // --- Get Reviews ---
@@ -71,7 +64,7 @@
 				{ array_push($row, $data[$i]); }
 			array_push($arr, $row);
         }
-        
+
         echo json_encode($arr);
     }
 
@@ -117,7 +110,7 @@
         }
         catch(mysqli_sql_exception $exception) {
             echo("<script>console.log(`Error on getReviews.php: $conn->error`)</script>");
-            $_SESSION['review-error'] = $conn->error;
+            //$_SESSION['review-error'] = $conn->error;
             exit;
         }
 
@@ -133,28 +126,28 @@
 
         try {
             $conn->query($query);
-            $_SESSION['review-success'] = true;
+            //$_SESSION['review-success'] = true;
         }
         catch(mysqli_sql_exception $exception) {
             echo("<script>console.log(`Error on getReviews.php: $conn->error`)</script>");
-            $_SESSION['review-error'] = $conn->error;
+            //$_SESSION['review-error'] = $conn->error;
             exit;
         }
 
         return $resultSql;
     }
 
-    function getDatalistHTML($resultSql) {
-        $resultHtml = "";
+    // function getDatalistHTML($resultSql) {
+    //     $resultHtml = "";
 
-        while ( $row = $resultSql->fetch_array() ) {
+    //     while ( $row = $resultSql->fetch_array() ) {
 
-            $id = $row['item_id'];
-            $name = $row['productName'];
+    //         $id = $row['item_id'];
+    //         $name = $row['productName'];
 
-            $resultHtml .= "<option value='$name'>";
-        }
+    //         $resultHtml .= "<option value='$name'>";
+    //     }
 
-        return $resultHtml;
-    }
+    //     return $resultHtml;
+    // }
 ?>

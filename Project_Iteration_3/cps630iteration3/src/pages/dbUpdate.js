@@ -80,7 +80,7 @@ const Update = ({showLogin, toggleLogin}) => {
 
     // Update query
     function updateQuery() {
-        if (columnArray != "") {
+        if (columnArray !== "") {
 
             let newDisplay = getDisplayDefault()
             let newSQL = getSqlDefault() 
@@ -97,7 +97,7 @@ const Update = ({showLogin, toggleLogin}) => {
                 let value = queryColInputArr[i].querySelector(":scope > input").value
 
                 // Getting used columns
-                if (value != "") {
+                if (value !== "") {
                     disColArr.push(dis);
                     sqlColArr.push(sql);
                     valArr.push(value);
@@ -110,7 +110,7 @@ const Update = ({showLogin, toggleLogin}) => {
                 newSQL += " SET ";
 
                 for (let i = 0; i < disColArr.length; i++) {
-                    if (i != 0) {
+                    if (i !== 0) {
                         newDisplay += ", ";
                         newSQL += ", ";
                     }
@@ -132,7 +132,7 @@ const Update = ({showLogin, toggleLogin}) => {
                     let comp = queryColCondArr[i].querySelector(`:scope .queryColumnBtn input[name='queryColumnBtn-${sql}']:checked + label`).innerHTML
 
                     // Getting used columns
-                    if (value != "") {
+                    if (value !== "") {
                         conDisColArr.push(dis);
                         conSqlColArr.push(sql);
                         conValArr.push(value);
@@ -146,7 +146,7 @@ const Update = ({showLogin, toggleLogin}) => {
                     newSQL += " WHERE ";
 
                     for (let i = 0; i < conDisColArr.length; i++) {
-                        if (i != 0) {
+                        if (i !== 0) {
                             newDisplay += " AND ";
                             newSQL += " AND ";
                         }
