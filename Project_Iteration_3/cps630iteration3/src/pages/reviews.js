@@ -27,28 +27,9 @@ const Reviews = ({showLogin, toggleLogin}) => {
     useEffect(() => {
         setupDatabase()
         getItemNames()
-    }, [])
-
-    // Setup document
-    useEffect(() => {
-
-        // Page height
-        setPageHeight();
-
-        // Form input enter
-        ["keypress", "keydown", "keyup"].map( eventName => {
-            
-            document.querySelectorAll("#writeReviewForm input")[0].addEventListener(eventName, (e) => {
-                if (e.keyCode == 13) {
-                    e.preventDefault()
-                }
-            });
-        });
-
-        // Star rating
+        setPageHeight()
         makeStarsGrey()
         makeStarsNotGreyOnChange()
-
     }, [])
 
     // -------------------
@@ -160,11 +141,14 @@ const Reviews = ({showLogin, toggleLogin}) => {
     // ------------
 
     function showElements(show) {
-        let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
+        let elemArr = ["reviewItem", "reviewCards"]
         let display = (show === true ? "block" : "none")
         
         // Show / Hide elments
         elemArr.map( elem => document.getElementById(elem).style.display = display )
+
+        // Show Write Review Form only if logged in
+        if (user !== null) document.getElementById("writeReviewForm").style.display = display
     }
 
     function showSuccessMsg(show) {
@@ -254,8 +238,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </article>
 
                 {/*--- Search ---*/}
-                <form id="emptyForm" ></form>
-                <form id="reviewSearchForm" className="box">
+                <div id="reviewSearchForm" className="box">
                     <select className="searchItemList" id="reviewSearch" defaultValue={"select"} onChange={e => {handleSearch(e);}}>
                         <option value="select" disabled hidden>Select item to search</option>
                         {items.map((item, i) => {
@@ -266,7 +249,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                             )
                         })}
                     </select>
-                </form>
+                </div>
 
                 {/*--- Result ---*/}
                 <div id="resultMsg" className="box">
@@ -316,7 +299,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 </div>  
 
                 {/*--- Write Cards ---*/}
-                <form id="writeReviewForm">
+                <div id="writeReviewForm">
                     <div className="box">
                         <h4>WRITE A REVIEW</h4>
                         <input id="reviewUserID" type="text" name="reviewUserID"/>
@@ -357,7 +340,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
                     <button className="submit" name="reviewWrite" value="reviewWrite" onClick={submitReviewWrite}>Submit</button> 
                     </div> 
-                </form>
+                </div>
             </div>
         </>
     )

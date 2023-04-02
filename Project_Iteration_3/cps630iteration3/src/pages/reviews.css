@@ -76,11 +76,11 @@ h2 {
 /* -------------- */
 
 #reviewSearchForm {
-    padding: 10px;
-    margin: 30px auto;
-    width: 50%;
-    text-align: center;
-    display: block;
+    padding: 10px !important;
+    margin: 30px auto !important;
+    width: 50% !important;
+    text-align: center !important;
+    display: block !important;
 }
 
     #reviewSearchForm select {
@@ -216,7 +216,7 @@ h2 {
 
 #writeReviewForm {
     padding-bottom: 30px;
-    /* display: none; */
+    display: none;
     background-color: transparent;
     box-shadow: none;
     width: 100%;
