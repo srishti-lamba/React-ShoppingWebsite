@@ -16,16 +16,19 @@
                 $result = $conn->query($query);
 
                 while($row = $result->fetch_assoc()) {
-                    array_push($output, json_encode($row));
+                    $rowArr = array();
+                    foreach($row as $key => $value) // each key in each row
+                        { $rowArr[$key] = $value; }
+
+                    array_push($output, $rowArr);
                 }
 
-                return json_encode($output);
+                return $output;
             } 
             catch (mysqli_sql_exception $e)
                 { echo("<script>console.log(`Error on getProducts.php: $conn->error`)</script>"); }
         }
 
         $result = getItems();
-        // echo json_encode($result);
-        echo $result;
+        echo json_encode($result);
 ?>

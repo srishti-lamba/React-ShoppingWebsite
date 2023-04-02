@@ -11,22 +11,23 @@ import { setPageHeight} from '../functions/dbMaintain.js';
 
 const Reviews = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
-    const [searchItem, setSearchItem] = useState("");
+
+    const [searchItemID, setSearchItemID] = useState("");
+    const [searchItemName, setSearchItemName] = useState("");
+    const [searchItemImg, setSearchItemImg] = useState("");
 
     const [reviewUserID, setReviewUserID] = useState("");
     const [reviewItemID, setReviewItemID] = useState("");
     const [reviewTitle, setReviewTitle] = useState("");
     const [reviewContent, setReviewContent] = useState("");
-    const [source, setSource] = useState("");
     const [items, setItems] = useState([])
-    const [sourceImg, setSourceImg] = useState("");
     const [reviews, setReviews] = useState([])
 
     const [selectedItemName, setSelectedItemName] = useState("");
 
     {user !== null && toggleLogin(false)}
 
-    // Setup database
+    // Get item names
     useEffect(() => {
         setupDatabase();
 
@@ -35,8 +36,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
         .then(res => {
             let products = res.data
             setItems(products)
-            setSource(JSON.parse(products).productName)
-            setItems.append()
         })
         .catch(err => {
             console.log(err)
@@ -98,7 +97,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
     function submitReviewSearch(data = "") {
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
         let fdata = new FormData();
-        fdata.append('searchItem', searchItem)
+        fdata.append('searchItem', searchItemName)
         axios.post(url, fdata)
         .then(res=> {
             setReviews(res.data)
@@ -135,7 +134,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
         // Show / hide other form elements depending on if item is selected
         let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
         
-        if (searchItem.length > 0) {
+        if (searchItemName.length > 0) {
             elemArr.map( elem => {
                 document.getElementById(elem).style.display = "block"
             })
@@ -146,17 +145,18 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 document.getElementById(elem).style.display = "none"
             })
         }
-    }, [searchItem])
+    }, [searchItemName])
 
     function handleSearch(e) {
-        setSource(e.target.value)
+        setSearchItemName(e.target.value)
         for (var i=0; i < items.length; i++) {
-            if (e.target.value == JSON.parse(items[i]).productName) {
-                setSourceImg(JSON.parse(items[i]).image_url)
+            if (e.target.value == items[i].productName) {
+                setSearchItemID(items[i].item_id)
+                setSearchItemName(items[i].productName)
+                setSearchItemImg(items[i].image_url)
             }
         }
         document.getElementById("productImg").style.visibility = "visible"
-        setSearchItem(e.target.value)
     }
 
     // ------------------------
@@ -224,7 +224,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                         {items.map((item, i) => {
                             return(
                                 <option key={`searchItemList-${i}`}>
-                                    {JSON.parse(item).productName}
+                                    {item.productName}
                                 </option>
                             )
                         })}
@@ -239,8 +239,8 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
                 {/*--- Item ---*/}
                 <div id="reviewItem" className="box">
-                    <h4>{source}</h4>
-                    <img id="productImg" src={sourceImg} alt="product"/>
+                    <h4>{searchItemName}</h4>
+                    <img id="productImg" src={searchItemImg} alt="product"/>
                 </div>
 
                 {/*--- Review Cards ---*/}
