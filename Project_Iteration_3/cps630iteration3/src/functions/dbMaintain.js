@@ -46,6 +46,7 @@ export function getDbColumns(tableName) {
                 ["Delivery Time", "deliveryTime"],
                 ["Price", "totalPrice"],
                 ["Payment Code", "paymentCode"],
+                ["Salt", "Salt"],
                 ["User ID", "userId"],
                 ["Trip ID", "tripId"],
                 ["Receipt ID", "receiptId"],

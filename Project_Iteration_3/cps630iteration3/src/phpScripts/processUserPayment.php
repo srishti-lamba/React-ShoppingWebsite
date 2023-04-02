@@ -51,7 +51,10 @@
         header("HTTP/1.1 201 $orderId");
     }
 
-
+    function randomSalt() {
+        $salt = bin2hex(random_bytes(3));
+        return $salt;
+    }
 
     function addTripAndOrderToDB($warehouse, $destination, $distance, $date, $deliveryTime, $total, $cardNumber, $user) {
         $servername = "localhost";
@@ -87,8 +90,11 @@
             $getTripIdQueryResult = $conn->query($getTripIdQuery);
             $tripId = $getTripIdQueryResult->fetch_assoc()['LAST_INSERT_ID()'];
 
-            $insertOrderQuery = "INSERT INTO Orders (deliveryDate, deliveryTime, totalPrice, paymentCode, userId, tripId)
-                                VALUES('$date', '$deliveryTime', $total, $cardNumber, $user, $tripId);";
+            $salt = randomSalt();
+            $encryptedCardNumber = md5($cardNumber.$salt);
+
+            $insertOrderQuery = "INSERT INTO Orders (deliveryDate, deliveryTime, totalPrice, paymentCode, userId, tripId, salt)
+                                VALUES('$date', '$deliveryTime', $total, '$encryptedCardNumber', $user, $tripId, '$salt');";
 
             $conn->query($insertOrderQuery);
 
