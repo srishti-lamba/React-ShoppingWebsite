@@ -10,29 +10,25 @@ import './reviews.css';
 import { setPageHeight} from '../functions/dbMaintain.js';
 
 const Reviews = ({showLogin, toggleLogin}) => {
+    
     const user = useSelector(selectUser);
 
     const [searchItemID, setSearchItemID] = useState("");
     const [searchItemName, setSearchItemName] = useState("");
     const [searchItemImg, setSearchItemImg] = useState("");
 
-    const [reviewUserID, setReviewUserID] = useState("");
-    const [reviewItemID, setReviewItemID] = useState("");
-    const [reviewTitle, setReviewTitle] = useState("");
-    const [reviewContent, setReviewContent] = useState("");
     const [items, setItems] = useState([])
     const [reviews, setReviews] = useState([])
+    const [showPage, setShowPage] = useState(false)
 
-    const [selectedItemName, setSelectedItemName] = useState("");
-
-    {user !== null && toggleLogin(false)}
+    user !== null && toggleLogin(false)
 
     // Get item names
     useEffect(() => {
         setupDatabase();
 
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getProducts.php"
-        axios.get(`${url}?category=%`)
+        axios.get(url)
         .then(res => {
             let products = res.data
             setItems(products)
@@ -44,6 +40,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     // Setup document
     useEffect(() => {
+
         // Page height
         setPageHeight();
 
@@ -94,13 +91,26 @@ const Reviews = ({showLogin, toggleLogin}) => {
     // --- Submit Form ---
     // -------------------
     
-    function submitReviewSearch(data = "") {
+    function submitReviewSearch() {
+        console.log("submitReviewSearch itemName: " + searchItemName)
+        console.log("submitReviewSearch showPage: " + showPage)
+        
+        if (searchItemName === "") {
+            showElements(showPage)
+            return
+        }
+
+
+        // Get Reviews
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
         let fdata = new FormData();
         fdata.append('searchItem', searchItemName)
         axios.post(url, fdata)
         .then(res=> {
+            console.log("Searched")
             setReviews(res.data)
+            setShowPage(true)
+            showElements(true)
         })
         .catch((err) => {
             //setErrorMsg(err.response.statusText)
@@ -108,18 +118,34 @@ const Reviews = ({showLogin, toggleLogin}) => {
     }
 
     function submitReviewWrite() {
-        if (document.querySelectorAll("input[type='radio'][name='reviewRating']:checked").length === 0 ) {
-            document.getElementById("input[type='radio'][name='reviewRating']").value = 0;
+        let reviewRating = 0
+        if (document.querySelector("input[type='radio'][name='reviewRating']:checked") !== null ) {
+            reviewRating = document.querySelector("input[type='radio'][name='reviewRating']:checked").value
         }
     
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getReviews.php";
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/writeReview.php"
         let fdata = new FormData();
-        fdata.append('reviewUserID', reviewUserID)
-        fdata.append('reviewItemID', reviewItemID)
+
+        let reviewTitle = document.getElementById("reviewTitle").value
+        let reviewContent = document.getElementById("reviewContent").value
+        let oldSearchItemName = searchItemName
+
+        fdata.append('reviewUserID', user.user.id)
+        fdata.append('reviewItemID', searchItemID)
         fdata.append('reviewTitle', reviewTitle)
         fdata.append('reviewContent', reviewContent)
+        fdata.append('reviewRating', reviewContent)
+        fdata.append('reviewRating', reviewRating)
+
+        console.log("Posting Request")
 
         axios.post(url, fdata)
+        .then(res => {
+            console.log("old itemName: " + oldSearchItemName)
+            console.log("current itemName: " + searchItemName)
+            //setSearchItemName(oldSearchItemName)
+            submitReviewSearch()
+        })
         .catch((err) => {
             console.log(err)
             //setErrorMsg(err.response.statusText)
@@ -131,24 +157,10 @@ const Reviews = ({showLogin, toggleLogin}) => {
     // --------------
 
     useEffect(() => {
-        // Show / hide other form elements depending on if item is selected
-        let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
-        
-        if (searchItemName.length > 0) {
-            elemArr.map( elem => {
-                document.getElementById(elem).style.display = "block"
-            })
-            submitReviewSearch()
-        }
-        else {
-            elemArr.map( elem => {
-                document.getElementById(elem).style.display = "none"
-            })
-        }
+        submitReviewSearch()
     }, [searchItemName])
 
     function handleSearch(e) {
-        setSearchItemName(e.target.value)
         for (var i=0; i < items.length; i++) {
             if (e.target.value == items[i].productName) {
                 setSearchItemID(items[i].item_id)
@@ -162,6 +174,25 @@ const Reviews = ({showLogin, toggleLogin}) => {
     // ------------------------
     // --- Fill Information ---
     // ------------------------
+
+    function showElements(show) {
+        let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
+        
+        if (show === true) {
+            // Show elements
+            elemArr.map( elem => {
+                console.log("show")
+                document.getElementById(elem).style.display = "block"
+            })
+        }
+        else {
+            // Hide elements
+            elemArr.map( elem => {
+                console.log("hide")
+                document.getElementById(elem).style.display = "none"
+            })
+        }
+    }
 
     function fillDatalist(data) {
         document.getElementById("searchItemList").html(data);
@@ -219,7 +250,7 @@ const Reviews = ({showLogin, toggleLogin}) => {
                 {/*--- Search ---*/}
                 <form id="emptyForm" ></form>
                 <form id="reviewSearchForm" className="box">
-                    <select className="searchItemList" defaultValue={"select"} onChange={e => {handleSearch(e);}}>
+                    <select className="searchItemList" id="reviewSearch" defaultValue={"select"} onChange={e => {handleSearch(e);}}>
                         <option value="select" disabled hidden>Select item to search</option>
                         {items.map((item, i) => {
                             return(
