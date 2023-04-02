@@ -125,7 +125,7 @@ export function getDbRows(columnArray, setTableRows) {
     .then(()  => {
         
         // Get Rows
-        let tableName = columnArray[0][2]
+        let tableName = columnArray[0][1].toLowerCase()
         const urlRow = `http://localhost/CPS630-Project-Iteration3-PHPScripts/getTableRows.php?table=${tableName}`;
         axios.get(urlRow)
         .then(res  => {
@@ -202,7 +202,7 @@ export function resetPage(setTable, setColumnArray, setTableRows, setQuery, setQ
 }
 
 export function updateQueryDiv(queryDisplay, getDisplayDefault) {
-    if (queryDisplay.length > 1) {
+    if (queryDisplay.length > 0) {
         document.getElementById("queryDisplay").innerHTML = queryDisplay
         if (queryDisplay !== getDisplayDefault()) {
             document.getElementById("querySubmitForm").style.display = "block"
@@ -236,6 +236,13 @@ export function showErrorMsg(errorMsg) {
     }
 }
 
-// export function functionName(parameter) {
-//     return result;
-// }
+export function resetResults(successMsg, errorMsg, setSuccessMsg, setErrorMsg) {
+    if (successMsg.length > 0 || errorMsg.length > 0) {
+        setSuccessMsg("")
+        setErrorMsg("")
+    }
+
+    ["#main-title + .box", "#successMsg", "#errorMsg"].map(
+        (formName) => document.querySelector(formName).style.display = "none"
+    )
+}

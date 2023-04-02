@@ -4,7 +4,11 @@ import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { getDbColumns, getDbRows, setPageHeight, setQuery, updateQueryDiv, showPage, showSuccessMsg, showErrorMsg } from '../functions/dbMaintain.js';
+import { 
+        getDbColumns, getDbRows, setPageHeight, 
+        setQuery, updateQueryDiv, 
+        showPage, showSuccessMsg, showErrorMsg, resetResults 
+    } from '../functions/dbMaintain.js';
 
 const Select = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser);
@@ -27,7 +31,7 @@ const Select = ({showLogin, toggleLogin}) => {
     useEffect(() => {
         if (table != null) {
 
-            resetResults()
+            resetResults(successMsg, errorMsg, setSuccessMsg, setErrorMsg)
             resetTable()
             if ((successMsg != "") && (errorMsg != "")) resetPage()
 
@@ -44,6 +48,23 @@ const Select = ({showLogin, toggleLogin}) => {
     useEffect (() => {
         showPage(columnArray, getDisplayDefault, getSqlDefault, setQueryDisplay, setQuerySQL)
     }, [columnArray])
+
+    // Result Table
+    useEffect (() => {
+        if ((resultTableRows.length > 0) && (resultTableColumns.length > 0)) {
+            document.getElementById("resultTableView").style.display = "block"
+        }
+    }, [resultTableRows])
+
+    // Success Message
+    useEffect (() => {
+        showSuccessMsg(successMsg)
+    }, [successMsg])
+
+    // Error
+    useEffect (() => {
+        showErrorMsg(errorMsg)
+    }, [errorMsg])
 
     // -------------
     // --- Query ---
@@ -201,21 +222,8 @@ const Select = ({showLogin, toggleLogin}) => {
     }
 
     function hidePage() {
-        setColumnArray([]);
-
         ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm", "inputColumns"].map(
             (formName) => document.getElementById(formName).style.display = "none"
-        )
-    }
-
-    function resetResults() {
-        if (successMsg.length > 0 || errorMsg.length > 0) {
-            setSuccessMsg("")
-            setErrorMsg("")
-        }
-
-        ["#main-title + .box", "#successMsg", "#errorMsg"].map(
-            (formName) => document.querySelector(formName).style.display = "none"
         )
     }
 
@@ -226,23 +234,6 @@ const Select = ({showLogin, toggleLogin}) => {
         }
         document.getElementById("resultTableView").style.display = "none"
     }
-
-    // Result Table
-    useEffect (() => {
-        if ((resultTableRows.length > 1) && (resultTableColumns.length > 1) && (columnArray.length < 1)) {
-            document.getElementById("resultTableView").style.display = "block"
-        }
-    }, [resultTableRows])
-
-    // Success Message
-    useEffect (() => {
-        showSuccessMsg(successMsg)
-    }, [successMsg])
-
-    // Error
-    useEffect (() => {
-        showErrorMsg(errorMsg)
-    }, [errorMsg])
 
     user !== null && toggleLogin(false)
     

@@ -3,8 +3,12 @@ import NavBar from "../components/navBar";
 import Login from "../components/login";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { getDbColumns, getDbRows, setPageHeight, setQuery, submitQuery, updateQueryDiv, resetPage, showPage, showSuccessMsg, showErrorMsg } from '../functions/dbMaintain.js';
+import { 
+        getDbColumns, getDbRows, setPageHeight, 
+        setQuery, submitQuery, updateQueryDiv, 
+        resetPage, showPage, 
+        showSuccessMsg, showErrorMsg, resetResults 
+    } from '../functions/dbMaintain.js';
 
 const Update = ({showLogin, toggleLogin}) => {
     const user = useSelector(selectUser)
@@ -25,7 +29,7 @@ const Update = ({showLogin, toggleLogin}) => {
     useEffect(() => {
         if (table != null) {
 
-            resetResults()
+            resetResults(successMsg, errorMsg, setSuccessMsg, setErrorMsg)
 
             // Columns
             let newColumnArray = getDbColumns(table)
@@ -40,6 +44,16 @@ const Update = ({showLogin, toggleLogin}) => {
     useEffect (() => {
         showPage(columnArray, getDisplayDefault, getSqlDefault, setQueryDisplay, setQuerySQL)
     }, [columnArray])
+
+    // Success Message
+    useEffect (() => {
+        showSuccessMsg(successMsg)
+    }, [successMsg])
+
+    // Error
+    useEffect (() => {
+        showErrorMsg(errorMsg)
+    }, [errorMsg])
 
     // -------------
     // --- Query ---
@@ -56,6 +70,12 @@ const Update = ({showLogin, toggleLogin}) => {
 
     function getSqlDefault() {
         return `UPDATE ${columnArray[0][1]}`
+    }
+
+    function runQueryClicked () {
+        submitQuery (querySQL, setQuery, setQuerySQL, setQueryDisplay, getSqlDefault, 
+            setErrorMsg, setSuccessMsg, 
+            setTable, setColumnArray, setTableRows, resetPage)
     }
 
     // Update query
@@ -142,31 +162,6 @@ const Update = ({showLogin, toggleLogin}) => {
             }            
         }
     }
-
-    function runQueryClicked () {
-        submitQuery (querySQL, setQuery, setQuerySQL, setQueryDisplay, getSqlDefault, setErrorMsg, setSuccessMsg, setTable, setColumnArray, setTableRows, resetPage)
-    }
-
-    function resetResults() {
-        if (successMsg.length > 0 || errorMsg.length > 0) {
-            setSuccessMsg("")
-            setErrorMsg("")
-        }
-
-        ["#main-title + .box", "#successMsg", "#errorMsg"].map(
-            (formName) => document.querySelector(formName).style.display = "none"
-        )
-    }
-
-    // Success Message
-    useEffect (() => {
-        showSuccessMsg(successMsg)
-    }, [successMsg])
-
-    // Error
-    useEffect (() => {
-        showErrorMsg(errorMsg)
-    }, [errorMsg])
 
     user !== null && toggleLogin(false)
     
