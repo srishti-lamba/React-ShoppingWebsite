@@ -156,7 +156,7 @@ const Home = ({showLogin, toggleLogin}) => {
                     <h2 className="center" id="productH2">{categoryDisplay}</h2>
                     <div className="products-flex">
                         {products.map(product => {
-                            const obj = JSON.parse(product)
+                            const obj = product
                             return( 
                             <ProductCard 
                                 key={obj['item_id']}
