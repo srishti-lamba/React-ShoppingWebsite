@@ -25,17 +25,8 @@ const Reviews = ({showLogin, toggleLogin}) => {
 
     // Get item names
     useEffect(() => {
-        setupDatabase();
-
-        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getProducts.php"
-        axios.get(url)
-        .then(res => {
-            let products = res.data
-            setItems(products)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        setupDatabase()
+        getItemNames()
     }, [])
 
     // Setup document
@@ -59,42 +50,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
         makeStarsNotGreyOnChange()
 
     }, [])
-
-    function makeStarsGrey() {
-        let starLabel = document.querySelectorAll("#reviewStars label")
-        starLabel.forEach( star => star.style.color = "lightgray")
-    }
-
-    function makeStarsNotGreyOnChange() {
-        let starLabel = document.querySelectorAll("#reviewStars label")
-        let starBtn = document.querySelectorAll("input[type='radio'][name='reviewRating']")
-        
-        starBtn.forEach( star => {
-            star.addEventListener("change", () => {
-                let value = star.value;
-                document.getElementById("reviewStarsText").innerHTML = `${value} stars`
-    
-                starLabel.forEach( star => star.style.color = "")
-            })
-        } )
-    }
-
-    // Setup Database tables
-    function setupDatabase() {
-        let fileArray = ["CreateAndPopulateUsersTable.php", 
-                          "CreateAndPopulateItemsTable.php",
-                          "CreateAndPopulateReviewsTable.php"
-                        ]
-        
-        fileArray.forEach((fileName) => {
-            let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/" + fileName
-            let fdata = new FormData();
-            axios.post(url, fdata)
-            .catch((err) => {
-                console.log(err)
-            })
-        })
-    }
 
     // -------------------
     // --- Submit Form ---
@@ -200,9 +155,9 @@ const Reviews = ({showLogin, toggleLogin}) => {
         document.getElementById("productImg").style.visibility = "visible"
     }
 
-    // ------------------------
-    // --- Fill Information ---
-    // ------------------------
+    // ------------
+    // --- Show ---
+    // ------------
 
     function showElements(show) {
         let elemArr = ["reviewItem", "reviewCards", "writeReviewForm"]
@@ -210,30 +165,6 @@ const Reviews = ({showLogin, toggleLogin}) => {
         
         // Show / Hide elments
         elemArr.map( elem => document.getElementById(elem).style.display = display )
-    }
-
-    function fillDatalist(data) {
-        document.getElementById("searchItemList").html(data);
-    }
-
-    function fillItemInfo(itemName, itemURL) {
-        document.getElementById("reviewItem").css("display", "block");
-        document.getElementById("reviewItem").getElementsByTagName("h4").html(itemName);
-        document.getElementById("reviewItem").getElementsByTagName("img").attr("src", itemURL);
-    }
-
-    function fillReviews(data) {        
-        document.getElementById("reviewCards").html(data);
-    }
-
-    function showWriteReview(userID, itemID, itemName, itemURL) {
-
-        document.getElementById("reviewUserID").value(userID);
-        document.getElementById("reviewItemID").value(itemID);
-        document.getElementById("reviewItemName").value(itemName);
-        document.getElementById("reviewItemURL").value(itemURL);
-
-        document.getElementById("writeReviewForm").css("display", "block");
     }
 
     function showSuccessMsg(show) {
@@ -247,6 +178,62 @@ const Reviews = ({showLogin, toggleLogin}) => {
         document.getElementById("resultMsg").style.display = display
         document.getElementById("errorMsg").style.display = display
     }
+
+    // ------------------------
+    // --- Helper Functions ---
+    // ------------------------
+
+    // Setup Database tables
+    function setupDatabase() {
+        let fileArray = ["CreateAndPopulateUsersTable.php", 
+                          "CreateAndPopulateItemsTable.php",
+                          "CreateAndPopulateReviewsTable.php"
+                        ]
+        
+        fileArray.forEach((fileName) => {
+            let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/" + fileName
+            let fdata = new FormData();
+            axios.post(url, fdata)
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+    }
+
+    function getItemNames() {
+        const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/getProducts.php"
+        axios.get(url)
+        .then(res => {
+            let products = res.data
+            setItems(products)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    function makeStarsGrey() {
+        let starLabel = document.querySelectorAll("#reviewStars label")
+        starLabel.forEach( star => star.style.color = "lightgray")
+    }
+
+    function makeStarsNotGreyOnChange() {
+        let starLabel = document.querySelectorAll("#reviewStars label")
+        let starBtn = document.querySelectorAll("input[type='radio'][name='reviewRating']")
+        
+        starBtn.forEach( star => {
+            star.addEventListener("change", () => {
+                let value = star.value;
+                document.getElementById("reviewStarsText").innerHTML = `${value} stars`
+    
+                starLabel.forEach( star => star.style.color = "")
+            })
+        } )
+    }
+
+    // ------------
+    // --- Show ---
+    // ------------
     
     return (
         <>

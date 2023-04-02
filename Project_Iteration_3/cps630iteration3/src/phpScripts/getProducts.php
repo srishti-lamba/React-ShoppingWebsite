@@ -1,7 +1,7 @@
 <?php
         
         header('Access-Control-Allow-Origin: *');
-        function getItems() {
+        function getItems($category) {
 
             $servername = "localhost";
             $username = "root";
@@ -9,7 +9,12 @@
             $dbname = "cps630";
         
             $conn = new mysqli($servername, $username, $password, $dbname);
-            $query = "SELECT item_id, productName, price, category, image_url FROM Items";
+
+            $query = "";
+            if ($category == "")
+                {$query = "SELECT item_id, productName, price, category, image_url FROM Items";}
+            else
+                {$query = "SELECT item_id, productName, price, category, image_url FROM Items WHERE category LIKE " . "'". $category . "'";}
 
             try{
                 $output = array();
@@ -29,6 +34,10 @@
                 { echo("<script>console.log(`Error on getProducts.php: $conn->error`)</script>"); }
         }
 
-        $result = getItems();
+        $category = "";
+        if (isset($_REQUEST['category'])) 
+            {$category = $_REQUEST['category'];}
+
+        $result = getItems($category);
         echo json_encode($result);
 ?>
