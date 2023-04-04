@@ -1,6 +1,6 @@
 <?php
     header('Access-Control-Allow-Origin: *');
-    //include_once('./createAndPopulateCoupons.php');
+    include_once('./createAndPopulateCoupons.php');
 
     function getDiscount($coupon){
         $servername = "localhost";
