@@ -48,22 +48,22 @@ const AboutUs = ({showLogin, toggleLogin}) => {
                     <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Raymond Floro</h2>
-                        <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
+                        <p className="bio center">Raymond is the Co-Founder of Smart Customer Services' Furniture Department. Over the past 10 years, he specializes in Living Room furniture.</p>
                     </div>
                     <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Roberto Mariani</h2>
-                        <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
+                        <p className="bio center">Roberto is the Co-Founder of Smart Customer Services' Furniture Department. Over the past 10 years, he specializes in Bedroom and Kid's Room furniture.</p>
                     </div>
                     <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Srishti Lamba</h2>
-                        <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
+                        <p className="bio center">Srishti is the Co-Founder of Smart Customer Services' Furniture Department. Over the past 10 years, she specializes in Dining Room furniture.</p>
                     </div>
                     <div className="aboutUsCard">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" className="img"></img>
                         <h2 className="center">Vanessa Landayan</h2>
-                        <p className="bio center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt cupiditate quisquam dicta nisi vero sunt, vitae id commodi asperiores dolore nihil cumque animi. Quam, similique necessitatibus? Excepturi aperiam sequi architecto?</p>
+                        <p className="bio center">Vanessa is the Co-Founder of Smart Customer Services' Furniture Department. Over the past 10 years, she specializes in Office Room furniture.</p>
                     </div>
                 </main>
             </div>
