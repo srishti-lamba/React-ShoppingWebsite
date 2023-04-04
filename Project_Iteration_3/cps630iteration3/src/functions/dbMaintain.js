@@ -142,10 +142,15 @@ export function getDbRows(columnArray, setTableRows) {
 
 export function setPageHeight() {
     function setMinHeight() {
-        let navHeight = document.getElementsByTagName("header")[0].offsetHeight
-        if(navHeight !== null) {
-            document.getElementById("main-image").style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
-            document.getElementsByTagName("body")[0].style.height = (document.documentElement.clientHeight - 1) + "px"
+        let navElem = document.getElementsByTagName("header")[0]
+        let imageElem = document.getElementById("main-image")
+        let bodyElem = document.getElementsByTagName("body")[0]
+
+        // Make sure elements exist
+        if((navElem !== null) && (imageElem !== null) && (bodyElem !== null)) {
+            let navHeight = navElem.offsetHeight
+            imageElem.style.minHeight = (document.documentElement.clientHeight - navHeight) + "px"
+            bodyElem.style.height = (document.documentElement.clientHeight - 1) + "px"
         } 
     };
 
