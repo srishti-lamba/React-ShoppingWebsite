@@ -154,15 +154,17 @@ const Home = ({showLogin, toggleLogin}) => {
                     <div className="products-flex">
                         {products.length > 0 && products.map(product => {
                             const obj = product
-                            return( 
-                            <ProductCard 
-                                key={obj['item_id']}
-                                product_id={Number(obj['item_id'])}
-                                productName={obj['productName']}
-                                price={obj['price']}
-                                category={obj['category']}
-                                image_url={obj['image_url']}
-                            />)
+                            if (obj['category'] === categoryDisplay) {
+                                return( 
+                                <ProductCard 
+                                    key={obj['item_id']}
+                                    product_id={Number(obj['item_id'])}
+                                    productName={obj['productName']}
+                                    price={obj['price']}
+                                    category={obj['category']}
+                                    image_url={obj['image_url']}
+                                />)
+                            }
                         })}
 
 
