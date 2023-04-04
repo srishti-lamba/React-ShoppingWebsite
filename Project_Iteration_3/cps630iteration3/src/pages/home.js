@@ -96,20 +96,15 @@ const Home = ({showLogin, toggleLogin}) => {
             setShoppingCart(JSON.parse(shoppingCart))
             setTotal(Number(total))
         }
-
-        setupDatabase()
     }, [])
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log('hello')
             dispatch(resetOrderId());
         }, 30000)
 
         return () => clearTimeout(timer);
     }, [])
-
-
 
     const checkOutOrder = () => {
         if(shoppingCart.length === 0) {
@@ -123,28 +118,6 @@ const Home = ({showLogin, toggleLogin}) => {
         setShoppingCart([])
         localStorage.removeItem("shoppingCart")
         localStorage.removeItem("shoppingCartTotal")
-    }
-
-    // Setup Database tables
-    function setupDatabase() {
-        let fileArray = ["CreateAndPopulateUsersTable.php", 
-                          "CreateAndPopulateItemsTable.php",
-                          "CreateOrderTable.php",
-                          "CreateAndPopulateLocationsTable.php",
-                          "CreateAndPopulateTruckTable.php",
-                          "createAndPopulateCoupons.php",
-                          "CreateTripTable.php",
-                          "CreateAndPopulateReviewsTable.php"
-                        ]
-        
-        fileArray.forEach((fileName) => {
-            let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/" + fileName
-            let fdata = new FormData();
-            axios.post(url, fdata)
-            .catch((err) => {
-                console.log(err)
-            })
-        })
     }
     
     return (
