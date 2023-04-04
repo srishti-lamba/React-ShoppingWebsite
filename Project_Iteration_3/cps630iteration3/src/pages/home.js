@@ -96,6 +96,8 @@ const Home = ({showLogin, toggleLogin}) => {
             setShoppingCart(JSON.parse(shoppingCart))
             setTotal(Number(total))
         }
+
+        setupDatabase()
     }, [])
 
     useEffect(() => {
@@ -121,6 +123,28 @@ const Home = ({showLogin, toggleLogin}) => {
         setShoppingCart([])
         localStorage.removeItem("shoppingCart")
         localStorage.removeItem("shoppingCartTotal")
+    }
+
+    // Setup Database tables
+    function setupDatabase() {
+        let fileArray = ["CreateAndPopulateUsersTable.php", 
+                          "CreateAndPopulateItemsTable.php",
+                          "CreateOrderTable.php",
+                          "CreateAndPopulateLocationsTable.php",
+                          "CreateAndPopulateTruckTable.php",
+                          "createAndPopulateCoupons.php",
+                          "CreateTripTable.php",
+                          "CreateAndPopulateReviewsTable.php"
+                        ]
+        
+        fileArray.forEach((fileName) => {
+            let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/" + fileName
+            let fdata = new FormData();
+            axios.post(url, fdata)
+            .catch((err) => {
+                console.log(err)
+            })
+        })
     }
     
     return (
@@ -155,7 +179,7 @@ const Home = ({showLogin, toggleLogin}) => {
                 <div className="products">
                     <h2 className="center" id="productH2">{categoryDisplay}</h2>
                     <div className="products-flex">
-                        {products.map(product => {
+                        {products.length > 0 && products.map(product => {
                             const obj = product
                             return( 
                             <ProductCard 
@@ -194,7 +218,7 @@ const Home = ({showLogin, toggleLogin}) => {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colSpan="2" style={{"text-align": "left"}}>Total</td>
+                                        <td colSpan="2" style={{"textAlign": "left"}}>Total</td>
                                         <td id="total" name="total">${total}</td>
                                     </tr>
                                 </tfoot>
