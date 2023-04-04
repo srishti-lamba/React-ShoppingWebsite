@@ -160,7 +160,7 @@ const Home = ({showLogin, toggleLogin}) => {
                                     key={obj['item_id']}
                                     product_id={Number(obj['item_id'])}
                                     productName={obj['productName']}
-                                    price={obj['price']}
+                                    price={obj['price'].includes(".") ? obj['price'] : obj['price'].concat(".00")}
                                     category={obj['category']}
                                     image_url={obj['image_url']}
                                 />)
@@ -186,7 +186,7 @@ const Home = ({showLogin, toggleLogin}) => {
                                             <tr key={item.item_id}>
                                                 <td>{item.productName}</td>
                                                 <td>{item.quantity}</td>
-                                                <td>${item.price}</td>
+                                                <td>${String(item.price).includes(".") ? item.price : String(item.price).concat(".00")}</td>
                                             </tr>
                                         )
                                     })}

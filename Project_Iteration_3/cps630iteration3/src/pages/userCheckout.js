@@ -233,7 +233,7 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                             <tr key={item.item_id}>
                                                 <td>{item.productName}</td>
                                                 <td>{item.quantity}</td>
-                                                <td>{item.price}</td>
+                                                <td>${String(item.price).includes(".") ? item.price : String(item.price).concat(".00")}</td>
                                             </tr>
                                         )
                                     })}
@@ -246,7 +246,7 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                         </tr>) 
                                     :<tr>
                                         <td colSpan="2">Total</td>
-                                        <td id="total">{totalPrice}</td>
+                                        <td id="total">${totalPrice}</td>
                                     </tr>  
                                     }
                                     {discountedTotal ? (<tr><td colSpan="2" style={{color:'green'}}>Total</td><td id="total" style={{color:'green'}}>{discountedTotal}</td></tr>): null}
