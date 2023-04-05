@@ -65,6 +65,9 @@ const SignUp = ({toggleLogin, showLogin}) => {
             <NavBar toggleLogin={toggleLogin}/>
             {showLogin ? <Login setShowLogin={toggleLogin}/> : <></>}
             {showLogin ? <div onClick={() => toggleLogin(false)} className='overlay'></div> : <></>}
+
+            <h3 className="advertisement">SIGN UP TODAY AND GET 10% OFF YOUR FIRST ORDER</h3>
+
             <main className="reg-container">
                 {errorMsg.length > 0  && <p style={{color:'red', textAlign: 'center'}}>{errorMsg}</p> }
                 <h1 className="registration-h1">Registration</h1>
