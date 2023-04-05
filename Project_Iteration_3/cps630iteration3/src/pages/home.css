@@ -214,3 +214,24 @@ h1, h2 {
         justify-content: center;
     }
 }
+
+.advertisement {
+    text-align: center;
+    padding: 5px;
+    animation: color-change 5s infinite;
+  }
+  
+  @keyframes color-change {
+    0% { 
+        color: white; 
+        background-color: #8D7B68;
+    }
+    50% { 
+        color: #8D7B68; 
+        background-color: white;
+    }
+    100% { 
+        color: white; 
+        background-color: #8D7B68;
+    }
+  }

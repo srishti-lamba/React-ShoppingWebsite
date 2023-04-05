@@ -133,6 +133,8 @@ const Home = ({showLogin, toggleLogin}) => {
                 </article>
             </div>
 
+            <h3 className="advertisement">SPRING SALE: USE CODE "SPRING20" TO GET 20% OFF YOUR ENTIRE ORDER</h3>
+
             {orderId !== null && <p className="orderNotification">Your order id is {orderId.orderId}, use this number to track your order!</p>}
 
             <div className="product-container">
