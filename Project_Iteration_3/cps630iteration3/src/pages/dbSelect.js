@@ -225,6 +225,14 @@ const Select = ({showLogin, toggleLogin}) => {
         ["inputValuesForm", "queryDiv", "tableView", "querySubmitForm", "inputColumns"].map(
             (formName) => document.getElementById(formName).style.display = "none"
         )
+
+        // Reset tableName
+        document.getElementById("tableName").value = "select"
+        setTable(null)
+
+        // Reset columnSelect
+        let inputColArr = document.querySelectorAll("#inputColumnsBtn input[type='checkbox']")
+        inputColArr.forEach( (colBtn) =>  colBtn.checked = false)
     }
 
     function resetTable() {
@@ -258,7 +266,7 @@ const Select = ({showLogin, toggleLogin}) => {
                     <div id="successMsg" key={"successMsg"}>{successMsg}</div>
                 </div>
                 <div id="resultTableView" className="box">
-                    {resultTableRows.length > 0 ? <p key={"trName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
+                    {resultTableRows.length > 0 && table !== null ? <p key={"trName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
                     <table className="db-table">
                         <thead>
                             <tr>
@@ -354,7 +362,7 @@ const Select = ({showLogin, toggleLogin}) => {
                 </div>
 
                 <div id="tableView" className="box">
-                    {columnArray.length > 0 ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
+                    {columnArray.length > 0 && table !== null ? <p key={"tName"}>{`${table.toUpperCase()} TABLE`}</p> : <></>}
                     <table className="db-table">
                         <thead>
                             <tr>
