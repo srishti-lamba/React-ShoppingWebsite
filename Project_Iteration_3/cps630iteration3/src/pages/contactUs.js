@@ -23,7 +23,7 @@ const ContactUs = ({showLogin, toggleLogin}) => {
                 <div className="contactus-card">
                     <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>
                     <h2 className="center">Raymond Floro</h2>
-                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
+                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
                     <p className="email">raymond@smartcustomerservices.ca</p><br/>
                     1-800-555-1111
                     </p>
@@ -31,21 +31,21 @@ const ContactUs = ({showLogin, toggleLogin}) => {
                 <div className="contactus-card">
                     <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" />
                     <h2 className="center">Roberto Mariani</h2>
-                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
+                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
                     <p className="email">roberto@smartcustomerservices.ca</p><br/>
                     1-800-555-2222</p>
                 </div>
                 <div className="contactus-card">
                     <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>
                     <h2 className="center">Srishti Lamba</h2>
-                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
+                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
                     <p className="email">srishti@smartcustomerservices.ca</p><br/>
                     1-800-555-3333</p>
                 </div>
                 <div className="contactus-card">
                     <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"/>
                     <h2 className="center">Vanessa Landayan</h2>
-                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
+                    <p className="contact center">⎯⎯⎯⎯⎯⎯⎯⎯⎯ Contact ⎯⎯⎯⎯⎯⎯⎯⎯⎯<br/><br/>
                     <p className="email">vanessa@smartcustomerservices.ca</p><br/>
                     1-800-555-4444</p>
                 </div>
