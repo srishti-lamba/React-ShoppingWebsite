@@ -23,7 +23,7 @@
             $conn->query($insert3);
         }
         catch (mysqli_sql_exception $exception) {
-            echo $exception;
+            echo("<script>console.log(`Error on Items: $conn->error`)</script>");
         }
     }
 

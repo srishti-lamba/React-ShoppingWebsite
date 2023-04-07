@@ -100,11 +100,13 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
     }
 
     const processCoupon = () => {
+        setupCouponDatabase()
         const url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/processCoupon.php";
         let fdata = new FormData();
         fdata.append('coupon', coupon);
         axios.post(url, fdata)
         .then(res => {
+            console.log(res.data)
             let response = (JSON.parse(res.data[0]));
             let discount = response.discount;
             let newPrice = (initalTotal*((100-discount)/100));
@@ -117,6 +119,15 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         .catch(err => {
             setDiscountedTotal(null);
             setTotalPrice(initalTotal);
+        })
+    }
+
+    function setupCouponDatabase() {
+        let url = "http://localhost/CPS630-Project-Iteration3-PHPScripts/createAndPopulateCoupons.php"
+        let fdata = new FormData()
+        axios.post(url, fdata)
+        .catch((err) => {
+            console.log(err)
         })
     }
 
@@ -212,7 +223,7 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                             <div>
                                 <p>Add a promotion code</p>
                                 <input type="text" value={coupon} onChange={(e) => setCoupon(e.target.value)}></input>
-                                <button onClick={(processCoupon)}>Apply</button>
+                                <button onClick={processCoupon}>Apply</button>
                             </div>
                         </section>
                     </main>
@@ -242,14 +253,14 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
                                     {discountedTotal ? (
                                         <tr>
                                             <td colSpan="2" style={{'textDecoration':'line-through', color:'red'}}>Total</td>
-                                            <td id="total" style={{'textDecoration':'line-through', color:'red'}}>{initalTotal}</td>
+                                            <td id="total" style={{'textDecoration':'line-through', color:'red'}}>${initalTotal}</td>
                                         </tr>) 
                                     :<tr>
                                         <td colSpan="2">Total</td>
                                         <td id="total">${totalPrice}</td>
                                     </tr>  
                                     }
-                                    {discountedTotal ? (<tr><td colSpan="2" style={{color:'green'}}>Total</td><td id="total" style={{color:'green'}}>{discountedTotal}</td></tr>): null}
+                                    {discountedTotal ? (<tr><td colSpan="2" style={{color:'green'}}>Total</td><td id="total" style={{color:'green'}}>${discountedTotal}</td></tr>): null}
                                 </tfoot>
                             </table>
                             <div className="submitContainer">
