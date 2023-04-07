@@ -106,7 +106,6 @@ const UserCheckoutPage = ({toggleLogin, showLogin}) => {
         fdata.append('coupon', coupon);
         axios.post(url, fdata)
         .then(res => {
-            console.log(res.data)
             let response = (JSON.parse(res.data[0]));
             let discount = response.discount;
             let newPrice = (initalTotal*((100-discount)/100));
